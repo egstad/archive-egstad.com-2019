@@ -156,7 +156,7 @@ export default {
    */
   pwa: {
     manifest: {
-      name: process.env.npm_package_name,
+      name: 'Egstad',
       lang: 'en',
     },
   },
