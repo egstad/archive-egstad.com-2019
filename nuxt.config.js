@@ -205,57 +205,6 @@ export default {
   },
   generate: {
     async routes() {
-      // routes const to store the return array
-      // const routes = []
-      // get prismic api endpoint
-      // const api = await initApi()
-      // object for results
-      // let results = {}
-      // async query to prismic
-      // const prismicQuery = await api.query(
-      //   Prismic.Predicates.any('document.type', [
-      //     'homepage',
-      //     'information',
-      //     'pieces_single',
-      //   ])
-      // )
-
-      //
-      //
-      //
-      //
-      //
-      //
-      //
-      // const tags = await api
-      //   .query(Prismic.Predicates.at('document.type', 'tag'))
-      //   .then(response => {
-      //     const tags = response.results
-      //     const tagRoutes = []
-
-      //     // for each tag, add to results
-      //     tags.forEach(tag => {
-      //       initApi().then(api => {
-      //         return api
-      //           .query([
-      //             Prismic.Predicates.at('document.type', 'pieces_single'),
-      //             Prismic.Predicates.at('my.pieces_single.tags.tag', tag.id),
-      //           ])
-      //           .then(response => {
-      //             const tagResult = {
-      //               title: tag.data.tag,
-      //               items: response.results,
-      //               type: 'tag',
-      //             }
-      //             // console.log(tagResult)
-      //             tagRoutes.push(tagResult)
-      //             console.log('b4 return', tagRoutes.length)
-      //           })
-      //       })
-      //     })
-      //     return tagRoutes
-      //   })
-
       /**
        * Fetch content for 'home'
        */
