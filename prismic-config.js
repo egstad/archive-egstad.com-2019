@@ -17,6 +17,11 @@ export const generatePageData = (documentType, data) => {
         pageContent: data,
         title: data.title[0].text,
       }
+    case 'information':
+      return {
+        pageContent: data,
+        title: data.title[0].text,
+      }
     case 'pieces':
       return {
         pageContent: data,
@@ -24,8 +29,27 @@ export const generatePageData = (documentType, data) => {
       }
     case 'pieces_single':
       return {
-        pieces: data,
+        pageContent: data,
         title: data.title[0].text,
+      }
+    case 'projects':
+      return {
+        pageContent: data,
+        title: data.title[0].text,
+      }
+    case 'projects_single':
+      return {
+        pageContent: data,
+        title: data.title[0].text,
+      }
+    case 'tags':
+      return {
+        pageContent: data,
+        title: 'Tags bro',
+      }
+    case 'tag':
+      return {
+        pageContent: data,
       }
   }
 }

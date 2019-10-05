@@ -17,8 +17,9 @@ If you don't already have Prismic or Netlify accounts setup, start there. Both a
 
 ## [Wiki: A-How-Dafuq-Guide](https://github.com/egstad/nuxtlific/wiki/)
 
-The documentaion is light, no-nonsense, and easy to read. If something is missing, let me know. Thanks babe.
+## Todo!
 
-## Credit
+### October 05, 2019
 
-The sucker who spent some of his nights and weekends putting this shit together is Jordan Egstad. He's a graphic designer and developer living in Portland, OR. 
+- Tags Index
+- Document Tags

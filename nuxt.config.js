@@ -206,85 +206,180 @@ export default {
   generate: {
     async routes() {
       // routes const to store the return array
-      const routes = []
+      // const routes = []
       // get prismic api endpoint
-      const api = await initApi()
+      // const api = await initApi()
       // object for results
-      let results = {}
+      // let results = {}
       // async query to prismic
-      const prismicQuery = await api.query(
-        Prismic.Predicates.any('document.type', ['homepage', 'pieces_single'])
-      )
-      // assign the results to our variable object
-      results = prismicQuery.results
+      // const prismicQuery = await api.query(
+      //   Prismic.Predicates.any('document.type', [
+      //     'homepage',
+      //     'information',
+      //     'pieces_single',
+      //   ])
+      // )
 
-      // for each object in our result lets create a route
-      // not currently using the payload feature because it breaks automatic sitemap generation which requires
-      // routes only be string URLs and not objects.
-      // https://nuxtjs.org/api/configuration-generate/#speeding-up-dynamic-route-generation-with-code-payload-code-
-      results.forEach(item => {
-        switch (item.type) {
-          case 'homepage':
-            routes.push(`/work/${item.uid}`)
-            break
-          case 'pieces_single':
-            routes.push(`/pieces/${item.uid}`)
-            break
-          default:
-            break
-        }
+      //
+      //
+      //
+      //
+      //
+      //
+      //
+      // const tags = await api
+      //   .query(Prismic.Predicates.at('document.type', 'tag'))
+      //   .then(response => {
+      //     const tags = response.results
+      //     const tagRoutes = []
+
+      //     // for each tag, add to results
+      //     tags.forEach(tag => {
+      //       initApi().then(api => {
+      //         return api
+      //           .query([
+      //             Prismic.Predicates.at('document.type', 'pieces_single'),
+      //             Prismic.Predicates.at('my.pieces_single.tags.tag', tag.id),
+      //           ])
+      //           .then(response => {
+      //             const tagResult = {
+      //               title: tag.data.tag,
+      //               items: response.results,
+      //               type: 'tag',
+      //             }
+      //             // console.log(tagResult)
+      //             tagRoutes.push(tagResult)
+      //             console.log('b4 return', tagRoutes.length)
+      //           })
+      //       })
+      //     })
+      //     return tagRoutes
+      //   })
+
+      /**
+       * Fetch content for 'home'
+       */
+      const homepage = await initApi().then(api => {
+        return api
+          .query(Prismic.Predicates.at('document.type', 'homepage'))
+          .then(response => {
+            return response.results.map(payload => {
+              return {
+                route: '/',
+                payload,
+              }
+            })
+          })
       })
 
-      return routes
+      /**
+       * Fetch content for 'information'
+       */
+      const information = await initApi().then(api => {
+        return api
+          .query(Prismic.Predicates.at('document.type', 'information'))
+          .then(response => {
+            return response.results.map(payload => {
+              return {
+                route: '/information',
+                payload,
+              }
+            })
+          })
+      })
 
-      // /**
-      //  * Fetch content for 'home'
-      //  *
-      //  * Want to query a different repeatable Custom Type other than home?
-      //  * Create the CT in Prismic, populate it with content
-      //  * and then change 'home' to 'whatever'
-      //  */
-      // const homepage = initApi().then(api => {
-      //   return api
-      //     .query(Prismic.Predicates.at('document.type', 'home'))
-      //     .then(response => {
-      //       return response.results.map(payload => {
-      //         return {
-      //           route: '/',
-      //           payload,
-      //         }
-      //       })
-      //     })
-      // })
+      /**
+       * Fetch content for 'projects'
+       */
+      const projects = await initApi().then(api => {
+        return api
+          .query(Prismic.Predicates.at('document.type', 'projects'))
+          .then(response => {
+            return response.results.map(payload => {
+              return {
+                route: '/projects',
+                payload,
+              }
+            })
+          })
+      })
 
-      // /**
-      //  * Fetch content for 'pieces'
-      //  *
-      //  * Want to query a different repeatable Custom Type other than pieces?
-      //  * Create the CT in Prismic, populate it with content
-      //  * and then change 'pieces_single' to 'whatever'
-      //  */
-      // const pieces = initApi().then(api => {
-      //   return api
-      //     .query(Prismic.Predicates.at('document.type', 'pieces_single'), {
-      //       orderings: '[document.first_publication_date]',
-      //     })
-      //     .then(response => {
-      //       return response.results.map(payload => {
-      //         return {
-      //           route: `/pieces/${payload.uid}`,
-      //           payload,
-      //         }
-      //       })
-      //     })
-      // })
+      /**
+       * Fetch content for 'projects_single'
+       */
+      const projectsSingle = await initApi().then(api => {
+        return api
+          .query(Prismic.Predicates.at('document.type', 'projects_single'), {
+            orderings: '[document.first_publication_date]',
+            // fetchLinks: ['projects_single.data'],
+          })
+          .then(response => {
+            return response.results.map(payload => {
+              return {
+                route: `/projects/${payload.uid}`,
+                payload,
+              }
+            })
+          })
+      })
 
-      // // We return an array of the results of each promise using the spread operator.
-      // // It will be passed to each page as the `payload` property of the `context` object,
-      // // which is used to generate the markup of the page.
-      // return Promise.all([homepage, pieces]).then(values => {
-      //   return [...values[0], ...values[1]]
-      // })
+      /**
+       * Fetch content for 'pieces'
+       */
+      const pieces = await initApi().then(api => {
+        return api
+          .query(Prismic.Predicates.at('document.type', 'pieces_single'), {
+            orderings: '[document.first_publication_date]',
+            // fetchLinks: ['pieces_single.data'],
+          })
+          .then(response => {
+            return response.results.map(payload => {
+              return {
+                route: `/pieces/${payload.uid}`,
+                payload,
+              }
+            })
+          })
+      })
+
+      /**
+       * Fetch content for 'tag' slugs
+       */
+      const tags = await initApi().then(api => {
+        return api
+          .query(Prismic.Predicates.at('document.type', 'tag'))
+          .then(response => {
+            return response.results.map(payload => {
+              return {
+                route: `/tags/${payload.data.tag}`,
+                payload,
+              }
+            })
+          })
+      })
+
+      // console.log(tags)
+
+      // We return an array of the results of each promise using the spread operator.
+      // It will be passed to each page as the `payload` property of the `context` object,
+      // which is used to generate the markup of the page.
+      return Promise.all([
+        homepage,
+        information,
+        projects,
+        projectsSingle,
+        pieces,
+        tags,
+      ]).then(values => {
+        return [
+          ...values[0],
+          ...values[1],
+          ...values[2],
+          ...values[3],
+          ...values[4],
+          ...values[5],
+        ]
+      })
     },
   },
 }

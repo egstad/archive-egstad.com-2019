@@ -8,7 +8,13 @@
         <nuxt-link to="/pieces">Pieces</nuxt-link>
       </li>
       <li>
-        <a href="https://github.com/egstad/nuxtlific" target="_blank">Github</a>
+        <nuxt-link to="/projects">Projects</nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/information">Information</nuxt-link>
+      </li>
+      <li>
+        <nuxt-link to="/tags">Tags</nuxt-link>
       </li>
     </ul>
   </nav>
