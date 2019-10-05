@@ -1,5 +1,5 @@
 {
-  "name": "Egstad Dotcom",
+  "name": "@egstad/dotcom",
   "version": "1.0.0",
   "description": "Prismic + Netlify + Nuxt.js",
   "author": "Jordan Egstad",
