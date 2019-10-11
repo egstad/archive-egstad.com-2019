@@ -1,6 +1,12 @@
 <template>
   <section class="container">
     <h1>{{ title }}</h1>
+
+    <ul>
+      <li v-for="(piece, pieceIndex) in pieces" :key="`piece-${pieceIndex}`">
+        <nuxt-link :to="`pieces/${piece.uid}`">{{ piece.title }}</nuxt-link>
+      </li>
+    </ul>
   </section>
 </template>
 
@@ -11,25 +17,50 @@ import { initApi, generatePageData } from '@/prismic-config'
 
 export default {
   mixins: [routeTransitionFade],
-  asyncData(context) {
+  async asyncData(context) {
     if (context.payload) {
-      return generatePageData('pieces', context.payload.data)
+      await generatePageData('pieces', context.payload.data)
     } else {
-      return initApi().then(api => {
+      const piecesData = []
+      await initApi().then(api => {
         return api
           .query(Prismic.Predicates.at('document.type', 'pieces'))
           .then(response => {
-            return generatePageData('home', response.results[0].data)
+            piecesData.push(response.results[0].data)
           })
       })
+      await initApi().then(api => {
+        return api
+          .query(Prismic.Predicates.at('document.type', 'pieces_single'), {
+            orderings: '[document.first_publication_date]',
+          })
+          .then(response => {
+            const cleanData = []
+
+            // lets tidy up this data
+            for (const item of response.results) {
+              const itemData = {
+                title: item.data.title[0].text,
+                tags: item.data.tags,
+                uid: item.uid,
+              }
+
+              cleanData.push(itemData)
+            }
+            piecesData.push(cleanData)
+          })
+      })
+
+      return generatePageData('pieces', piecesData)
     }
   },
   mounted() {
     this.$app.$emit('page::mounted')
+    console.log(this.$data)
   },
-  head() {
-    return this.$setPageMetadata(this.pageContent)
-  },
+  // head() {
+  //   return this.$setPageMetadata(this.pageContent)
+  // },
 }
 </script>
 

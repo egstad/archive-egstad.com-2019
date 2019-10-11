@@ -25,7 +25,8 @@ export const generatePageData = (documentType, data) => {
     case 'pieces':
       return {
         pageContent: data,
-        title: data.title[0].text,
+        title: data[0].title[0].text,
+        pieces: data[1],
       }
     case 'pieces_single':
       return {

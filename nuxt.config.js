@@ -256,7 +256,7 @@ export default {
       /**
        * Fetch content for 'projects_single'
        */
-      const projectsSingle = await initApi().then(api => {
+      const projectSlugs = await initApi().then(api => {
         return api
           .query(Prismic.Predicates.at('document.type', 'projects_single'), {
             orderings: '[document.first_publication_date]',
@@ -275,7 +275,7 @@ export default {
       /**
        * Fetch content for 'pieces'
        */
-      const pieces = await initApi().then(api => {
+      const piecesSlugs = await initApi().then(api => {
         return api
           .query(Prismic.Predicates.at('document.type', 'pieces_single'), {
             orderings: '[document.first_publication_date]',
@@ -313,20 +313,20 @@ export default {
       // It will be passed to each page as the `payload` property of the `context` object,
       // which is used to generate the markup of the page.
       return Promise.all([
-        homepage,
-        information,
-        projects,
-        projectsSingle,
-        pieces,
+        // homepage,
+        // information,
+        // projects,
+        projectSlugs,
+        piecesSlugs,
         tags,
       ]).then(values => {
         return [
           ...values[0],
           ...values[1],
           ...values[2],
-          ...values[3],
-          ...values[4],
-          ...values[5],
+          // ...values[3],
+          // ...values[4],
+          // ...values[5],
         ]
       })
     },

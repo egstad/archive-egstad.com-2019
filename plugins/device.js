@@ -22,6 +22,11 @@ const device = {
       this.winWidth = window.innerWidth
       this.winHeight = window.innerHeight
 
+      // reduced motion
+      this.reducedMotionState = window.matchMedia(
+        '(prefers-reduced-motion: reduce)'
+      )
+
       // scrollable area
       this.docHeight = document.body.scrollHeight
       this.docWidth = document.body.scrollWidth
@@ -36,6 +41,8 @@ const device = {
       this.delay = 250
     }
 
+    // determin if reduce motion is on or off
+    this.handleReduceMotion()
     // add device-specific classes to html element
     this.setDeviceClasses()
     // measure the window
@@ -46,6 +53,22 @@ const device = {
     this.scrollHistory()
     // remeasure the window on resize
     window.addEventListener('resize', this.resizeHandler)
+    // watch if reduce motion changes at all
+    this.reducedMotionState.addEventListener(
+      'change',
+      this.handleReduceMotionChange
+    )
+  },
+
+  handleReduceMotion() {
+    window.$app.$store.commit(
+      'prefersReducedMotion',
+      this.reducedMotionState.matches
+    )
+  },
+
+  handleReduceMotionChange() {
+    window.$app.$store.commit('prefersReducedMotion', this.matches)
   },
 
   setDeviceClasses() {
