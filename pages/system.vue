@@ -25,6 +25,13 @@
       <template v-if="slice.slice_type === 'video'">
         <vid :video="slice.primary"></vid>
       </template>
+
+      <div class="slice__info">
+        <div class="slice__name text--2">
+          Slice: <span class="text--mono">{{ slice.slice_type }}</span>
+        </div>
+        <pre class="slice__code text--1 text--mono">{{ slice }}</pre>
+      </div>
     </div>
   </article>
 </template>
@@ -56,3 +63,14 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.slice {
+  &__info {
+    color: $color-interactive;
+    border-top: 1px solid $color-interactive;
+    padding-top: 1em;
+    margin: 2em 0 6em;
+  }
+}
+</style>
