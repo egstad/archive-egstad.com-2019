@@ -149,6 +149,7 @@ export default {
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources',
     '~modules/custom-generate.js',
+    '@nuxtjs/sitemap',
   ],
 
   /*
@@ -292,5 +293,16 @@ export default {
         return [...values[0], ...values[1], ...values[2], ...values[3]]
       })
     },
+  },
+
+  // ───────────────────────────── SITEMAP CONFIG ───────────────────────────── //
+  /*
+   ** XML sitemap configuration https://www.npmjs.com/package/@nuxtjs/sitemap
+   *  Automatically picks up routes from generate unless generate uses payload.
+   */
+  sitemap: {
+    hostname: 'https://egstad.com',
+    gzip: true,
+    exclude: ['/preview'],
   },
 }
