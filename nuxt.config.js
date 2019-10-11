@@ -1,6 +1,36 @@
 import Prismic from 'prismic-javascript'
 import { prismicConfig, initApi } from './prismic-config'
 
+// Used to generate sitemap
+// When site generated, all dynamic routes are added here
+const siteMapRoutes = [
+  {
+    url: `/`,
+    changefreq: 'monthly',
+    priority: 1,
+  },
+  {
+    url: `/pieces`,
+    changefreq: 'weekly',
+    priority: 0.9,
+  },
+  {
+    url: `/projects`,
+    changefreq: 'monthly',
+    priority: 0.9,
+  },
+  {
+    url: `/information`,
+    changefreq: 'monthly',
+    priority: 0.9,
+  },
+  {
+    url: `/tags`,
+    changefreq: 'monthly',
+    priority: 0.8,
+  },
+]
+
 export default {
   mode: 'universal',
   globalName: 'app',
@@ -217,6 +247,16 @@ export default {
           })
           .then(response => {
             return response.results.map(payload => {
+              // create site map data
+              const siteMapData = {
+                url: `/projects/${payload.uid}`,
+                changefreq: 'monthly',
+                priority: 0.7,
+              }
+              // add to sitemap
+              siteMapRoutes.push(siteMapData)
+
+              // generate route & payload!
               return {
                 route: `/projects/${payload.uid}`,
                 payload,
@@ -236,6 +276,16 @@ export default {
           })
           .then(response => {
             return response.results.map(payload => {
+              // create site map data
+              const siteMapData = {
+                url: `/pieces/${payload.uid}`,
+                changefreq: 'weekly',
+                priority: 0.5,
+              }
+              // add to sitemap
+              siteMapRoutes.push(siteMapData)
+
+              // generate route & payload!
               return {
                 route: `/pieces/${payload.uid}`,
                 payload,
@@ -249,9 +299,23 @@ export default {
        */
       const pagesSlugs = await initApi().then(api => {
         return api
-          .query(Prismic.Predicates.at('document.type', 'page'))
+          .query([
+            Prismic.Predicates.at('document.type', 'page'),
+            // blacklist system
+            Prismic.Predicates.not('my.page.uid', 'system'),
+          ])
           .then(response => {
             return response.results.map(payload => {
+              // create site map data
+              const siteMapData = {
+                url: `${payload.uid}`,
+                changefreq: 'monthly',
+                priority: 0.7,
+              }
+              // add to sitemap
+              siteMapRoutes.push(siteMapData)
+
+              // generate route & payload!
               return {
                 route: `/${payload.uid}`,
                 payload,
@@ -268,6 +332,16 @@ export default {
           .query(Prismic.Predicates.at('document.type', 'tag'))
           .then(response => {
             return response.results.map(payload => {
+              // create site map data
+              const siteMapData = {
+                url: `/tags/${payload.data.tag}`,
+                changefreq: 'monthly',
+                priority: 0.5,
+              }
+              // add to sitemap
+              siteMapRoutes.push(siteMapData)
+
+              // generate route & payload!
               return {
                 route: `/tags/${payload.data.tag}`,
                 payload,
@@ -275,8 +349,6 @@ export default {
             })
           })
       })
-
-      // console.log(tags)
 
       // We return an array of the results of each promise using the spread operator.
       // It will be passed to each page as the `payload` property of the `context` object,
@@ -303,6 +375,15 @@ export default {
   sitemap: {
     hostname: 'https://egstad.com',
     gzip: true,
-    exclude: ['/preview'],
+    exclude: ['/preview', '/system'],
+    defaults: {
+      changefreq: 'monthly',
+      priority: 0.5,
+      lastmod: new Date(),
+      lastmodrealtime: true,
+    },
+    routes: () => {
+      return siteMapRoutes
+    },
   },
 }
