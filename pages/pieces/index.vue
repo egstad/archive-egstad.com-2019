@@ -1,9 +1,13 @@
 <template>
   <section class="container">
-    <h1>{{ title }}</h1>
+    <h1 class="text--4">{{ title }}</h1>
 
     <ul>
-      <li v-for="(piece, pieceIndex) in pieces" :key="`piece-${pieceIndex}`">
+      <li
+        v-for="(piece, pieceIndex) in pieces"
+        :key="`piece-${pieceIndex}`"
+        class="text--2"
+      >
         <nuxt-link :to="`pieces/${piece.uid}`">{{ piece.title }}</nuxt-link>
       </li>
     </ul>
