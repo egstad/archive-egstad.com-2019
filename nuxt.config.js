@@ -300,8 +300,11 @@ export default {
       const pagesSlugs = await initApi().then(api => {
         return api
           .query([
+            // fetch them all
             Prismic.Predicates.at('document.type', 'page'),
-            // blacklist system
+            // blacklist urls by uid here
+            // because 'system' (and other) generates on build anyways
+            // you want to add this to sitemap.exclude also!
             Prismic.Predicates.not('my.page.uid', 'system'),
           ])
           .then(response => {
@@ -350,13 +353,10 @@ export default {
           })
       })
 
-      // We return an array of the results of each promise using the spread operator.
+      // Return array of results from each promise using the spread operator.
       // It will be passed to each page as the `payload` property of the `context` object,
       // which is used to generate the markup of the page.
       return Promise.all([
-        // homepage,
-        // information,
-        // projects,
         pagesSlugs,
         projectSlugs,
         piecesSlugs,
@@ -370,7 +370,6 @@ export default {
   // ───────────────────────────── SITEMAP CONFIG ───────────────────────────── //
   /*
    ** XML sitemap configuration https://www.npmjs.com/package/@nuxtjs/sitemap
-   *  Automatically picks up routes from generate unless generate uses payload.
    */
   sitemap: {
     hostname: 'https://egstad.com',
