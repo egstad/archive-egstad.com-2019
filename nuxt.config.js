@@ -206,55 +206,7 @@ export default {
   generate: {
     async routes() {
       /**
-       * Fetch content for 'home'
-       */
-      const homepage = await initApi().then(api => {
-        return api
-          .query(Prismic.Predicates.at('document.type', 'homepage'))
-          .then(response => {
-            return response.results.map(payload => {
-              return {
-                route: '/',
-                payload,
-              }
-            })
-          })
-      })
-
-      /**
-       * Fetch content for 'information'
-       */
-      const information = await initApi().then(api => {
-        return api
-          .query(Prismic.Predicates.at('document.type', 'information'))
-          .then(response => {
-            return response.results.map(payload => {
-              return {
-                route: '/information',
-                payload,
-              }
-            })
-          })
-      })
-
-      /**
-       * Fetch content for 'projects'
-       */
-      const projects = await initApi().then(api => {
-        return api
-          .query(Prismic.Predicates.at('document.type', 'projects'))
-          .then(response => {
-            return response.results.map(payload => {
-              return {
-                route: '/projects',
-                payload,
-              }
-            })
-          })
-      })
-
-      /**
-       * Fetch content for 'projects_single'
+       * Project slugs
        */
       const projectSlugs = await initApi().then(api => {
         return api
@@ -273,7 +225,7 @@ export default {
       })
 
       /**
-       * Fetch content for 'pieces'
+       * Pieces slugs
        */
       const piecesSlugs = await initApi().then(api => {
         return api
@@ -292,9 +244,25 @@ export default {
       })
 
       /**
-       * Fetch content for 'tag' slugs
+       * Page slugs
        */
-      const tags = await initApi().then(api => {
+      const pagesSlugs = await initApi().then(api => {
+        return api
+          .query(Prismic.Predicates.at('document.type', 'page'))
+          .then(response => {
+            return response.results.map(payload => {
+              return {
+                route: `/${payload.uid}`,
+                payload,
+              }
+            })
+          })
+      })
+
+      /**
+       * Tag slugs
+       */
+      const tagsSlugs = await initApi().then(api => {
         return api
           .query(Prismic.Predicates.at('document.type', 'tag'))
           .then(response => {
@@ -316,18 +284,12 @@ export default {
         // homepage,
         // information,
         // projects,
+        pagesSlugs,
         projectSlugs,
         piecesSlugs,
-        tags,
+        tagsSlugs,
       ]).then(values => {
-        return [
-          ...values[0],
-          ...values[1],
-          ...values[2],
-          // ...values[3],
-          // ...values[4],
-          // ...values[5],
-        ]
+        return [...values[0], ...values[1], ...values[2], ...values[3]]
       })
     },
   },

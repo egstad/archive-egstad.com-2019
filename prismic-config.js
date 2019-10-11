@@ -22,6 +22,11 @@ export const generatePageData = (documentType, data) => {
         pageContent: data,
         title: data.title[0].text,
       }
+    case 'page':
+      return {
+        pageContent: data,
+        title: data.title[0].text,
+      }
     case 'pieces':
       return {
         pageContent: data,

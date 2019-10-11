@@ -22,10 +22,10 @@
       v-lazy
       playsinline
       class="vid__video"
-      :muted="video.muted == 'true'"
-      :loop="video.loop == 'true'"
+      :muted="video.is_muted == 'true'"
+      :loop="video.will_loop == 'true'"
+      :controls="video.has_controls == 'true'"
       :poster="video.poster.url"
-      :controls="video.controls == 'true'"
       :aria-label="video.alt_text"
       :data-src="video.source.url"
     ></video>
@@ -54,8 +54,8 @@ export default {
   },
   created() {
     // make this shit readable
-    this.isMuted = this.video.muted === 'true'
-    this.isAutoplay = this.video.autoplay === 'true'
+    this.isMuted = this.video.is_muted === 'true'
+    this.isAutoplay = this.video.is_autoplay === 'true'
   },
   mounted() {
     this.$refs.video.addEventListener('loadedmetadata', this.setDimensions)
