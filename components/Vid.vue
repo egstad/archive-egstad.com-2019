@@ -29,6 +29,10 @@
       :aria-label="video.alt_text"
       :data-src="video.source.url"
     ></video>
+
+    <figcaption v-if="caption && caption[0].text">
+      <prismic-rich-text :field="caption" />
+    </figcaption>
   </figure>
 </template>
 
@@ -38,6 +42,11 @@ export default {
     video: {
       type: Object,
       required: true,
+    },
+    caption: {
+      type: Array || String,
+      required: false,
+      default: null,
     },
   },
   data() {

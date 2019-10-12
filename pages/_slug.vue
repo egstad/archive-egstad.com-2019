@@ -17,13 +17,28 @@
       <!-- IMAGE -->
       <template v-if="slice.slice_type === 'image'">
         <figure v-if="slice.primary.image.url">
-          <pic :image="slice.primary.image" />
+          <pic
+            :image="slice.primary.image"
+            :caption="
+              slice.primary.caption.length > 0 ? slice.primary.caption : null
+            "
+          />
         </figure>
       </template>
 
       <!-- VIDEO -->
       <template v-if="slice.slice_type === 'video'">
-        <vid :video="slice.primary"></vid>
+        <vid
+          :video="slice.primary"
+          :caption="
+            slice.primary.caption.length > 0 ? slice.primary.caption : null
+          "
+        />
+      </template>
+
+      <!-- Gallery -->
+      <template v-if="slice.slice_type === 'gallery'">
+        <gallery :collection="slice"></gallery>
       </template>
     </div>
   </article>
@@ -33,6 +48,7 @@
 import Prismic from 'prismic-javascript'
 import Pic from '@/components/Pic'
 import Vid from '@/components/Vid'
+import Gallery from '@/components/Gallery'
 import { routeTransitionFade } from '@/mixins/route-transitions'
 import { initApi, generatePageData } from '@/prismic-config'
 
@@ -40,6 +56,7 @@ export default {
   components: {
     Pic,
     Vid,
+    Gallery,
   },
   mixins: [routeTransitionFade],
   asyncData(context) {
