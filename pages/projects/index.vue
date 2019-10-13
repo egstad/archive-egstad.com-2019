@@ -1,6 +1,18 @@
 <template>
   <section class="container">
     <h1>{{ title }}</h1>
+
+    <ul>
+      <li
+        v-for="(project, projectIndex) in projects"
+        :key="`project-${projectIndex}`"
+        class="text--2"
+      >
+        <nuxt-link :to="`projects/${project.uid}`">{{
+          project.title
+        }}</nuxt-link>
+      </li>
+    </ul>
   </section>
 </template>
 
@@ -11,25 +23,49 @@ import { initApi, generatePageData } from '@/prismic-config'
 
 export default {
   mixins: [routeTransitionFade],
-  asyncData(context) {
+  async asyncData(context) {
     if (context.payload) {
-      return generatePageData('projects', context.payload.data)
+      await generatePageData('projects', context.payload.data)
     } else {
-      return initApi().then(api => {
+      const projectsData = []
+      await initApi().then(api => {
         return api
           .query(Prismic.Predicates.at('document.type', 'projects'))
           .then(response => {
-            return generatePageData('home', response.results[0].data)
+            projectsData.push(response.results[0].data)
           })
       })
+      await initApi().then(api => {
+        return api
+          .query(Prismic.Predicates.at('document.type', 'projects_single'), {
+            orderings: '[document.first_publication_date]',
+          })
+          .then(response => {
+            const cleanData = []
+
+            // lets tidy up this data
+            for (const item of response.results) {
+              const itemData = {
+                title: item.data.title[0].text,
+                tags: item.data.tags,
+                uid: item.uid,
+              }
+
+              cleanData.push(itemData)
+            }
+            projectsData.push(cleanData)
+          })
+      })
+
+      return generatePageData('projects', projectsData)
     }
   },
   mounted() {
     this.$app.$emit('page::mounted')
   },
-  head() {
-    return this.$setPageMetadata(this.pageContent)
-  },
+  // head() {
+  //   return this.$setPageMetadata(this.pageContent)
+  // },
 }
 </script>
 

@@ -9,8 +9,8 @@
 </template>
 
 <script>
-import SiteMenu from '@/components/SiteMenu'
-import SiteFooter from '@/components/SiteFooter'
+import SiteMenu from '@/components/organism/header'
+import SiteFooter from '@/components/organism/footer'
 
 export default {
   components: {
@@ -19,6 +19,7 @@ export default {
   },
   watch: {
     $route(to, from) {
+      console.log('update')
       this.$app.$emit('route::updated')
     },
   },

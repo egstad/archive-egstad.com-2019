@@ -8,7 +8,7 @@
   • Mute
 -->
 <template>
-  <figure ref="figure" class="vid">
+  <div class="vid">
     <button
       v-if="!isPlaying"
       class="vid__play"
@@ -29,11 +29,7 @@
       :aria-label="video.alt_text"
       :data-src="video.source.url"
     ></video>
-
-    <figcaption v-if="caption && caption[0].text">
-      <prismic-rich-text :field="caption" />
-    </figcaption>
-  </figure>
+  </div>
 </template>
 
 <script>

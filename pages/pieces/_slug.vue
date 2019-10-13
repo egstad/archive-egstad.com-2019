@@ -4,42 +4,19 @@
       <h1 class="text--5">{{ title }}</h1>
     </header>
 
-    <div
-      v-for="(slice, sliceIndex) in pageContent.body"
-      :key="`slice-${sliceIndex}`"
-      :class="`slice slice--${slice.slice_type}`"
-    >
-      <!-- TEXT -->
-      <template v-if="slice.slice_type === 'text'">
-        <prismic-rich-text :field="slice.items[0].content" />
-      </template>
-
-      <!-- IMAGE -->
-      <template v-if="slice.slice_type === 'image'">
-        <figure v-if="slice.primary.image.url">
-          <pic :image="slice.primary.image" />
-        </figure>
-      </template>
-
-      <!-- VIDEO -->
-      <template v-if="slice.slice_type === 'video'">
-        <vid :video="slice.primary"></vid>
-      </template>
-    </div>
+    <Slices :slices="pageContent.body" />
   </article>
 </template>
 
 <script>
 import Prismic from 'prismic-javascript'
-import Pic from '@/components/Pic'
-import Vid from '@/components/Vid'
+import Slices from '@/components/templates/slices'
 import { routeTransitionFade } from '@/mixins/route-transitions'
 import { initApi, generatePageData } from '@/prismic-config'
 
 export default {
   components: {
-    Pic,
-    Vid,
+    Slices,
   },
   mixins: [routeTransitionFade],
   asyncData(context) {
