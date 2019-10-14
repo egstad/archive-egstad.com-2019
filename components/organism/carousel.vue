@@ -77,7 +77,9 @@ export default {
   beforeMount() {
     // when images load, update gallery height
     this.$app.$on('image::loaded', el => {
+      // does this image exist in this gallery?
       if (el.closest('.gallery')) {
+        // if image is taller, update height
         if (this.galleryHeight < el.clientHeight) {
           this.galleryHeight = el.clientHeight
           this.setFlickityHeight()
@@ -86,8 +88,9 @@ export default {
     })
   },
   mounted() {
-    this.$refs.gallery.on('change', index => {})
+    // this.$refs.gallery.on('change', index => {})
 
+    // update cell heights on resize
     this.$app.$on('page::resized', () => {
       this.measureCells()
       this.setFlickityHeight()
