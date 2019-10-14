@@ -266,7 +266,7 @@ export default {
       })
 
       /**
-       * Pieces slugs
+       * Piece slugs
        */
       const piecesSlugs = await initApi().then(api => {
         return api
