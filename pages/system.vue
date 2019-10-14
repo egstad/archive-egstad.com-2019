@@ -4,18 +4,18 @@
       <h1 class="text--5">{{ title }}s</h1>
     </header>
 
-    <!-- <Slices :slices="pageContent.body" /> -->
+    <Slices :slices="pageContent.body" />
   </article>
 </template>
 
 <script>
-// import Slices from '@/components/templates/slices'
+import Slices from '@/components/templates/slices'
 import { routeTransitionFade } from '@/mixins/route-transitions'
 import { initApi, generatePageData } from '@/prismic-config'
 
 export default {
   components: {
-    // Slices,
+    Slices,
   },
   mixins: [routeTransitionFade],
   asyncData(context) {

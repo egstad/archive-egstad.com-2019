@@ -8,7 +8,7 @@
         :key="`piece-${pieceIndex}`"
         class="text--2"
       >
-        <nuxt-link :to="`pieces/${piece.uid}`">{{ piece.title }}</nuxt-link>
+        <nuxt-link :to="piece.uid" append>{{ piece.title }}</nuxt-link>
       </li>
     </ul>
   </section>
