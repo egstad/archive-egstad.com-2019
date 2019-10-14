@@ -3,13 +3,13 @@
     <h1 class="text--5">{{ title }}</h1>
 
     <Slices :slices="pageContent.body" />
-    <Carousel />
+    <!-- <Carousel /> -->
   </div>
 </template>
 
 <script>
 import Prismic from 'prismic-javascript'
-import Carousel from '@/components/organism/carousel'
+// import Carousel from '@/components/organism/carousel'
 import Slices from '@/components/templates/slices'
 import { routeTransitionFade } from '@/mixins/route-transitions'
 import { initApi, generatePageData } from '@/prismic-config'
@@ -17,7 +17,7 @@ import { initApi, generatePageData } from '@/prismic-config'
 export default {
   components: {
     Slices,
-    Carousel,
+    // Carousel,
   },
   mixins: [routeTransitionFade],
   asyncData(context) {
