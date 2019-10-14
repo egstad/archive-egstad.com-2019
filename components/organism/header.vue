@@ -19,9 +19,6 @@
       <li>
         <nuxt-link to="/system">System</nuxt-link>
       </li>
-      <li>
-        <nuxt-link to="/page-test">Page Test</nuxt-link>
-      </li>
     </ul>
   </nav>
 </template>
