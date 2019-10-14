@@ -8,9 +8,7 @@
         :key="`project-${projectIndex}`"
         class="text--2"
       >
-        <nuxt-link :to="`projects/${project.uid}`">{{
-          project.title
-        }}</nuxt-link>
+        <nuxt-link :to="project.uid" append>{{ project.title }}</nuxt-link>
       </li>
     </ul>
   </section>
@@ -62,10 +60,11 @@ export default {
   },
   mounted() {
     this.$app.$emit('page::mounted')
+    console.log(this.$data)
   },
-  // head() {
-  //   return this.$setPageMetadata(this.pageContent)
-  // },
+  head() {
+    return this.$setPageMetadata(this.pageContent[0])
+  },
 }
 </script>
 

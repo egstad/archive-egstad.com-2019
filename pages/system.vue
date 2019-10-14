@@ -1,7 +1,7 @@
 <template>
   <article class="container">
     <header>
-      <h1 class="text--5">{{ title }}s</h1>
+      <h1 class="text--5">{{ title }}</h1>
     </header>
 
     <Slices :slices="pageContent.body" />

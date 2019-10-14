@@ -60,11 +60,10 @@ export default {
   },
   mounted() {
     this.$app.$emit('page::mounted')
-    console.log(this.$data)
   },
-  // head() {
-  //   return this.$setPageMetadata(this.pageContent)
-  // },
+  head() {
+    return this.$setPageMetadata(this.pageContent[0])
+  },
 }
 </script>
 

@@ -19,7 +19,6 @@ export default {
   },
   watch: {
     $route(to, from) {
-      console.log('update')
       this.$app.$emit('route::updated')
     },
   },

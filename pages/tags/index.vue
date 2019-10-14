@@ -140,6 +140,7 @@ export default {
 
   mounted() {
     this.$app.$emit('page::mounted')
+    console.log(this.$data)
   },
   methods: {
     getTagInfo() {

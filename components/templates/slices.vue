@@ -32,6 +32,11 @@
       <template v-if="slice.slice_type === 'gallery'">
         <Gallery :collection="slice" />
       </template>
+
+      <!-- <Carousel /> -->
+      <template v-if="slice.slice_type === 'carousel'">
+        <Carousel :slides="slice.items" :options="slice.primary" />
+      </template>
     </div>
   </section>
 </template>
@@ -41,12 +46,14 @@ import Pic from '@/components/atoms/pic'
 import Vid from '@/components/atoms/vid'
 import Caption from '@/components/atoms/caption'
 import Gallery from '@/components/organism/gallery'
+import Carousel from '@/components/organism/carousel'
 export default {
   components: {
     Pic,
     Vid,
     Caption,
     Gallery,
+    Carousel,
   },
   props: {
     slices: {

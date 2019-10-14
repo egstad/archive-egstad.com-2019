@@ -3,46 +3,27 @@
     <Flickity
       ref="gallery"
       :options="galleryOptions"
-      class="gallery --bottom"
+      :class="`gallery --${options.align_y}`"
       @init="onReady"
     >
-      <div class="gallery__item js-animate animate">
-        <img v-lazy data-src="//placehold.it/400x800" alt="" />
-      </div>
-      <div class="gallery__item js-animate animate">
-        <img
-          v-lazy
-          data-src="https://images.prismic.io/egstad%2F9f1220ce-c6e4-479d-b0f7-cbcdbc4b962b__ops.jpg?auto=compress,format&w=2500"
-          alt=""
-        />
-      </div>
-      <div class="gallery__item js-animate animate">
-        <img
-          v-lazy
-          data-src="https://images.prismic.io/egstad%2F9f1220ce-c6e4-479d-b0f7-cbcdbc4b962b__ops.jpg?auto=compress,format&w=2500"
-          alt=""
-        />
-      </div>
-      <div class="gallery__item js-animate animate">
-        <img
-          v-lazy
-          data-src="https://images.prismic.io/egstad%2F9f1220ce-c6e4-479d-b0f7-cbcdbc4b962b__ops.jpg?auto=compress,format&w=2500"
-          alt=""
-        />
-      </div>
-      <div class="gallery__item js-animate animate">
-        <img
-          v-lazy
-          data-src="https://images.prismic.io/egstad%2F9f1220ce-c6e4-479d-b0f7-cbcdbc4b962b__ops.jpg?auto=compress,format&w=2500"
-          alt=""
-        />
-      </div>
-      <div class="gallery__item js-animate animate">
-        <img
-          v-lazy
-          data-src="https://images.prismic.io/egstad%2F9f1220ce-c6e4-479d-b0f7-cbcdbc4b962b__ops.jpg?auto=compress,format&w=2500"
-          alt=""
-        />
+      <div
+        v-for="(item, itemIndex) in slides"
+        :key="`item-${itemIndex}`"
+        :class="
+          `gallery__item gallery__item--${item.media_type} js-animate animate`
+        "
+      >
+        <!-- IMAGE -->
+        <figure v-if="item.media_type === 'image'">
+          <Pic :image="item.poster" />
+          <Caption v-if="item.caption.length > 0" :caption="item.caption" />
+        </figure>
+
+        <!-- VIDEO -->
+        <figure v-if="item.media_type === 'video'">
+          <Vid :video="item" />
+          <Caption v-if="item.caption.length > 0" :caption="item.caption" />
+        </figure>
       </div>
     </Flickity>
 
@@ -52,11 +33,28 @@
 </template>
 
 <script>
-import Flickity from 'vue-flickity'
+import Pic from '@/components/atoms/pic'
+import Vid from '@/components/atoms/vid'
+import Caption from '@/components/atoms/caption'
+import Flickity from '~/node_modules/vue-flickity/src/flickity'
 
 export default {
   components: {
+    Pic,
+    Vid,
+    Caption,
     Flickity,
+  },
+  props: {
+    slides: {
+      type: Array,
+      required: true,
+    },
+    options: {
+      type: Object,
+      required: false,
+      default: null,
+    },
   },
   data() {
     return {
@@ -65,12 +63,14 @@ export default {
       galleryOptions: {
         prevNextButtons: false,
         pageDots: false,
+        contain: true,
 
         // options
-        wrapAround: true,
-        freeScroll: true,
-        cellAlign: 'left',
-        groupCells: true,
+        wrapAround: this.options.loop === 'true',
+        freeScroll: this.options.snap_scroll === 'true',
+        cellAlign: this.options.align_x,
+        groupCells: this.options.group_cells === 'true',
+        autoPlay: this.options.autoplay_duration,
       },
     }
   },
@@ -82,18 +82,20 @@ export default {
         // if image is taller, update height
         if (this.galleryHeight < el.clientHeight) {
           this.galleryHeight = el.clientHeight
+          this.measureCells()
           this.setFlickityHeight()
         }
       }
     })
   },
   mounted() {
-    // this.$refs.gallery.on('change', index => {})
-
     // update cell heights on resize
     this.$app.$on('page::resized', () => {
-      this.measureCells()
-      this.setFlickityHeight()
+      // throttle it a bit
+      setTimeout(() => {
+        this.measureCells()
+        this.setFlickityHeight()
+      }, 250)
     })
   },
   beforeDestroy() {
@@ -101,6 +103,7 @@ export default {
     this.$app.$off('page::resized')
   },
   methods: {
+    onResize() {},
     onReady() {
       this.isLoading = 0
     },
@@ -112,12 +115,15 @@ export default {
     },
     measureCells() {
       let tallest = 0
+
+      // search for the tallest
       this.$refs.gallery.$flickity.cells.forEach(item => {
         if (tallest < item.element.clientHeight) {
           tallest = item.element.clientHeight
         }
       })
 
+      // update it
       this.galleryHeight = tallest
     },
     setFlickityHeight() {
@@ -142,7 +148,7 @@ export default {
   display: block;
   width: 100%;
 
-  &.--center {
+  &.--middle {
     /deep/.flickity-slider {
       display: flex;
       align-items: center;
