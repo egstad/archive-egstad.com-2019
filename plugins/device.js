@@ -125,6 +125,7 @@ const device = {
 
   resizeHandler() {
     if (!this.throttled) {
+      window.$app.$emit('page::resized')
       this.measureWindow()
       this.throttled = true
 

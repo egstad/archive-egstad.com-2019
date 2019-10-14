@@ -1,9 +1,7 @@
 <template>
-  <div class="container">
-    <h1 class="text--5">{{ title }}</h1>
-
+  <section>
     <div
-      v-for="(slice, sliceIndex) in pageContent.body"
+      v-for="(slice, sliceIndex) in slices"
       :key="`slice-${sliceIndex}`"
       :class="`slice slice--${slice.slice_type}`"
     >
@@ -35,18 +33,14 @@
         <Gallery :collection="slice" />
       </template>
     </div>
-  </div>
+  </section>
 </template>
 
 <script>
-import Prismic from 'prismic-javascript'
-import { routeTransitionFade } from '@/mixins/route-transitions'
-import { initApi, generatePageData } from '@/prismic-config'
 import Pic from '@/components/atoms/pic'
 import Vid from '@/components/atoms/vid'
 import Caption from '@/components/atoms/caption'
 import Gallery from '@/components/organism/gallery'
-
 export default {
   components: {
     Pic,
@@ -54,29 +48,11 @@ export default {
     Caption,
     Gallery,
   },
-  mixins: [routeTransitionFade],
-  asyncData(context) {
-    if (context.payload) {
-      return generatePageData('projects_single', context.payload.data)
-    } else {
-      return initApi().then(api => {
-        return api
-          .query(
-            Prismic.Predicates.at('my.projects_single.uid', context.params.slug)
-          )
-          .then(response => {
-            return generatePageData('pieces_single', response.results[0].data)
-          })
-      })
-    }
-  },
-  mounted() {
-    this.$app.$emit('page::mounted')
-
-    console.log(this.pageContent)
-  },
-  head() {
-    return this.$setPageMetadata(this.pageContent)
+  props: {
+    slices: {
+      type: Array,
+      required: true,
+    },
   },
 }
 </script>

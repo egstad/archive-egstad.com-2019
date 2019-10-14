@@ -11,6 +11,9 @@ Vue.directive('lazy', {
     el.instance = new LazyLoad(
       {
         thresholds: `${window.innerHeight * 2}px 0%`,
+        callback_loaded: el => {
+          window.$app.$emit('image::loaded', el)
+        },
       },
       el.item
     )

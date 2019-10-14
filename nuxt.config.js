@@ -232,7 +232,7 @@ export default {
       config.node = { fs: 'empty' }
     },
 
-    transpile: ['TweenMax', 'SplitText'],
+    transpile: ['TweenMax', 'Flickity'],
   },
   generate: {
     async routes() {
@@ -266,7 +266,7 @@ export default {
       })
 
       /**
-       * Pieces slugs
+       * Piece slugs
        */
       const piecesSlugs = await initApi().then(api => {
         return api

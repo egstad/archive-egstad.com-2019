@@ -6,34 +6,30 @@
       :class="`gallery__item gallery__item--${item.media_type}`"
     >
       <!-- IMAGE -->
-      <template v-if="item.media_type === 'image'">
-        <pic
-          :image="item.poster"
-          :caption="item.caption.length > 0 ? item.caption : null"
-        />
-        <!-- <pic :image="item.poster" :caption="item.caption" /> -->
-      </template>
+      <figure v-if="item.media_type === 'image'">
+        <Pic :image="item.poster" />
+        <Caption v-if="item.caption.length > 0" :caption="item.caption" />
+      </figure>
 
       <!-- VIDEO -->
-      <template v-if="item.media_type === 'video'">
-        <vid
-          :video="item"
-          :caption="item.caption.length > 0 ? item.caption : null"
-        />
-        <!-- <vid :video="item" :caption="item.caption" /> -->
-      </template>
+      <figure v-if="item.media_type === 'video'">
+        <Vid :video="item" />
+        <Caption v-if="item.caption.length > 0" :caption="item.caption" />
+      </figure>
     </li>
   </ul>
 </template>
 
 <script>
-import Pic from '@/components/Pic'
-import Vid from '@/components/Vid'
+import Pic from '@/components/atoms/pic'
+import Vid from '@/components/atoms/vid'
+import Caption from '@/components/atoms/caption'
 
 export default {
   components: {
     Pic,
     Vid,
+    Caption,
   },
   props: {
     collection: {

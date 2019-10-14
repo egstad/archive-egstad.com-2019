@@ -16,6 +16,9 @@
       <li>
         <nuxt-link to="/tags">Tags</nuxt-link>
       </li>
+      <li>
+        <nuxt-link to="/system">System</nuxt-link>
+      </li>
     </ul>
   </nav>
 </template>
