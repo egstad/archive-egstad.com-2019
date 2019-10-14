@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Slices from '@/components/templates/slices'
+import Slices from '@/components/templates/prismic-slices'
 import { routeTransitionFade } from '@/mixins/route-transitions'
 import { initApi, generatePageData } from '@/prismic-config'
 
