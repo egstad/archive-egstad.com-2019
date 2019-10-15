@@ -61,9 +61,9 @@ export default {
       accent: this.$app.$store.state.theme.accent,
     }
     this.themeNew = {
-      background: this.$app.$store.state.theme.background,
-      foreground: this.$app.$store.state.theme.foreground,
-      accent: this.$app.$store.state.theme.accent,
+      background: this.colors.background,
+      foreground: this.colors.foreground,
+      accent: this.colors.accent,
     }
     this.themesAreSame =
       JSON.stringify(this.themeOriginal) === JSON.stringify(this.themeNew)
@@ -113,7 +113,7 @@ export default {
         // if above theme change point cache the current theme
         if (window.scrollY < this.target) {
           // theme is below
-          console.log('below')
+          // console.log('below')
           this.cacheTheme()
         }
 
@@ -156,10 +156,10 @@ export default {
         // remove it when its out of the viewport.
         if (entry.intersectionRatio > 0) {
           window.addEventListener('scroll', this.handleScroll)
-          console.log('in')
+          // console.log('in')
         } else {
           window.removeEventListener('scroll', this.handleScroll)
-          console.log('out')
+          // console.log('out')
 
           // If the page is loaded with the component already scrolled out of view
           // force a toggle as if the target scroll was hit.
@@ -183,10 +183,19 @@ export default {
     toggleTheme() {
       if (
         this.isBelow &&
-        this.$store.state.theme.themeName !== this.originalTheme
+        !this.themesAreSame
+        // this.$store.state.theme.themeName !== this.originalTheme
       ) {
-        console.log('set theme')
+        console.log('set to original')
         // this.$store.commit('theme/set', this.originalTheme)
+        this.isFirstLoad = false
+      } else if (
+        !this.isBelow &&
+        !this.themesAreSame
+        // this.$store.state.theme.themeName !== this.theme
+      ) {
+        console.log('set to new')
+        // this.$store.commit('theme/set', this.theme)
         this.isFirstLoad = false
       }
     },
