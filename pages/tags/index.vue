@@ -137,7 +137,6 @@ export default {
     // this.getTaggedItems()
     // this.getAllTags()
   },
-
   mounted() {
     this.$app.$emit('page::mounted')
     console.log(this.$data)

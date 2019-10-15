@@ -160,6 +160,10 @@ export default {
       src: '@/plugins/animate.js',
       ssr: false,
     },
+    {
+      src: '@/plugins/theme.js',
+      ssr: false,
+    },
   ],
 
   /*

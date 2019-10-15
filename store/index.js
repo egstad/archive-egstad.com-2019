@@ -1,3 +1,4 @@
+import theme from '@/plugins/theme'
 // import dom from '@/plugins/dom'
 // import TweenMax from 'gsap/TweenMax'
 
@@ -8,6 +9,12 @@ export const state = () => ({
   isTransitioning: false,
   // what page are we on?
   activePage: null,
+  // theme
+  theme: {
+    background: 'black',
+    foreground: 'white',
+    accent: 'blue',
+  },
 
   /**
    * BROWSER MEASUREMENTS
@@ -64,5 +71,24 @@ export const mutations = {
     state.deviceIsTouch = val.isTouch
     state.deviceIsCursor = val.isCursor
     state.deviceIsMobile = val.isMobile
+  },
+
+  /**
+   * Color
+   */
+  setTheme(state, val) {
+    // save it
+    if (val.background) {
+      state.theme.background = val.background
+    }
+    if (val.foreground) {
+      state.theme.foreground = val.foreground
+    }
+    if (val.accent) {
+      state.theme.accent = val.accent
+    }
+
+    // update it boi!
+    theme.updateColor(val)
   },
 }

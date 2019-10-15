@@ -21,3 +21,9 @@ $text-fluidity-end: $vp5;
 $trans-ease: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 $trans-duration: 400ms;
 $trans-delay-intro: 750ms;
+
+:root {
+  --color-background: rgb(18, 19, 4);
+  --color-foreground: rgb(200,200,200);
+  --color-accent: rgb(30,30,255);
+}
