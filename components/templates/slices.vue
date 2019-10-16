@@ -40,7 +40,7 @@
 
       <!-- Theme -->
       <template v-if="slice.slice_type === 'themer'">
-        <Theme :colors="slice.primary" fade-target="middle" />
+        <Theme :colors="slice.primary" fade-target="top" />
       </template>
     </div>
   </section>
@@ -70,3 +70,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss">
+.slice {
+  padding: 200px;
+}
+</style>

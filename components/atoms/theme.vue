@@ -18,13 +18,11 @@
   has been reached.
 -->
 <template>
-  <div class="theme-scroll-changer-component">
-    <div ref="Target" class="target"></div>
-  </div>
+  <div ref="theme" class="theme"></div>
 </template>
 
 <style lang="scss" scoped>
-.target {
+.theme {
   display: block;
   height: 1px;
   background: red;
@@ -51,28 +49,48 @@ export default {
       isFirstLoad: true,
       themeOriginal: null,
       themeNew: null,
-      themesAreSame: null,
     }
   },
+  computed: {
+    themesAreSame() {
+      return (
+        JSON.stringify(this.themeOriginal) === JSON.stringify(this.themeNew)
+      )
+    },
+  },
   mounted() {
+    const themesOnPage = document.querySelectorAll('.theme')
+
+    // if this theme is first
+    if (themesOnPage[0] === this.$refs.theme) {
+      console.log('i first')
+    } else {
+      console.log('i not')
+    }
+
+    // cache old theme
     this.themeOriginal = {
       background: this.$app.$store.state.theme.background,
       foreground: this.$app.$store.state.theme.foreground,
       accent: this.$app.$store.state.theme.accent,
     }
+    // save new one
     this.themeNew = {
       background: this.colors.background,
       foreground: this.colors.foreground,
       accent: this.colors.accent,
     }
-    this.themesAreSame =
-      JSON.stringify(this.themeOriginal) === JSON.stringify(this.themeNew)
+    // compare to see if they match
+    // this.themesAreSame =
+    //   JSON.stringify(this.themeOriginal) === JSON.stringify(this.themeNew)
 
+    // watch
     this.addObserver()
-    this.getTarget()
+    // determine what theme to activate on load
+    this.onUpdate()
   },
   beforeDestroy() {
-    this.loadObserver.unobserve(this.$refs.Target)
+    this.loadObserver.unobserve(this.$refs.theme)
   },
   methods: {
     /**
@@ -80,30 +98,33 @@ export default {
      * scroll point.
      */
     getTarget() {
-      const rect = this.$refs.Target.getBoundingClientRect()
+      const rect = this.$refs.theme.getBoundingClientRect()
 
       if (this.fadeTarget === 'top') {
         this.target = rect.top
       } else if (this.fadeTarget === 'middle') {
         this.target = rect.top + window.scrollY - window.innerHeight / 2
+      } else if (this.fadeTarget === 'bottom') {
+        this.target = rect.top + window.scrollY
       }
     },
     /**
      * Handles Scroll on Animation Frame.
      */
     handleScroll() {
-      requestAnimationFrame(this.onScroll)
+      requestAnimationFrame(this.onUpdate)
     },
     /**
      * Updates the scroll target, caches the current theme if above the target
      * point, and calls toggleTheme.
      */
-    onScroll() {
+    onUpdate() {
       this.getTarget()
 
       if (this.fadeTarget === 'top') {
         if (this.target > 0) {
           this.cacheTheme()
+          console.log('dont')
         }
 
         this.isBelow = this.target > 0
@@ -118,6 +139,13 @@ export default {
         }
 
         this.isBelow = window.scrollY < this.target
+      }
+
+      if (this.fadeTarget === 'bottom') {
+        if (this.target > window.scrollY + window.innerHeight) {
+          this.cacheTheme()
+        }
+        this.isBelow = this.target > window.scrollY + window.innerHeight
       }
 
       this.toggleTheme()
@@ -145,7 +173,7 @@ export default {
         this.onIntersection,
         IntersectionConfig
       )
-      this.loadObserver.observe(this.$refs.Target)
+      this.loadObserver.observe(this.$refs.theme)
     },
     /**
      * Intersection Observer Intersection Event.
@@ -181,100 +209,16 @@ export default {
      * to the new target theme.
      */
     toggleTheme() {
-      if (
-        this.isBelow &&
-        !this.themesAreSame
-        // this.$store.state.theme.themeName !== this.originalTheme
-      ) {
-        console.log('set to original')
-        // this.$store.commit('theme/set', this.originalTheme)
+      if (this.isBelow && !this.themesAreSame) {
+        // console.log('old')
+        this.$store.commit('setTheme', this.themeOriginal)
         this.isFirstLoad = false
-      } else if (
-        !this.isBelow &&
-        !this.themesAreSame
-        // this.$store.state.theme.themeName !== this.theme
-      ) {
-        console.log('set to new')
-        // this.$store.commit('theme/set', this.theme)
+      } else if (!this.isBelow && !this.themesAreSame) {
+        // console.log('new')
+        this.$store.commit('setTheme', this.themeNew)
         this.isFirstLoad = false
       }
     },
   },
 }
 </script>
-
-<!--<template>
-  <div
-    ref="theme"
-    class="theme"
-    :data-background="colors.background"
-    :data-foreground="colors.foreground"
-    :data-accent="colors.accent"
-  ></div>
-</template>
-
-<script>
-export default {
-  props: {
-    colors: {
-      type: Object,
-      required: true,
-    },
-  },
-  mounted() {
-    this.addObserver()
-  },
-  methods: {
-    addObserver() {
-      const options = {
-        threshold: 0.5,
-      }
-      this.observer = new IntersectionObserver(this.onObserverChange, options)
-
-      this.observer.observe(this.$refs.theme)
-    },
-    onObserverChange(themeShifter, observer) {
-      themeShifter.forEach(shifter => {
-        // let background = 'red'
-        // let foreground = 'green'
-        // let accent = 'blue'
-
-        if (shifter.intersectionRatio === 0) {
-          console.log('outside')
-        } else {
-          console.log('inside')
-        }
-
-        // else {
-        //   console.log('behind', shifter.intersectionRatio)
-        // }
-
-        // if (shifter.intersectionRatio === 0) {
-        //   console.log('out')
-        // } else {
-        //   console.log('in')
-        //   background = shifter.target.dataset.bg
-        //   foreground = shifter.target.dataset.fg
-        //   accent = shifter.target.dataset.accent
-
-        //   // document.documentElement.style.setProperty(
-        //   //   '--color-background',
-        //   //   background
-        //   // )
-        //   // document.documentElement.style.setProperty(
-        //   //   '--color-foreground',
-        //   //   foreground
-        //   // )
-        // }
-      })
-    },
-  },
-}
-</script>
-
-<style lang="scss" scoped>
-.theme {
-  height: 10px;
-  background: red;
-}
-</style>-->
