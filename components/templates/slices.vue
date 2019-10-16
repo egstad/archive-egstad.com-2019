@@ -72,7 +72,7 @@ export default {
 </script>
 
 <style lang="scss">
-.slice {
-  padding: 200px;
-}
+// .slice {
+//   padding: 200px;
+// }
 </style>
