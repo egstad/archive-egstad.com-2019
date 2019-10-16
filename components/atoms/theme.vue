@@ -124,7 +124,6 @@ export default {
       if (this.fadeTarget === 'top') {
         if (this.target > 0) {
           this.cacheTheme()
-          console.log('dont')
         }
 
         this.isBelow = this.target > 0
@@ -210,7 +209,7 @@ export default {
      */
     toggleTheme() {
       if (this.isBelow && !this.themesAreSame) {
-        // console.log('old')
+        console.log('old')
         this.$store.commit('setTheme', this.themeOriginal)
         this.isFirstLoad = false
       } else if (!this.isBelow && !this.themesAreSame) {
