@@ -18,7 +18,13 @@
   has been reached.
 -->
 <template>
-  <div ref="theme" class="theme"></div>
+  <div
+    ref="theme"
+    class="theme"
+    :data-background="colors.background"
+    :data-foreground="colors.foreground"
+    :data-accent="colors.accent"
+  ></div>
 </template>
 
 <style lang="scss" scoped>
@@ -59,27 +65,26 @@ export default {
     },
   },
   mounted() {
-    const themesOnPage = document.querySelectorAll('.theme')
+    this.themesOnPage = document.querySelectorAll('.theme')
+    this.themeIndex = Array.prototype.indexOf.call(
+      this.themesOnPage,
+      this.$refs.theme
+    )
 
     // if this theme is first
-    if (themesOnPage[0] === this.$refs.theme) {
-      console.log('i first')
+    if (this.themesOnPage[0] === this.$refs.theme) {
+      this.cachePageTheme()
     } else {
-      console.log('i not')
+      this.cachePreviousTheme()
     }
 
-    // cache old theme
-    this.themeOriginal = {
-      background: this.$app.$store.state.theme.background,
-      foreground: this.$app.$store.state.theme.foreground,
-      accent: this.$app.$store.state.theme.accent,
-    }
     // save new one
     this.themeNew = {
       background: this.colors.background,
       foreground: this.colors.foreground,
       accent: this.colors.accent,
     }
+
     // compare to see if they match
     // this.themesAreSame =
     //   JSON.stringify(this.themeOriginal) === JSON.stringify(this.themeNew)
@@ -87,12 +92,29 @@ export default {
     // watch
     this.addObserver()
     // determine what theme to activate on load
-    this.onUpdate()
+    // this.onUpdate()
   },
   beforeDestroy() {
     this.loadObserver.unobserve(this.$refs.theme)
   },
   methods: {
+    cachePageTheme() {
+      // cache old theme
+      this.themeOriginal = {
+        background: this.$app.$store.state.theme.background,
+        foreground: this.$app.$store.state.theme.foreground,
+        accent: this.$app.$store.state.theme.accent,
+      }
+    },
+    cachePreviousTheme() {
+      // console.log(this.themesOnPage[this.themeIndex].dataset)
+      // cache old theme
+      this.themeOriginal = {
+        background: this.themesOnPage[this.themeIndex - 1].dataset.background,
+        foreground: this.themesOnPage[this.themeIndex - 1].dataset.foreground,
+        accent: this.themesOnPage[this.themeIndex - 1].dataset.accent,
+      }
+    },
     /**
      * Get the Target elements target point in the middle of the screen at its
      * scroll point.
@@ -208,8 +230,24 @@ export default {
      * to the new target theme.
      */
     toggleTheme() {
+      // // above line
+      // // themes don't match
+      // if (!this.isBelow && !this.themesAreSame) {
+      //   this.$store.commit('setTheme', this.themeNew)
+      //   this.isFirstLoad = false
+      // }
+
+      // // below line
+      // // themes don't match
+      // // nothing above
+      // if (this.isBelow && !this.themesAreSame) {
+      //   console.log(this.themeOriginal.background)
+      //   this.$store.commit('setTheme', this.themeOriginal)
+      //   this.isFirstLoad = false
+      // }
+
       if (this.isBelow && !this.themesAreSame) {
-        console.log('old')
+        // console.log('old')
         this.$store.commit('setTheme', this.themeOriginal)
         this.isFirstLoad = false
       } else if (!this.isBelow && !this.themesAreSame) {
