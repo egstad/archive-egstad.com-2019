@@ -22,7 +22,7 @@
     class="scroll-to-theme"
     :data-background="colors.background"
     :data-foreground="colors.foreground"
-    data-target="middle"
+    :data-target="fadeTarget"
     :data-accent="colors.accent"
   ></div>
 </template>
@@ -45,8 +45,11 @@ export default {
     },
     fadeTarget: {
       type: String,
-      default: 'middle',
+      required: true,
     },
+  },
+  mounted() {
+    console.log(this.fadeTarget)
   },
 }
 </script>

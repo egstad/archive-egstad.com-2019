@@ -40,7 +40,10 @@
 
       <!-- Theme -->
       <template v-if="slice.slice_type === 'themer'">
-        <Theme :colors="slice.primary" fade-target="middle" />
+        <Theme
+          :colors="slice.primary"
+          :fade-target="slice.primary.fade_target"
+        />
       </template>
     </div>
   </section>
