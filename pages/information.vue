@@ -28,11 +28,11 @@ export default {
       })
     }
   },
-  beforeMount() {
-    this.$store.commit('setTheme', {
-      background: 'white',
-      foreground: 'gray',
-      accent: 'maroon',
+  created() {
+    this.$app.$store.commit('setTheme', {
+      background: this.pageContent.background,
+      foreground: this.pageContent.foreground,
+      accent: this.pageContent.accent,
     })
   },
   mounted() {

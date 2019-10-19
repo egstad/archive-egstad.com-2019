@@ -164,6 +164,10 @@ export default {
       src: '@/plugins/theme.js',
       ssr: false,
     },
+    {
+      src: '@/plugins/theme-scroller.js',
+      ssr: false,
+    },
   ],
 
   /*

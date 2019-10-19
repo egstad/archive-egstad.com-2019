@@ -28,6 +28,13 @@ export default {
       })
     }
   },
+  created() {
+    this.$app.$store.commit('setTheme', {
+      background: this.pageContent.background,
+      foreground: this.pageContent.foreground,
+      accent: this.pageContent.accent,
+    })
+  },
   mounted() {
     this.$app.$emit('page::mounted')
   },

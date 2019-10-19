@@ -77,7 +77,6 @@ export const mutations = {
    * Color
    */
   setTheme(state, val) {
-    // console.log('updated theme')
     // save it
     if (val.background) {
       state.theme.background = val.background

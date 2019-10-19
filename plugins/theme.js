@@ -1,20 +1,20 @@
 const theme = {
   updateColor(options) {
-    if (options.background) {
+    if (process.client && options.background) {
       document.documentElement.style.setProperty(
         '--color-background',
         options.background
       )
     }
 
-    if (options.foreground) {
+    if (process.client && options.foreground) {
       document.documentElement.style.setProperty(
         '--color-foreground',
         options.foreground
       )
     }
 
-    if (options.accent) {
+    if (process.client && options.accent) {
       document.documentElement.style.setProperty(
         '--color-accent',
         options.accent
