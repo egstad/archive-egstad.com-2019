@@ -8,13 +8,13 @@
       >
         <!-- IMAGE -->
         <figure v-if="item.media_type === 'image'">
-          <Pic :image="item.poster" />
+          <Pic :image="item.poster" class="js-animate animate" />
           <Caption v-if="item.caption.length > 0" :caption="item.caption" />
         </figure>
 
         <!-- VIDEO -->
         <figure v-if="item.media_type === 'video'">
-          <Vid :video="item" />
+          <Vid :video="item" class="js-animate animate" />
           <Caption v-if="item.caption.length > 0" :caption="item.caption" />
         </figure>
       </li>

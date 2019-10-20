@@ -30,8 +30,7 @@
 <style lang="scss" scoped>
 .scroll-to-theme {
   display: block;
-  height: 10px;
-  background: red;
+  height: 0px;
   width: 100%;
 }
 </style>
@@ -47,9 +46,6 @@ export default {
       type: String,
       required: true,
     },
-  },
-  mounted() {
-    console.log(this.fadeTarget)
   },
 }
 </script>

@@ -132,14 +132,8 @@ export default {
     await fetchProjectsFromPrismic()
     return generatePageData('tags', [tags, content])
   },
-  beforeMount() {
-    // this.getTagInfo()
-    // this.getTaggedItems()
-    // this.getAllTags()
-  },
   mounted() {
     this.$app.$emit('page::mounted')
-    console.log(this.$data)
   },
   methods: {
     getTagInfo() {

@@ -29,14 +29,21 @@ const colorWash = {
     }
   },
   setupEvents() {
+    // bind this
     this.onScroll = this.onScroll.bind(this)
     this.onResize = this.onResize.bind(this)
+
+    // check position on scroll
     window.addEventListener('scroll', this.onScroll)
+
+    // update target position on resize & on image load
     window.addEventListener('resize', this.onResize)
+    window.$app.$on('image::loaded', this.onResize)
   },
   destroy() {
     window.removeEventListener('scroll', this.onScroll)
     window.removeEventListener('resize', this.onResize)
+    window.$app.$off('image::loaded', this.onResize)
   },
   getTargetPositions() {
     this.targetPositions = []

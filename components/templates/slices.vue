@@ -1,5 +1,5 @@
 <template>
-  <section>
+  <div>
     <div
       v-for="(slice, sliceIndex) in slices"
       :key="`slice-${sliceIndex}`"
@@ -12,7 +12,7 @@
 
       <!-- IMAGE -->
       <figure v-if="slice.slice_type === 'image'">
-        <Pic :image="slice.primary.image" />
+        <Pic :image="slice.primary.image" class="js-animate animate" />
         <Caption
           v-if="slice.primary.caption.length > 0"
           :caption="slice.primary.caption"
@@ -21,7 +21,7 @@
 
       <!-- VIDEO -->
       <figure v-if="slice.slice_type === 'video'">
-        <Vid :video="slice.primary" />
+        <Vid :video="slice.primary" class="js-animate animate" />
         <Caption
           v-if="slice.primary.caption.length > 0"
           :caption="slice.primary.caption"
@@ -46,7 +46,7 @@
         />
       </template>
     </div>
-  </section>
+  </div>
 </template>
 
 <script>

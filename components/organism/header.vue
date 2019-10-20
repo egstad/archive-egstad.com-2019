@@ -1,6 +1,6 @@
 <template>
   <nav class="site-menu">
-    <ul class="text--3">
+    <ul class="text--1">
       <li>
         <nuxt-link to="/">Home</nuxt-link>
       </li>

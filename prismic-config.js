@@ -29,9 +29,11 @@ export const generatePageData = (documentType, data) => {
       }
     case 'pieces':
       return {
-        pageContent: data,
-        title: data[0].title[0].text,
-        pieces: data[1],
+        // projects content is the first item in the page content array
+        pageContent: data[0].results,
+        // project single content is the second item in the page content array
+        pieces: data[1].results,
+        title: data[0].results.title[0].text,
       }
     case 'pieces_single':
       return {
@@ -40,9 +42,11 @@ export const generatePageData = (documentType, data) => {
       }
     case 'projects':
       return {
-        pageContent: data,
-        title: data[0].title[0].text,
-        projects: data[1],
+        // projects content is the first item in the page content array
+        pageContent: data[0].results,
+        // project single content is the second item in the page content array
+        projects: data[1].results,
+        title: data[0].results.title[0].text,
       }
     case 'projects_single':
       return {

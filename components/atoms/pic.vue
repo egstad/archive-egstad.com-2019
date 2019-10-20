@@ -21,10 +21,19 @@ export default {
       aspectRatio: '',
       meta: {},
       size: {},
+      transformedUrl: null,
     }
   },
   created() {
+    // set alt tag
     this.alt = this.image.alt || ''
+
+    // remove imgix format tag because webp sucks ass
+    this.transformedUrl = this.image.url.replace(
+      '?auto=compress,format',
+      '?auto=compress'
+    )
+
     this.meta = {
       width: this.image.dimensions.width,
       height: this.image.dimensions.height,
