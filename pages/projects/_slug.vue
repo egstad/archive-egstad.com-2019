@@ -34,8 +34,6 @@ export default {
   },
   mounted() {
     this.$app.$emit('page::mounted')
-
-    console.log(this.pageContent)
   },
   head() {
     return this.$setPageMetadata(this.pageContent)
