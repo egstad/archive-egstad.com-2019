@@ -97,7 +97,7 @@ export default {
     const getAllProjectData = async projectUID => {
       await initApi().then(api => {
         api.getByUID('projects_single', projectUID).then(response => {
-          console.log(response)
+          // console.log(response)
           // lets tidy up this data
           const itemData = {
             title: response.data.title,
