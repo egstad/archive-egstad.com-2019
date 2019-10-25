@@ -14,3 +14,7 @@ At a high-level, this site is a blend of [Nuxt.js](https://nuxtjs.org/), [Netlif
 | `npm start`        | Launch dev server                      |
 
 ## [Read Documentation Here](https://github.com/egstad/dotcom/wiki/)
+
+## Todo
+- Refactor Image Loader
+- Refactor pieces slug generation (only does first page in pagination)
