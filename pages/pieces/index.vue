@@ -1,7 +1,5 @@
 <template>
   <section class="container">
-    <h1 class="text--5 text--center">{{ title }}</h1>
-
     <ul class="piece-list">
       <li
         v-for="(piece, pieceIndex) in pieces"

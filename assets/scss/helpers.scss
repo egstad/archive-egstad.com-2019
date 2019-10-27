@@ -1,0 +1,49 @@
+.visually-hidden {
+  @include visually-hidden()
+}
+
+
+// menu and tag toggle!
+.toggle {
+  transition: background $trans-duration $trans-ease;
+  @include reset-appearance();
+  width: calc(24px + 2vw);
+  height: calc(24px + 2vw);
+  min-width: 48px;
+  max-width: 54px;
+  min-height: 48px;
+  max-height: 54px;
+  background: var(--color-foreground);
+  border-radius: 100%;
+  margin-right: calc(5px + 0.2vw);
+
+  // position inner svgs
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .svg {
+    display: block;
+    width: 40%;
+  }
+
+  .fill {
+    transition: fill $trans-duration $trans-ease;
+    fill: var(--color-background);
+  }
+}
+
+
+
+
+/* Basic fade transition for vue <transition>
+   ========================================================================== */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity $trans-duration $trans-ease;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}

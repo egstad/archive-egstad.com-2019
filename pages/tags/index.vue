@@ -1,5 +1,5 @@
 <template>
-  <section class="container">
+  <section class="container spacing-top-5">
     <!-- <pre>{{ pageContent }}</pre> -->
     <h1 class="text--5">{{ title }}</h1>
 

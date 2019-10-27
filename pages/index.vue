@@ -1,7 +1,7 @@
 <!-- pages/index.vue -->
 
 <template>
-  <section class="container">
+  <section class="container spacing-top-5">
     <header class="spacing-bottom-4">
       <h1>{{ title }}</h1>
     </header>
@@ -36,6 +36,8 @@ export default {
     })
   },
   mounted() {
+    // set the page label
+    this.$app.$emit('page::setLabel', 'EGSTAD')
     this.$app.$emit('page::mounted')
   },
   head() {

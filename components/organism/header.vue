@@ -1,57 +1,89 @@
 <template>
-  <nav class="site-menu">
-    <ul class="text--1">
-      <li>
-        <nuxt-link to="/">Home</nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/pieces">Pieces</nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/projects">Projects</nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/information">Information</nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/tags">Tags</nuxt-link>
-      </li>
-      <li>
-        <nuxt-link to="/system">System</nuxt-link>
-      </li>
-    </ul>
-  </nav>
+  <header class="site-header">
+    <div class="site-header__toggles">
+      <ToggleMenu />
+      <ToggleTags />
+    </div>
+
+    <transition name="fade" mode="out-in">
+      <h1 :key="label" class="label">{{ label }}</h1>
+    </transition>
+  </header>
 </template>
 
+<script>
+import ToggleMenu from '@/components/atoms/toggle-menu'
+import ToggleTags from '@/components/atoms/toggle-tags'
+export default {
+  components: {
+    ToggleMenu,
+    ToggleTags,
+  },
+  data() {
+    return {
+      label: '',
+    }
+  },
+  watch: {
+    // update label on route change
+    $route(to, from) {
+      this.setLabel(to)
+    },
+  },
+  mounted() {
+    this.setLabel(this.$route)
+  },
+  beforeDestroy() {
+    this.$app.$off('page::setLabel')
+  },
+  methods: {
+    setLabel(route) {
+      let labelText = route.name
+
+      if (route.name === 'index') {
+        labelText = 'EGSTAD'
+      }
+
+      this.label = labelText
+    },
+  },
+}
+</script>
+
 <style lang="scss" scoped>
-.site-menu {
-  position: relative;
-  color: $color-bg;
-  padding: 20px;
-  border-bottom: 1px solid $color-fg;
+.site-header {
+  @include padding(all, 10px, 20px);
+  transition: transform $trans-duration $trans-ease;
 
-  ul {
-    width: 100%;
+  // alignment
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  // position
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  transform: translate3d(0, 0, 0);
+
+  &__toggles {
     display: flex;
-    margin: 0 auto;
-    justify-content: space-between;
-    line-height: 1;
+    flex-direction: row;
   }
+}
 
-  a {
-    transition: color $trans-duration/2 $trans-ease;
-    display: block;
-    // padding: 0.5em 20px 0.6em;
-    margin: 0;
+.label {
+  @include text-size(44px, 64px);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin-top: -0.15em;
+}
 
-    &:hover {
-      text-decoration: none;
-      color: $color-interactive;
-    }
-
-    &.nuxt-link-exact-active {
-      color: $color-interactive;
-    }
-  }
+.scrolling-down .site-header {
+  transform: translate3d(0, -100%, 0);
 }
 </style>

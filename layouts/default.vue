@@ -18,9 +18,20 @@ export default {
     SiteFooter,
   },
   watch: {
+    // fired when route changes
     $route(to, from) {
+      // tell plugins to teardown/restart
       this.$app.$emit('route::updated')
+      // tell the store about the new change
+      this.$store.commit('updateActivePage', {
+        name: to.name,
+        path: to.fullPath,
+      })
     },
+  },
+  mounted() {
+    // tell the store what page we're on when we mount
+    this.$store.commit('updateActivePage', this.$route.name)
   },
 }
 </script>
@@ -39,5 +50,12 @@ main {
 
 .site-content {
   flex: 1;
+}
+
+.nuxt-progress {
+  transition: background $trans-duration $trans-ease,
+    width $trans-duration $trans-ease;
+  background: var(--color-foreground) !important;
+  height: 3px;
 }
 </style>

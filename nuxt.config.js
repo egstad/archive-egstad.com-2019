@@ -139,6 +139,7 @@ export default {
     '@/assets/scss/typography.scss',
     '@/assets/scss/spacing.scss',
     '@/assets/scss/animate.scss',
+    '@/assets/scss/helpers.scss',
   ],
 
   /*
