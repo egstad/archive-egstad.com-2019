@@ -9,6 +9,8 @@ export const state = () => ({
   isTransitioning: false,
   // what page are we on?
   activePage: null,
+  // menu state
+  menuIsOpen: false,
   // theme
   theme: {
     background: 'black',
@@ -33,6 +35,18 @@ export const state = () => ({
 })
 
 export const mutations = {
+  // Set menu state
+  menuToggle(state, value) {
+    if (value) {
+      state.menuIsOpen = true
+      // window.$app.$emit('filter::close')
+    } else {
+      state.menuIsOpen = false
+    }
+
+    window.$app.$emit('site::blurToggle', state.menuIsOpen)
+  },
+
   /**
    * Set prefers reduced motion state
    */

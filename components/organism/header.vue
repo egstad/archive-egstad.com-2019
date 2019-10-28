@@ -6,7 +6,9 @@
     </div>
 
     <transition name="fade" mode="out-in">
-      <h1 :key="label" class="label">{{ label }}</h1>
+      <h1 v-if="!$store.state.menuIsOpen" :key="label" class="label">
+        {{ label }}
+      </h1>
     </transition>
   </header>
 </template>
@@ -65,7 +67,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 11;
   width: 100%;
   transform: translate3d(0, 0, 0);
 

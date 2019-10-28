@@ -1,5 +1,9 @@
 <template>
-  <button class="toggle toggle-menu" tabindex="0">
+  <button
+    class="toggle toggle-menu"
+    tabindex="0"
+    @click="$root.$emit('menu::toggle', $event)"
+  >
     <span class="visually-hidden">Toggle Site Navigation</span>
     <svg
       class="svg"

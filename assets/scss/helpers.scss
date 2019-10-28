@@ -13,9 +13,21 @@
   max-width: 54px;
   min-height: 48px;
   max-height: 54px;
-  background: var(--color-foreground);
+  background: var(--color-accent);
   border-radius: 100%;
   margin-right: calc(5px + 0.2vw);
+  outline: 0;
+
+  &:hover,
+  &:focus {
+    transition-duration: 200ms;
+    background: var(--color-foreground);
+
+    .fill {
+      transition-duration: 200ms;
+      fill: var(--color-background);
+    }
+  }
 
   // position inner svgs
   display: flex;
@@ -29,10 +41,73 @@
 
   .fill {
     transition: fill $trans-duration $trans-ease;
-    fill: var(--color-background);
+    fill: var(--color-foreground);
   }
 }
 
+/* Keyboard focus state only!
+   ========================================================================== */
+.tab-focus {
+  /* Removing default outline only after we've added our custom one */
+  &:focus,
+  .tab-focus__content:focus {
+      outline: none;
+  }
+
+  /* Removing the focus ring styles specifically for button in Firefox */
+  &:not(:-moz-focusring):focus > .tab-focus__content {
+    box-shadow: none;
+  }
+
+  /* Fixing the Safari bug for `<button>`s overflow */
+  .tab-focus__content {
+    position: relative;
+  }
+
+  // /* All the states on the inner element */
+  // &:hover > .tab-focus__content {
+  //   background: blue;
+  // }
+
+  // &:active > .tab-focus__content {
+  //   background: darkorange;
+  // }
+
+  &:focus > .tab-focus__content {
+    box-shadow: 0 0 20px 7px var(--color-foreground);
+  }
+}
+
+
+
+
+/* Fills & Overlays
+   ========================================================================== */
+
+   .cover,
+   .screen {
+       overflow: hidden;
+       top: 0;
+       left: 0;
+   
+       width: 100%;
+       height: 100%;
+   }
+   
+   .cover {
+       position: absolute;
+   
+       &.can-scroll {
+           overflow-y: scroll;
+           -webkit-overflow-scrolling: touch;
+       }
+   }
+   
+   .screen {
+       position: fixed;
+       z-index: 1;
+   }
+   
 
 
 

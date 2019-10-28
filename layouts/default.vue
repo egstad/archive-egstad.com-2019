@@ -1,21 +1,33 @@
 <template>
   <div class="site">
-    <SiteMenu />
-    <main class="site-content spacing-top-2">
+    <Header />
+    <Menu />
+    <main
+      class="site-content spacing-top-2"
+      :class="{ 'is-blurred': $store.state.menuIsOpen }"
+    >
       <nuxt />
+      <SiteFooter />
     </main>
-    <SiteFooter />
   </div>
 </template>
 
 <script>
-import SiteMenu from '@/components/organism/header'
+import { TweenLite } from 'gsap'
+import Header from '@/components/organism/header'
+import Menu from '@/components/organism/menu'
 import SiteFooter from '@/components/organism/footer'
 
 export default {
   components: {
-    SiteMenu,
+    Header,
+    Menu,
     SiteFooter,
+  },
+  data() {
+    return {
+      siteContent: null,
+    }
   },
   watch: {
     // fired when route changes
@@ -30,8 +42,26 @@ export default {
     },
   },
   mounted() {
+    this.siteContent = this.$el.querySelectorAll('.site-content')
     // tell the store what page we're on when we mount
     this.$store.commit('updateActivePage', this.$route.name)
+
+    this.$app.$on('site::blurToggle', this.blurHandler)
+  },
+  methods: {
+    blurHandler(val) {
+      if (val) {
+        TweenLite.to(this.siteContent, 0.5, {
+          filter: 'blur(50px)',
+          opacity: '0.3',
+        })
+      } else {
+        TweenLite.to(this.siteContent, 0.3, {
+          filter: 'blur(0)',
+          opacity: '1',
+        })
+      }
+    },
   },
 }
 </script>
@@ -56,6 +86,6 @@ main {
   transition: background $trans-duration $trans-ease,
     width $trans-duration $trans-ease;
   background: var(--color-foreground) !important;
-  height: 3px;
+  height: 2px;
 }
 </style>
