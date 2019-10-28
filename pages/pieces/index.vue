@@ -8,13 +8,13 @@
       >
         <article class="piece">
           <div class="piece-link">
-            <Slices :slices="piece.assets" class="piece-assets" />
-            <h2>{{ piece.title[0].text }}</h2>
+            <Slices :slices="piece.data.body" class="piece-assets" />
+            <h2>{{ piece.data.title[0].text }}</h2>
           </div>
 
           <ul class="piece-tag-list">
             <li
-              v-for="(tag, tagIndex) in piece.tags"
+              v-for="(tag, tagIndex) in piece.data.tags"
               :key="`tag-${tagIndex}`"
               class="piece-tag-item"
             >
@@ -26,7 +26,6 @@
         </article>
       </li>
     </ul>
-    <button @click="fetchNextPage()">Load</button>
   </section>
 </template>
 
@@ -46,126 +45,34 @@ export default {
       isWaitingOnPrismic: false,
     }
   },
+  computed: {
+    pieces() {
+      this.$app.$emit('lazy::update')
+      return this.$store.state.pieces.collection
+
+      // console.log('counter', this.$store.state.pieces.collection)
+      // console.log(
+      //   'page',
+      //   this.$store.state.pieces.pagination.page,
+      //   '/',
+      //   this.$store.state.pieces.pagination.total_pages
+      // )
+    },
+  },
   async asyncData(context) {
-    /**
-     * 1. Fetch all tags
-     * 2. Fetch all pieces and projects tagged as 'i'
-     */
+    let prismicResponse = null
 
-    // keep track of projects data
-    const piecesData = {
-      name: 'pieces',
-      results: [],
-    }
-
-    // keep track of pieces_single's data
-    const piecesSinglesData = {
-      name: 'pieces_single',
-      results: [],
-      uids: [],
-      pagination: {
-        page: null,
-        results_per_page: 5,
-        results_size: null,
-        total_pages: null,
-        total_results_size: null,
-      },
-    }
-
-    // fetch all projects data
-    // including uids of ordered projects on within the 'projects' page
-    // await initApi().then(api => {
-    //   return api
-    //     .query(Prismic.Predicates.at('document.type', 'pieces'))
-    //     .then(response => {
-    //       // grab the uid from prismic
-    //       for (const piecesData of response.results[0].data.pieces) {
-    //         const uid = piecesData.piece.uid
-    //         // add to uids, we'll loop through them soon
-    //         piecesSinglesData.uids.push(uid)
-    //         console.log('all', uid)
-    //       }
-
-    //       // capture response
-    //       const projectsResponse = response.results[0].data
-    //       // delete data because we don't need it
-    //       delete projectsResponse.pieces
-    //       // update results
-    //       piecesData.results = projectsResponse
-    //     })
-    // })
-
-    // Asynchronously fetch all pieces for all tags
-    // const fetchPiecesFromPrismic = async () => {
-    //   for (let index = 0; index < piecesSinglesData.uids.length; index++) {
-    //     await getAllPiecesData(piecesSinglesData.uids[index])
-    //   }
-    // }
-
-    // fetch all posts from a specific tag
-    // const getAllPiecesData = async piecesUID => {
-    //   await initApi().then(api => {
-    //     return api.getByUID('pieces_single', piecesUID).then(response => {
-    //       // lets tidy up this data
-    //       const itemData = {
-    //         title: response.data.title,
-    //         assets: response.data.body,
-    //         tags: response.data.tags,
-    //         uid: response.uid,
-    //       }
-
-    //       piecesSinglesData.results.push(itemData)
-    //     })
-    //   })
-    // }
-
-    // including uids of ordered projects on within the 'projects' page
     await initApi().then(api => {
       return api
         .query(Prismic.Predicates.at('document.type', 'pieces'))
         .then(response => {
-          // capture response
-          const projectsResponse = response.results[0].data
-          // delete data because we don't need it
-          // delete projectsResponse.pieces
-          // update results
-          piecesData.results = projectsResponse
+          prismicResponse = response.results[0].data
         })
     })
-
-    const getAllPiecesData = async piecesUID => {
-      await initApi().then(api => {
-        return api
-          .query(Prismic.Predicates.at('document.type', 'pieces_single'), {
-            pageSize: piecesSinglesData.pagination.results_per_page,
-            orderings: '[document.first_publication_date]',
-          })
-          .then(response => {
-            // save pagination data
-            piecesSinglesData.pagination = {
-              page: response.page,
-              results_per_page: response.results_per_page,
-              results_size: response.results_size,
-              total_pages: response.total_pages,
-              total_results_size: response.total_results_size,
-            }
-
-            response.results.map(payload => {
-              const itemData = {
-                title: payload.data.title,
-                assets: payload.data.body,
-                tags: payload.data.tags,
-                uid: payload.uid,
-              }
-              piecesSinglesData.results.push(itemData)
-            })
-          })
-      })
-    }
-
-    await getAllPiecesData()
-    // await fetchPiecesFromPrismic()
-    return generatePageData('pieces', [piecesData, piecesSinglesData])
+    return generatePageData('pieces', prismicResponse)
+  },
+  fetch({ store }) {
+    store.dispatch('pieces/fetchPieces')
   },
   created() {
     this.$app.$store.commit('setTheme', {
@@ -175,58 +82,22 @@ export default {
     })
   },
   mounted() {
-    this.$app.$on('scroll::nearBottom', this.loadPiecesOnScroll)
+    this.$app.$on('pieces::loaded', this.updatePrismicThrottle)
+    this.$app.$on('scroll::nearBottom', this.infiniteScroll)
     this.$app.$emit('page::mounted')
   },
   methods: {
-    loadPiecesOnScroll() {
+    updatePrismicThrottle() {
+      this.isWaitingOnPrismic = false
+    },
+    infiniteScroll() {
       if (!this.isWaitingOnPrismic) {
         this.fetchNextPage()
         this.isWaitingOnPrismic = true
       }
     },
     fetchNextPage() {
-      if (this.pagination.page < this.pagination.total_pages) {
-        initApi().then(api => {
-          api
-            .query(Prismic.Predicates.at('document.type', 'pieces_single'), {
-              pageSize: this.pagination.results_per_page,
-              orderings: '[document.first_publication_date]',
-              page: this.pagination.page + 1,
-            })
-            .then(response => {
-              // add new pieces to collection
-              response.results.map(payload => {
-                const itemData = {
-                  title: payload.data.title,
-                  assets: payload.data.body,
-                  tags: payload.data.tags,
-                  uid: payload.uid,
-                }
-
-                this.pieces.push(itemData)
-              })
-
-              // update pagination
-              this.pagination = {
-                page: response.page,
-                results_per_page: response.results_per_page,
-                results_size: response.results_size,
-                total_pages: response.total_pages,
-                total_results_size: response.total_results_size,
-              }
-
-              // "all done!"
-              setTimeout(() => {
-                this.isWaitingOnPrismic = false
-              }, 1000)
-              // init lazyloading and re-init animations
-              this.$app.$emit('lazy::update')
-            })
-        })
-      }
-
-      // // To retrieve the API object, check out the How to Query the API page
+      this.$store.dispatch('pieces/fetchPieces')
     },
   },
   head() {
