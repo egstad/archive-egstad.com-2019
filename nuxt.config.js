@@ -121,6 +121,11 @@ export default {
         innerHTML:
           '{ window.prismic = { endpoint: "' + prismicConfig.baseUrl + '"} }',
       },
+      {
+        src:
+          'https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js',
+        defer: true,
+      },
       { src: '//static.cdn.prismic.io/prismic.min.js', async: true },
     ],
     __dangerouslyDisableSanitizers: ['script'],
@@ -219,6 +224,7 @@ export default {
    ** Build configuration
    */
   build: {
+    analyze: true,
     /*
      ** You can extend webpack config here
      */
@@ -241,7 +247,7 @@ export default {
       config.node = { fs: 'empty' }
     },
 
-    transpile: ['TweenMax', 'Flickity'],
+    transpile: ['Flickity'],
   },
   generate: {
     async routes() {

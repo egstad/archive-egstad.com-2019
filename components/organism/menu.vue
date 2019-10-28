@@ -55,7 +55,6 @@
 </template>
 
 <script>
-import { TweenMax, Power2 } from 'gsap'
 export default {
   data() {
     return {
@@ -192,21 +191,21 @@ export default {
     },
 
     showLinks() {
-      TweenMax.set('.menu__item', {
+      window.TweenMax.set('.menu__item', {
         opacity: 0,
         y: 50,
       })
-      TweenMax.staggerTo('.menu__item', 1, {
+      window.TweenMax.staggerTo('.menu__item', 1, {
         opacity: 1,
         stagger: 0.1,
         y: 0,
-        ease: Power2.easeOut,
+        ease: window.Power2.easeOut,
       })
     },
     hideLinks() {
-      TweenMax.staggerTo('.menu__item', 1, {
+      window.TweenMax.staggerTo('.menu__item', 1, {
         opacity: 0,
-        ease: Power2.easeOut,
+        ease: window.Power2.easeOut,
       })
     },
   },

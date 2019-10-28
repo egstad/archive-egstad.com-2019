@@ -13,7 +13,6 @@
 </template>
 
 <script>
-import { TweenLite } from 'gsap'
 import Header from '@/components/organism/header'
 import Menu from '@/components/organism/menu'
 import SiteFooter from '@/components/organism/footer'
@@ -51,12 +50,12 @@ export default {
   methods: {
     blurHandler(val) {
       if (val) {
-        TweenLite.to(this.siteContent, 0.5, {
+        window.TweenLite.to(this.siteContent, 0.5, {
           filter: 'blur(50px)',
           opacity: '0.3',
         })
       } else {
-        TweenLite.to(this.siteContent, 0.3, {
+        window.TweenLite.to(this.siteContent, 0.3, {
           filter: 'blur(0)',
           opacity: '1',
         })

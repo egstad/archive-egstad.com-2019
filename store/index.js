@@ -1,6 +1,5 @@
 import theme from '@/plugins/theme'
 // import dom from '@/plugins/dom'
-// import TweenMax from 'gsap/TweenMax'
 
 export const state = () => ({
   // does user have prefers reduced motion enabled?
