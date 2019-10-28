@@ -105,28 +105,29 @@ export default {
       const isTabPressed = e.key === 'Tab' || e.keyCode === 9
       const isEscPressed = e.key === 'Escape' || e.keyCode === 27
 
-      if (this.$store.state.menuIsOpen) {
-        // // close on escape
-        if (isEscPressed) {
-          this.close()
-        }
+      if (!this.$store.state.menuIsOpen) {
+        return
+      }
+      // // close on escape
+      if (isEscPressed) {
+        this.close()
+      }
 
-        // only pay attention to tab
-        if (isTabPressed) {
-          // focus next or last
-          if (e.shiftKey) {
-            // shift and tab goes back
-            if (document.activeElement === this.focusableFirst) {
-              this.focusableLast.focus()
-              e.preventDefault()
-            }
-          } else if (!e.shiftKey) {
-            // tab alone moves forward
-            if (document.activeElement === this.focusableLast) {
-              console.log('starting over')
-              this.focusableFirst.focus()
-              e.preventDefault()
-            }
+      // only pay attention to tab
+      if (isTabPressed) {
+        // focus next or last
+        if (e.shiftKey) {
+          // shift and tab goes back
+          if (document.activeElement === this.focusableFirst) {
+            this.focusableLast.focus()
+            e.preventDefault()
+          }
+        } else if (!e.shiftKey) {
+          // tab alone moves forward
+          if (document.activeElement === this.focusableLast) {
+            console.log('starting over')
+            this.focusableFirst.focus()
+            e.preventDefault()
           }
         }
       }
@@ -182,7 +183,8 @@ export default {
 
       // reset focus
       this.$el.setAttribute('aria-hidden', 'true')
-      this.focusedElBeforeOpen.focus()
+      window.focus()
+      document.activeElement.blur()
     },
 
     toggle() {
