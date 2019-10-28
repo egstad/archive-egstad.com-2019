@@ -154,7 +154,7 @@ export default {
       ssr: false,
     },
     {
-      src: '@/plugins/lazyloader.js',
+      src: '@/plugins/lazy.js',
       ssr: false,
     },
     {

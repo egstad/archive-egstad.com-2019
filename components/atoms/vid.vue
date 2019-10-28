@@ -19,9 +19,8 @@
     </button>
     <video
       ref="video"
-      v-lazy
       playsinline
-      class="vid__video"
+      class="vid__video js-lazy"
       :muted="video.is_muted == 'true'"
       :loop="video.will_loop == 'true'"
       :controls="video.has_controls == 'true'"

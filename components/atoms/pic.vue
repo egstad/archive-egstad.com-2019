@@ -1,7 +1,6 @@
 <template>
   <img
-    v-lazy
-    class="image"
+    class="image js-lazy"
     :data-srcset="[size.sm, size.md, size.lg, size.xl]"
     :alt="alt"
   />

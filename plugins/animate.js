@@ -43,6 +43,14 @@ if (process.client) {
   window.onAppReady(app => {
     animate.init()
 
+    // update!
+    window.$app.$on('lazy::update', () => {
+      setTimeout(() => {
+        animate.destroy()
+        animate.init()
+      }, 0)
+    })
+
     // route is changing
     window.$app.$on('route::updated', () => {
       // out with the old

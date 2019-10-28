@@ -3,6 +3,11 @@ const colorWash = {
     // get elements
     this.getElementsOnPage()
 
+    // nothing on the page? don't init
+    if (!this.targets.length) {
+      return
+    }
+
     // event setup
     this.setupEvents()
 

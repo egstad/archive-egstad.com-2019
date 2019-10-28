@@ -9,33 +9,24 @@ import LazyLoad from 'vanilla-lazyload'
    ========================================================================== */
 
 const lazyload = {
-  loadTimeout: null,
-  elemsInDoc: document.querySelectorAll('.js-lazy'),
-  elemsInView: [],
-
   init() {
-    this.bindEvents()
     this.options = {
       elements_selector: '.js-lazy',
       class_loading: 'is-loading',
       class_loaded: 'is-loaded',
       class_error: 'is-error',
+      thresholds: `${window.innerHeight * 2}px 0%`,
+      callback_loaded: el => {
+        window.$app.$emit('image::loaded', el)
+      },
     }
 
     // initialize
     this.instance = new LazyLoad(this.options)
-    // find images in view
-    this.getImagesInView()
   },
 
-  bindEvents() {
-    // emit.on('preload:lazyItems', function() {
-    //   // tell app that images are loaded
-    //   utils.preloadLazyItems = true
-    //   // ask app if everything else is loaded
-    //   // if so, close the intro
-    //   utils.isPreloadDone()
-    // })
+  update() {
+    this.instance.update()
   },
 
   destroy() {
@@ -46,6 +37,14 @@ const lazyload = {
 if (process.client) {
   window.onAppReady(app => {
     lazyload.init()
+
+    // update lazy images
+    // likely because we just got new assets from prismic
+    window.$app.$on('lazy::update', () => {
+      setTimeout(() => {
+        lazyload.update()
+      }, 0)
+    })
 
     // route is changing
     window.$app.$on('route::updated', () => {

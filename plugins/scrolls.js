@@ -72,6 +72,10 @@ const scroll = {
 
   isTopOut() {
     const isAtTop = (device.docY === 0) === true
+    // is two viewports away
+    // looks like three here, but that's because docY is in zero position
+    const isNearBottom =
+      -device.docY >= document.body.scrollHeight - device.winHeight * 3 === true
     const isAtBottom =
       device.docHeight <= -(Math.ceil(device.docY - 1) - device.winHeight) ===
       true
@@ -83,6 +87,10 @@ const scroll = {
     // at bottom
     if (isAtBottom) {
       this.isScrollBottom()
+    }
+    // close to bottom - used for infinite scroll
+    if (isNearBottom) {
+      window.$app.$emit('scroll::nearBottom')
     }
   },
 
