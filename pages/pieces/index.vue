@@ -142,6 +142,7 @@ export default {
   // each list item
   &-item {
     margin: 5vw 0;
+    min-height: 50vh;
   }
 
   // wraps figure and title

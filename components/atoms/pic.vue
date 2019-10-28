@@ -2,7 +2,7 @@
   <img
     v-lazy
     class="image"
-    :srcset="[size.sm, size.md, size.lg, size.xl]"
+    :data-srcset="[size.sm, size.md, size.lg, size.xl]"
     :alt="alt"
   />
 </template>

@@ -12,7 +12,7 @@
       @click="closeOnClick($event)"
       @keydown="keyboardNavigation($event)"
     >
-      <li class="menu__item text--4">
+      <li class="menu__item">
         <n-link
           class="menu__link tab-focus"
           tabindex="0"
@@ -21,7 +21,7 @@
           ><span class="tab-focus__content" tabindex="-1">Egstad</span></n-link
         >
       </li>
-      <li class="menu__item text--4">
+      <li class="menu__item">
         <n-link
           class="menu__link tab-focus"
           tabindex="0"
@@ -30,7 +30,7 @@
           ><span class="tab-focus__content" tabindex="-1">Pieces</span></n-link
         >
       </li>
-      <li class="menu__item text--4">
+      <li class="menu__item">
         <n-link
           class="menu__link tab-focus"
           tabindex="0"
@@ -41,7 +41,7 @@
           ></n-link
         >
       </li>
-      <li class="menu__item text--4">
+      <li class="menu__item">
         <n-link
           class="menu__link tab-focus"
           tabindex="0"
@@ -215,7 +215,7 @@ export default {
 
 <style scoped lang="scss">
 .menu {
-  @include padding(all, 10px, 20px);
+  @include padding(all, 15px, 30px);
   @include text-uppercase();
   transition: opacity $trans-duration $trans-ease;
   background: transparent;
@@ -275,6 +275,9 @@ export default {
 }
 
 .menu__link {
+  @include text-size(44px, 84px);
+  letter-spacing: -0.025em;
+  line-height: 1.2;
   text-decoration: none;
 
   // fade all links
