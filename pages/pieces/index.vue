@@ -7,22 +7,13 @@
         class="piece-item"
       >
         <article class="piece">
-          <div class="piece-link">
-            <Slices :slices="piece.data.body" class="piece-assets" />
-            <h2>{{ piece.data.title[0].text }}</h2>
-          </div>
+          <Slices :slices="piece.data.body" class="piece-assets" />
 
-          <ul class="piece-tag-list">
-            <li
-              v-for="(tag, tagIndex) in piece.data.tags"
-              :key="`tag-${tagIndex}`"
-              class="piece-tag-item"
-            >
-              <nuxt-link :to="`tags/${tag.tag.slug}`" class="piece-tag-link">
-                {{ tag.tag.slug }}
-              </nuxt-link>
-            </li>
-          </ul>
+          <TitleAndTags
+            class="piece-info"
+            :title="piece.data.title[0].text"
+            :tags="piece.data.tags"
+          />
         </article>
       </li>
     </ul>
@@ -32,12 +23,14 @@
 <script>
 import Prismic from 'prismic-javascript'
 import Slices from '@/components/templates/slices'
+import TitleAndTags from '@/components/organism/title-and-tags'
 import { routeTransitionFade } from '@/mixins/route-transitions'
 import { initApi, generatePageData } from '@/prismic-config'
 
 export default {
   components: {
     Slices,
+    TitleAndTags,
   },
   mixins: [routeTransitionFade],
   data() {
@@ -49,14 +42,6 @@ export default {
     pieces() {
       this.$app.$emit('lazy::update')
       return this.$store.state.pieces.collection
-
-      // console.log('counter', this.$store.state.pieces.collection)
-      // console.log(
-      //   'page',
-      //   this.$store.state.pieces.pagination.page,
-      //   '/',
-      //   this.$store.state.pieces.pagination.total_pages
-      // )
     },
   },
   async asyncData(context) {
@@ -112,6 +97,10 @@ export default {
 }
 
 .piece {
+  display: grid;
+  justify-content: center;
+  width: 100%;
+
   // wraps all project content
   &-list {
     display: grid;
@@ -124,20 +113,15 @@ export default {
     min-height: 50vh;
   }
 
-  // wraps figure and title
-  &-link {
-    display: grid;
-    justify-content: center;
-    width: 100%;
-  }
-
   // image wrapper
   &-assets {
     // single images
     /deep/.slice--image {
+      margin: 0 auto;
       max-width: 1700px;
 
       img {
+        margin: 0 auto;
         min-height: 40vw;
         max-height: 80vh;
         width: auto;
@@ -147,6 +131,7 @@ export default {
 
     // gallery
     /deep/.slice--gallery {
+      margin: 0 auto;
       max-width: 2000px;
 
       .gallery__item {
