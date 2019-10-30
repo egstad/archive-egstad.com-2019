@@ -29,12 +29,8 @@ export const generatePageData = (documentType, data) => {
       }
     case 'pieces':
       return {
-        // projects content is the first item in the page content array
-        pageContent: data[0].results,
-        // project single content is the second item in the page content array
-        pieces: data[1].results,
-        pagination: data[1].pagination,
-        title: data[0].results.title[0].text,
+        pageContent: data,
+        title: data.title[0].text,
       }
     case 'pieces_single':
       return {
