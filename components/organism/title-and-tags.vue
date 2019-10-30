@@ -96,10 +96,6 @@ export default {
 <style lang="scss" scoped>
 $gutter: 20px;
 
-:root {
-  --gutter: 20px;
-}
-
 .info {
   @include padding(top bottom, 36px, 72px);
   position: relative;
@@ -113,17 +109,17 @@ $gutter: 20px;
 
 .tags-list {
   display: grid;
-  grid-gap: calc($gutter / 2);
+  grid-gap: $gutter / 2;
   grid-template-columns: 10px;
   grid-auto-flow: column;
   align-content: center;
   justify-content: start;
-  grid-auto-columns: calc(50% - $gutter * 2);
+  grid-auto-columns: calc(50% - #{$gutter} * 2);
 
   overflow-x: scroll;
   scroll-snap-type: x proximity;
-  padding-bottom: calc(0.75 * $gutter);
-  margin-bottom: calc(-0.25 * $gutter);
+  padding-bottom: 0.75 * $gutter;
+  margin-bottom: -0.25 * $gutter;
 
   &::before,
   &::after {
