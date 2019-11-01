@@ -77,8 +77,8 @@ export default {
       })
 
       this.tagListWidth = this.$refs.tagList.clientWidth
-      console.clear()
-      console.log(this.tagListWidth, this.tagsWidth)
+      // console.clear()
+      // console.log(this.tagListWidth, this.tagsWidth)
     },
     styleTags() {
       if (this.tagsWidth > this.tagListWidth) {
@@ -99,7 +99,6 @@ $gutter: 20px;
 .info {
   @include padding(top bottom, 36px, 72px);
   position: relative;
-  width: 100vw;
 }
 
 .tags {
@@ -108,13 +107,10 @@ $gutter: 20px;
 }
 
 .tags-list {
-  display: grid;
-  grid-gap: $gutter / 2;
-  grid-template-columns: 10px;
-  grid-auto-flow: column;
+  display: flex;
   align-content: center;
-  justify-content: start;
-  grid-auto-columns: calc(50% - #{$gutter} * 2);
+  justify-content: flex-start;
+  width: 100vw;
 
   overflow-x: scroll;
   scroll-snap-type: x proximity;
@@ -141,12 +137,12 @@ $gutter: 20px;
 }
 
 .tag-link {
-  border: 1px solid var(--color-accent);
+  border: 1px solid var(--accent);
   border-radius: 100vw;
   font-family: monospace;
   display: inline-flex;
   padding: 1em 1.5em;
-  color: var(--color-foreground);
+  color: var(--foreground);
   opacity: 0.5;
   text-transform: capitalize;
   line-height: 1;

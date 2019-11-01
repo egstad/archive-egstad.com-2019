@@ -84,7 +84,7 @@ main {
 .nuxt-progress {
   transition: background $trans-duration $trans-ease,
     width $trans-duration $trans-ease;
-  background: var(--color-foreground) !important;
+  background: var(--foreground) !important;
   height: 2px;
 }
 </style>

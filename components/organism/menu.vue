@@ -293,7 +293,7 @@ export default {
 
   &:focus > .tab-focus__content {
     opacity: 1;
-    box-shadow: 0 0 20px 7px var(--color-foreground);
+    box-shadow: 0 0 20px 7px var(--foreground);
     border-radius: 100vw;
     padding: 0 2vw;
   }

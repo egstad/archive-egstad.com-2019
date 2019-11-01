@@ -23,7 +23,10 @@ $trans-duration: 400ms;
 $trans-delay-intro: 750ms;
 
 :root {
-  --color-background: rgb(18, 19, 4);
-  --color-foreground: rgb(200,200,200);
-  --color-accent: rgb(30,30,255);
+  --color-background: 18, 19, 4;
+  --color-foreground: 200, 200, 200;
+  --color-accent: 30, 30, 255;
+  --background: rgb(var(--color-background));
+  --foreground: rgb(var(--color-foreground));
+  --accent: rgb(var(--color-accent));
 }

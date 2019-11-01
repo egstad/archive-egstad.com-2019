@@ -157,8 +157,8 @@ table {
 
 // highlighted text
 ::selection {
-  background: var(--color-foreground);
-  color: var(--color-foreground);
+  background: var(--foreground);
+  color: var(--foreground);
 }
 
 // document styles
@@ -169,8 +169,8 @@ html {
   position: relative;
 
   font-family: $text-sans;
-  color: var(--color-foreground);
-  background: var(--color-background);
+  color: var(--foreground);
+  background: var(--background);
   transition: background $trans-duration $trans-ease, color $trans-duration $trans-ease;
 }
 
@@ -186,17 +186,17 @@ iframe,
 [tabindex],
 [contentEditable="true"] {
   &:not([tabindex="-1"]) {
-    outline-color: var(--color-accent);
+    outline-color: var(--accent);
   }
 }
 
 a {
   // transition: color $trans-duration/4 $trans-ease, border-color $trans-duration/2 $trans-ease;
-  color: var(--color-foreground);
+  color: var(--foreground);
   text-decoration: none;
 
   &:hover {
-    border-color: var(--color-accent);
+    border-color: var(--accent);
     text-decoration: underline;
   }
 
@@ -206,7 +206,7 @@ a {
 }
 
 hr {
-  border-color: var(--color-foreground);
+  border-color: var(--foreground);
 }
 
 // image styles
