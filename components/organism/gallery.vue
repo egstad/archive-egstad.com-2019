@@ -1,25 +1,23 @@
 <template>
-  <div>
-    <ul :class="`gallery gallery--${collection.primary.alignment}`">
-      <li
-        v-for="(item, itemIndex) in collection.items"
-        :key="`item-${itemIndex}`"
-        :class="`gallery__item gallery__item--${item.media_type}`"
-      >
-        <!-- IMAGE -->
-        <figure v-if="item.media_type === 'image'">
-          <Pic :image="item.poster" class="js-animate animate" />
-          <Caption v-if="item.caption.length > 0" :caption="item.caption" />
-        </figure>
+  <ul :class="`gallery gallery--${alignment}`">
+    <li
+      v-for="(item, itemIndex) in collection.items"
+      :key="`item-${itemIndex}`"
+      :class="`gallery__item gallery__item--${item.media_type}`"
+    >
+      <!-- IMAGE -->
+      <figure v-if="item.media_type === 'image'">
+        <Pic :image="item.poster" class="js-animate animate" />
+        <Caption v-if="item.caption.length > 0" :caption="item.caption" />
+      </figure>
 
-        <!-- VIDEO -->
-        <figure v-if="item.media_type === 'video'">
-          <Vid :video="item" class="js-animate animate" />
-          <Caption v-if="item.caption.length > 0" :caption="item.caption" />
-        </figure>
-      </li>
-    </ul>
-  </div>
+      <!-- VIDEO -->
+      <figure v-if="item.media_type === 'video'">
+        <Vid :video="item" class="js-animate animate" />
+        <Caption v-if="item.caption.length > 0" :caption="item.caption" />
+      </figure>
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -37,6 +35,11 @@ export default {
     collection: {
       type: Object,
       required: true,
+    },
+    alignment: {
+      type: String,
+      required: true,
+      default: 'top',
     },
   },
 }

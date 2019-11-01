@@ -39,7 +39,7 @@ export default {
       required: true,
     },
     caption: {
-      type: Array || String,
+      type: [Array, String],
       required: false,
       default: null,
     },

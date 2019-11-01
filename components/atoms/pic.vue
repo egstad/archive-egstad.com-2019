@@ -49,9 +49,6 @@ export default {
 </script>
 
 <style lang="scss">
-.pic {
-}
-
 .image {
   display: block;
   width: 100%;

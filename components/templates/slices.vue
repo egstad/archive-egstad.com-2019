@@ -30,7 +30,10 @@
 
       <!-- Gallery -->
       <template v-if="slice.slice_type === 'gallery'">
-        <Gallery :collection="slice" />
+        <Gallery
+          :collection="slice.items"
+          :alignment="slice.primary.alignment"
+        />
       </template>
 
       <!-- Carousel -->
