@@ -1,7 +1,7 @@
 <template>
   <ul :class="`gallery gallery--${alignment}`">
     <li
-      v-for="(item, itemIndex) in collection.items"
+      v-for="(item, itemIndex) in collection"
       :key="`item-${itemIndex}`"
       :class="`gallery__item gallery__item--${item.media_type}`"
     >
@@ -33,7 +33,7 @@ export default {
   },
   props: {
     collection: {
-      type: Object,
+      type: Array,
       required: true,
     },
     alignment: {
