@@ -124,7 +124,6 @@ export default {
         } else if (!e.shiftKey) {
           // tab alone moves forward
           if (document.activeElement === this.focusableLast) {
-            console.log('starting over')
             this.focusableFirst.focus()
             e.preventDefault()
           }

@@ -56,8 +56,8 @@ export default {
     })
     return generatePageData('pieces', prismicResponse)
   },
-  fetch({ store }) {
-    store.dispatch('pieces/fetchPieces')
+  async fetch({ store }) {
+    await store.dispatch('pieces/fetchPieces')
   },
   created() {
     this.$app.$store.commit('setTheme', {

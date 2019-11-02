@@ -58,8 +58,8 @@ export default {
     })
     return generatePageData('projects', prismicResponse)
   },
-  fetch({ store }) {
-    store.dispatch('projects/fetchProjects')
+  async fetch({ store }) {
+    await store.dispatch('projects/fetchProjects')
   },
   created() {
     this.$app.$store.commit('setTheme', {
@@ -72,8 +72,6 @@ export default {
     this.$app.$on('projects::loaded', this.updatePrismicThrottle)
     this.$app.$on('scroll::nearBottom', this.infiniteScroll)
     this.$app.$emit('page::mounted')
-
-    console.log(this.pageContent)
   },
   methods: {
     updatePrismicThrottle() {
