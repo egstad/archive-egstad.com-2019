@@ -1,3 +1,4 @@
+import { lookup } from 'dns'
 import Prismic from 'prismic-javascript'
 import { prismicConfig, initApi } from './prismic-config'
 
@@ -250,6 +251,7 @@ export default {
     transpile: ['Flickity'],
   },
   generate: {
+    // interval: 50,
     async routes() {
       /**
        * Project slugs
@@ -280,34 +282,78 @@ export default {
           })
       })
 
-      /**
-       * Piece slugs
-       */
-      const piecesSlugs = await initApi().then(api => {
-        return api
-          .query(Prismic.Predicates.at('document.type', 'pieces_single'), {
-            orderings: '[document.first_publication_date]',
-            // fetchLinks: ['pieces_single.data'],
-          })
-          .then(response => {
-            return response.results.map(payload => {
-              // create site map data
-              const siteMapData = {
-                url: `/pieces/${payload.uid}`,
-                changefreq: 'weekly',
-                priority: 0.5,
-              }
-              // add to sitemap
-              siteMapRoutes.push(siteMapData)
-
-              // generate route & payload!
-              return {
-                route: `/pieces/${payload.uid}`,
-                payload,
-              }
+      /* ==========================================================================
+        PIECES
+        ========================================================================== */
+      // stash the goods here
+      const piecesSlugs = []
+      // base settings for prismic request
+      let piecesPagination = {
+        page: 0,
+        results_per_page: 20,
+      }
+      // this call to prismic is simply to grab the total_pages available
+      // we'll use this info to call prismic a few times, asynchronously in 'fetchPiecesFromPrismic'
+      const piecesPaginationInfo = async () => {
+        await initApi().then(api => {
+          return api
+            .query(Prismic.Predicates.at('document.type', 'pieces_single'), {
+              page: piecesPagination.page + 1,
+              pageSize: piecesPagination.results_per_page,
             })
-          })
-      })
+            .then(response => {
+              // update pagination
+              piecesPagination.total_pages = response.total_pages
+            })
+        })
+      }
+      // Asynchronously fetch pages from prismic
+      const fetchPiecesFromPrismic = async () => {
+        for (let i = 0; i < piecesPagination.total_pages; i++) {
+          await getNextPageFromPrismic()
+        }
+      }
+      // Make the call to prismic
+      // Add route to siteMapData array
+      // Model its response into nuxt's 'route' and 'payload'
+      const getNextPageFromPrismic = async () => {
+        await initApi().then(api => {
+          return api
+            .query(Prismic.Predicates.at('document.type', 'pieces_single'), {
+              page: piecesPagination.page + 1,
+              pageSize: piecesPagination.results_per_page,
+            })
+            .then(response => {
+              // update pagination for the next go round
+              piecesPagination = {
+                page: response.page,
+                results_per_page: response.results_per_page,
+                total_pages: response.total_pages,
+              }
+
+              return response.results.map(payload => {
+                // create site map data
+                const siteMapData = {
+                  url: `/pieces/${payload.uid}`,
+                  changefreq: 'monthly',
+                  priority: 0.5,
+                }
+                // add to sitemap
+                siteMapRoutes.push(siteMapData)
+
+                // generate route & payload!
+                piecesSlugs.push({
+                  route: `/pieces/${payload.uid}`,
+                  payload,
+                })
+              })
+            })
+        })
+      }
+
+      //
+      await piecesPaginationInfo()
+      await fetchPiecesFromPrismic()
 
       /**
        * Page slugs

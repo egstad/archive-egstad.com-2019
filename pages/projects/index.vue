@@ -54,7 +54,7 @@ export default {
       return api
         .query(Prismic.Predicates.at('document.type', 'projects'))
         .then(response => {
-          console.log(response)
+          // console.log(response)
           prismicResponse = response.results[0].data
         })
     })
