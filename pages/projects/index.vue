@@ -49,17 +49,46 @@ export default {
   async asyncData(context) {
     let prismicResponse = null
 
+    // get projects page data
     await initApi().then(api => {
       return api
         .query(Prismic.Predicates.at('document.type', 'projects'))
         .then(response => {
+          console.log(response)
           prismicResponse = response.results[0].data
         })
     })
+
+    // get project singles!
+    await initApi().then(api => {
+      return api
+        .query(Prismic.Predicates.at('document.type', 'projects_single'), {
+          page: context.store.state.projects.pagination.page + 1,
+          pageSize: context.store.state.projects.pagination.results_per_page,
+          orderings: '[document.first_publication_date]',
+        })
+        .then(response => {
+          const updatedPagination = {
+            page: response.page,
+            results_per_page: response.results_per_page,
+            results_size: response.results_size,
+            total_pages: response.total_pages,
+            total_results_size: response.total_results_size,
+          }
+
+          const newProjects = () => {
+            return response.results
+          }
+
+          // update pagination data
+          // this data helps us fetch the right number of projects
+          context.store.commit('projects/updatePagination', updatedPagination)
+          // add new projects to store
+          context.store.commit('projects/addProjectsToStore', newProjects())
+        })
+    })
+
     return generatePageData('projects', prismicResponse)
-  },
-  async fetch({ store }) {
-    await store.dispatch('projects/fetchProjects')
   },
   created() {
     this.$app.$store.commit('setTheme', {
@@ -84,7 +113,7 @@ export default {
       }
     },
     fetchNextPage() {
-      this.$store.dispatch('pieces/fetchPieces')
+      this.$store.dispatch('projects/fetchProjects')
     },
   },
   head() {

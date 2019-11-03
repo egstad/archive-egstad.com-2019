@@ -54,11 +54,40 @@ export default {
           prismicResponse = response.results[0].data
         })
     })
+
+    await initApi().then(api => {
+      return api
+        .query(Prismic.Predicates.at('document.type', 'pieces_single'), {
+          page: context.store.state.pieces.pagination.page + 1,
+          pageSize: context.store.state.pieces.pagination.results_per_page,
+          orderings: '[document.first_publication_date]',
+        })
+        .then(response => {
+          const updatedPagination = {
+            page: response.page,
+            results_per_page: response.results_per_page,
+            results_size: response.results_size,
+            total_pages: response.total_pages,
+            total_results_size: response.total_results_size,
+          }
+
+          const newPieces = () => {
+            return response.results
+          }
+
+          // update pagination data
+          // this data helps us fetch the right number of pieces
+          context.store.commit('pieces/updatePagination', updatedPagination)
+          // add new pieces to store
+          context.store.commit('pieces/addPiecesToStore', newPieces())
+        })
+    })
+
     return generatePageData('pieces', prismicResponse)
   },
-  async fetch({ store }) {
-    await store.dispatch('pieces/fetchPieces')
-  },
+  // async fetch({ store }) {
+  //   await store.dispatch('pieces/fetchPieces')
+  // },
   created() {
     this.$app.$store.commit('setTheme', {
       background: this.pageContent.background,
