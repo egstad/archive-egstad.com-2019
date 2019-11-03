@@ -4,7 +4,9 @@
     <h1 class="text--5">{{ title }}</h1>
 
     <div v-for="(tag, index) in pageContent[0].results" :key="'tag-' + index">
-      <h2 class="text--3">{{ tag.name }}</h2>
+      <h2 class="text--3">
+        <nuxt-link :to="tag.name" append>{{ tag.name }}</nuxt-link>
+      </h2>
 
       <ul
         v-for="(item, itemIndex) in pageContent[1].results"

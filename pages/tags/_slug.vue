@@ -32,7 +32,7 @@ export default {
     return {
       tagTitle: null,
       tagId: null,
-      tagItems: null,
+      tagItems: [],
       tagsLoaded: false,
     }
   },
@@ -67,18 +67,34 @@ export default {
         }
       })
     },
-    getTaggedItems() {
-      initApi().then(api => {
+    async getTaggedItems() {
+      await initApi().then(api => {
         return api
           .query([
             Prismic.Predicates.at('document.type', 'pieces_single'),
             Prismic.Predicates.at('my.pieces_single.tags.tag', this.tagId),
           ])
           .then(response => {
-            this.tagItems = response.results
-            this.tagsLoaded = true
+            response.results.forEach(item => {
+              this.tagItems.push(item)
+            })
           })
       })
+
+      await initApi().then(api => {
+        return api
+          .query([
+            Prismic.Predicates.at('document.type', 'projects_single'),
+            Prismic.Predicates.at('my.projects_single.tags.tag', this.tagId),
+          ])
+          .then(response => {
+            response.results.forEach(item => {
+              this.tagItems.push(item)
+            })
+          })
+      })
+
+      this.tagsLoaded = true
     },
   },
   // head() {
