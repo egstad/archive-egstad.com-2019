@@ -1,4 +1,3 @@
-import { lookup } from 'dns'
 import Prismic from 'prismic-javascript'
 import { prismicConfig, initApi } from './prismic-config'
 
@@ -175,6 +174,14 @@ export default {
       src: '@/plugins/theme-scroller.js',
       ssr: false,
     },
+    {
+      src: '@/plugins/slideshow.js',
+      ssr: false,
+    },
+    // {
+    //   src: '@/plugins/isotope.js',
+    //   ssr: false,
+    // },
   ],
 
   /*

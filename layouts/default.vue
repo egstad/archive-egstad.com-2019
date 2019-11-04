@@ -66,10 +66,6 @@ export default {
 </script>
 
 <style lang="scss">
-main {
-  padding: 0 20px;
-}
-
 .site {
   display: flex;
   min-height: 100vh;

@@ -18,16 +18,24 @@
     font-family: $text-mono;
   }
 
-  &--bold {
-    font-weight: 600;
+  &--medium {
+    font-variation-settings: "wght" 500 !important;
   }
 
+  &--bold {
+    font-variation-settings: "wght" 800 !important;
+  }
+  
   &--italic {
     font-style: italic;
   }
 
   &--uppercase {
     @include text-uppercase();
+  }
+
+  &--truncate {
+    @include text-truncate();
   }
 
   &--strikethrough {
@@ -49,8 +57,8 @@
   /* Size
        ========================================================================== */
   &--0 {
-    @include text-size(12px, 14px);
-    font-variation-settings: "wght" 450;
+    font-size: 12px;
+    // font-variation-settings: "wght" 450;
     letter-spacing: 0.015em;
     word-spacing: 0.001em;
     line-height: 1.4;

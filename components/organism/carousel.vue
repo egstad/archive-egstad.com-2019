@@ -71,6 +71,7 @@ export default {
         cellAlign: this.options.align_x,
         groupCells: this.options.group_cells === 'true',
         autoPlay: this.options.autoplay_duration,
+        fade: this.options.fade === 'true',
       },
     }
   },
@@ -90,20 +91,17 @@ export default {
   },
   mounted() {
     // update cell heights on resize
-    this.$app.$on('page::resized', () => {
-      // throttle it a bit
-      setTimeout(() => {
-        this.measureCells()
-        this.setFlickityHeight()
-      }, 250)
-    })
+    this.$app.$on('page::resized', this.resizeFlickity)
+    this.$app.$on('carousel::updateHeight', this.resizeFlickity)
+
+    console.log(this.options)
   },
   beforeDestroy() {
+    this.$app.$off('carousel::updateHeight')
     this.$app.$off('image::loaded')
     this.$app.$off('page::resized')
   },
   methods: {
-    onResize() {},
     onReady() {
       this.isLoading = 0
     },
@@ -129,6 +127,13 @@ export default {
     setFlickityHeight() {
       this.$refs.gallery.$el.style.height = `${this.galleryHeight}px`
       this.$refs.gallery.$flickity.viewport.style.height = `${this.galleryHeight}px`
+    },
+    resizeFlickity() {
+      // throttle it a bit
+      setTimeout(() => {
+        this.measureCells()
+        this.setFlickityHeight()
+      }, 250)
     },
   },
 }

@@ -6,7 +6,11 @@
     </div>
 
     <transition name="fade" mode="out-in">
-      <h1 v-if="!$store.state.menuIsOpen" :key="label" class="label">
+      <h1
+        v-if="!$store.state.menuIsOpen"
+        :key="label"
+        class="label text--truncate text--right"
+      >
         {{ label }}
       </h1>
     </transition>
@@ -29,24 +33,33 @@ export default {
   watch: {
     // update label on route change
     $route(to, from) {
-      this.setLabel(to)
+      this.updateLabel(to)
     },
   },
   mounted() {
-    this.setLabel(this.$route)
+    this.updateLabel(this.$route)
+    this.$app.$on('page::overwriteLabel', this.overwriteLabel)
   },
   beforeDestroy() {
-    this.$app.$off('page::setLabel')
+    this.$app.$off('page::updateLabel')
+    this.$app.$off('page::overwriteLabel')
   },
   methods: {
-    setLabel(route) {
+    updateLabel(route) {
       let labelText = route.name
 
       if (route.name === 'index') {
-        labelText = 'EGSTAD'
+        labelText = 'Egstad'
+      } else if (route.name === 'tags-slug') {
+        labelText = `#${route.params.slug}`
+      } else if (route.name === 'pieces-slug') {
+        labelText = 'Pieces'
       }
 
       this.label = labelText
+    },
+    overwriteLabel(text) {
+      this.label = text
     },
   },
 }
