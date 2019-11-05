@@ -1,60 +1,67 @@
 <template>
   <section class="container spacing-top-7">
-    <!-- <header class="spacing-top-7 spacing-bottom-4">
-      <h2 class="text--5 text--center">#{{ tagTitle }}</h2>
-    </header> -->
-
     <ul>
-      <li>
-        <button @click="filter('all')">
+      <li v-if="pageContent.piecesInfo.total || pageContent.piecesInfo.total">
+        <button @click="filterResultsBy('all')">
           <span>{{ totalResults }}</span>
           <span>All</span>
         </button>
       </li>
-      <li>
-        <button @click="filter('pieces_single')">
+      <li v-if="pageContent.piecesInfo.total">
+        <button @click="filterResultsBy('pieces_single')">
           <span>{{ pageContent.piecesInfo.total }}</span>
           <span>Pieces</span>
         </button>
       </li>
-      <li>
-        <button @click="filter('projects_single')">
+      <li v-if="pageContent.projectsInfo.total">
+        <button @click="filterResultsBy('projects_single')">
           <span>{{ pageContent.projectsInfo.total }}</span>
           <span>Projects</span>
         </button>
       </li>
     </ul>
 
+    <ul>
+      <hr />
+      <li v-if="pageContent.piecesInfo.total || pageContent.piecesInfo.total">
+        <button @click="sortByName('abc')">
+          <span>Alphabetical</span>
+        </button>
+      </li>
+    </ul>
+
     <div class="results">
       <ul ref="list" class="results__list">
-        <li
-          v-for="(result, index) in taggedResults"
-          :key="'result-' + index"
-          class="results__list-item"
-          :data-type="result.type"
-        >
-          <nuxt-link :to="'/pieces/' + result.uid" class="results__link">
-            <article class="results__item">
-              <div class="results__border">
-                <template v-if="result.type === 'pieces_single'">
-                  <Tile :slices="result.data.body" />
-                </template>
+        <template v-for="(result, index) in taggedResults">
+          <li
+            v-if="result.visible"
+            :key="'result-' + index"
+            class="results__list-item"
+            :data-type="result.type"
+          >
+            <nuxt-link :to="'/pieces/' + result.uid" class="results__link">
+              <article class="results__item">
+                <div class="results__border">
+                  <template v-if="result.type === 'pieces_single'">
+                    <Tile :slices="result.data.body" />
+                  </template>
 
-                <template v-if="result.type === 'projects_single'">
-                  <Pic :image="result.data.thumbnail_url" />
-                </template>
-              </div>
+                  <template v-if="result.type === 'projects_single'">
+                    <Pic :image="result.data.thumbnail_url" />
+                  </template>
+                </div>
 
-              <header class="results__header">
-                <h3
-                  class="text--0 text--truncate text--center text--medium js-animate animate animate--delayed"
-                >
-                  {{ result.data.title[0].text }}
-                </h3>
-              </header>
-            </article>
-          </nuxt-link>
-        </li>
+                <header class="results__header">
+                  <h3
+                    class="text--0 text--truncate text--center text--medium js-animate animate animate--delayed"
+                  >
+                    {{ result.data.title[0].text }}
+                  </h3>
+                </header>
+              </article>
+            </nuxt-link>
+          </li>
+        </template>
       </ul>
     </div>
   </section>
@@ -76,6 +83,8 @@ export default {
   data() {
     return {
       resultsAreHidden: false,
+      allElements: null,
+      filteredElements: null,
     }
   },
   computed: {
@@ -137,7 +146,10 @@ export default {
               Prismic.Predicates.at('document.type', 'pieces_single'),
               Prismic.Predicates.at('my.pieces_single.tags.tag', thisId),
             ],
-            { pageSize: 100 }
+            {
+              pageSize: 100,
+              orderings: '[document.last_publication_date desc]',
+            }
           )
           .then(response => {
             // save info!
@@ -146,6 +158,9 @@ export default {
             }
 
             response.results.forEach(item => {
+              // add visible prop
+              // this is used to show/hide
+              item.visible = true
               pieces.push(item)
             })
           })
@@ -159,7 +174,10 @@ export default {
               Prismic.Predicates.at('document.type', 'projects_single'),
               Prismic.Predicates.at('my.projects_single.tags.tag', thisId),
             ],
-            { pageSize: 100 }
+            {
+              pageSize: 100,
+              orderings: '[document.last_publication_date desc]',
+            }
           )
           .then(response => {
             // save info!
@@ -168,6 +186,9 @@ export default {
             }
 
             response.results.forEach(item => {
+              // add visible prop
+              // this is used to show/hide
+              item.visible = true
               projects.push(item)
             })
           })
@@ -186,20 +207,70 @@ export default {
     })
   },
   mounted() {
+    this.getAllElements()
     this.$app.$emit('page::mounted')
   },
   methods: {
-    filter(query) {
-      let filteredElements
+    getAllElements() {
+      this.allElements = document.querySelectorAll(`.results__list-item`)
+    },
+    filterResultsBy(query) {
+      // hide results momentarily
+      // callback fires updateResults()
+      // then showResults fires
+      this.hideResults(query)
 
-      if (query === 'all') {
-        filteredElements = document.querySelectorAll(`.results__list-item`)
+      // hide results
+      // update result data
+      // show
+    },
+    updateResults(query) {
+      if (query !== 'all') {
+        this.taggedResults.find(item => {
+          item.type === query ? (item.visible = true) : (item.visible = false)
+        })
       } else {
-        filteredElements = document.querySelectorAll(
-          `.results__list-item[data-type="${query}"]`
-        )
+        this.taggedResults.find(item => {
+          item.visible = true
+        })
       }
-      console.log(filteredElements)
+      // update
+      this.$app.$emit('lazy::update')
+    },
+    showResults() {
+      window.TweenMax.set('.results__list', {
+        opacity: 0,
+        y: 50,
+      })
+      window.TweenMax.staggerTo('.results__list', 0.6, {
+        opacity: 1,
+        y: 0,
+        ease: window.Power2.easeOut,
+      })
+    },
+    hideResults(query) {
+      window.TweenMax.to('.results__list', 0.4, {
+        opacity: 0,
+        y: 100,
+        ease: window.Power2.easeInOut,
+        onComplete: () => {
+          // model ze data
+          this.updateResults(query)
+          // show it
+          setTimeout(() => {
+            this.showResults()
+          }, 100)
+        },
+      })
+    },
+    sortByName() {
+      const sortedResults = this.taggedResults
+      sortedResults.sort((a, b) => (a.uid > b.uid ? 1 : -1))
+      this.taggedResults = sortedResults
+
+      // this.taggedResults.find(item => {
+      //   console.log(query, item.data.title[0].text)
+      // })
     },
   },
   // head() {

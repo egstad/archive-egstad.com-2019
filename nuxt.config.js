@@ -232,7 +232,7 @@ export default {
    ** Build configuration
    */
   build: {
-    analyze: true,
+    // analyze: true,
     /*
      ** You can extend webpack config here
      */

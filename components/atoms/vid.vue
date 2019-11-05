@@ -176,7 +176,9 @@ export default {
     },
     pause() {
       this.isPlaying = false
-      this.$refs.video.pause()
+      if (this.$refs.video) {
+        this.$refs.video.pause()
+      }
     },
     restart() {
       this.$refs.video.currentTime = 0
