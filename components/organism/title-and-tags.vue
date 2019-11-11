@@ -1,5 +1,5 @@
 <template>
-  <div class="info">
+  <div class="info js-animate animate animate--delated">
     <header class="title">
       <h1 class="text--2 text--center">{{ title }}</h1>
     </header>
@@ -137,19 +137,27 @@ $gutter: 20px;
 }
 
 .tag-link {
-  border: 1px solid var(--accent);
+  transition: border-color $trans-duration/3 $trans-ease,
+    color $trans-duration $trans-ease;
+  border: 1px solid rgba(#{var(--color-foreground)}, 0.2);
   border-radius: 100vw;
   font-family: monospace;
   display: inline-flex;
   padding: 1em 1.5em;
-  color: var(--foreground);
-  opacity: 0.5;
+  color: rgba(#{var(--color-foreground)}, 0.6);
   text-transform: capitalize;
   line-height: 1;
+  outline: none;
 
   &:before {
     content: '#';
     opacity: 0.5;
+  }
+
+  &:focus,
+  &:hover {
+    border-color: rgba(#{var(--color-foreground)}, 0.8);
+    color: rgba(#{var(--color-foreground)}, 1);
   }
 }
 </style>

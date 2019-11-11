@@ -60,25 +60,6 @@ const getNextPageFromPrismic = context => {
 
         const newPieces = () => {
           return response.results
-
-          // create array for l8r
-          // const newPiecesData = []
-
-          // // loop through all new posts and format the data
-          // for (let i = 0; i < response.results_per_page; i++) {
-          //   const itemData =  {
-          //     title: response.results[i].data.title,
-          //     assets: response.results[i].data.body,
-          //     tags: response.results[i].data.tags,
-          //     uid: response.results[i].uid,
-          //   }
-          //   // add to created array
-          //   newPiecesData.push(itemData)
-          // }
-
-          // console.log(newPiecesData)
-          // // return array
-          // return newPiecesData[0]
         }
 
         // update pagination data
