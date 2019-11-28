@@ -9,7 +9,12 @@
         class="project-item"
       >
         <article class="project">
-          <Pic :image="project.data.thumbnail_url" class="js-animate animate" />
+          <n-link :to="project.uid" append>
+            <Pic
+              :image="project.data.thumbnail_url"
+              class="js-animate animate"
+            />
+          </n-link>
 
           <TitleAndTags
             class="project-info"
@@ -124,6 +129,10 @@ export default {
 
 <style lang="scss" scoped>
 .project {
+  display: grid;
+  justify-content: center;
+  width: 100%;
+
   // wraps all project content
   &-list {
     display: grid;

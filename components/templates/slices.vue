@@ -7,7 +7,9 @@
     >
       <!-- TEXT -->
       <template v-if="slice.slice_type === 'text'">
-        <prismic-rich-text :field="slice.items[0].content" />
+        <template v-for="(text, textIndex) in slice.items">
+          <prismic-rich-text :key="'text' + textIndex" :field="text.content" />
+        </template>
       </template>
 
       <!-- IMAGE -->
