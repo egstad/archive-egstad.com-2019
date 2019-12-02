@@ -3,19 +3,17 @@ $color-bg: rgb(200,200,200);
 $color-interactive: rgb(0,0,255);
 
 // Breakpoints
-$vp0: 320px;
-$vp1: 420px;
-$vp2: 780px;
-$vp3: 1250px;
-$vp4: 1600px;
-$vp5: 2200px;
+$vp-sm: 600px;
+$vp-md: 1000px;
+$vp-lg: 1200px;
+$vp-xl: 1600px;
 
 // Typography
 $text-sans: "egstad-sans", Helvetica, sans-serif;
 $text-serif: Times, serif;
 $text-mono: Courier, monospace;
-$text-fluidity-start: $vp0;
-$text-fluidity-end: $vp5;
+$text-fluidity-start: $vp-sm;
+$text-fluidity-end: $vp-xl;
 
 // Transitions
 $trans-ease: cubic-bezier(0.455, 0.03, 0.515, 0.955);

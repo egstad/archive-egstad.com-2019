@@ -15,6 +15,11 @@
   }
 }
 
+// leading
+@mixin leading($number: 1, $lineHeight: 11) {
+  line-height: $lineHeight * $number + px;
+}
+
 // Hyphenate text
 @mixin text-hyphenate() {
   word-break: break-word;

@@ -290,7 +290,7 @@ export default {
     padding: calc(24px + 2vw);
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 
-    @media screen and (min-width: $vp5) {
+    @media screen and (min-width: $vp-xl) {
       grid-template-columns: repeat(6, 1fr);
     }
 
