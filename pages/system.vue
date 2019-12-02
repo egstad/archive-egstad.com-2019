@@ -7,15 +7,12 @@
 
       <div class="c12 grid grid-- grid--full">
         <div class="text--1 c6 sm-c4 md-c3 lg-c2 xl-c2">
-          <!-- <div class="text--1">
-            01
-          </div> -->
           Because the quizzical twins proved my hijack-bug, will you please pack
           my box with five dozen liquor jugs? Because the quizzical twins proved
           my hijack-bug, will you please pack my box with five dozen liquor
           jugs?
         </div>
-        <div class="text--3 c12 sm-c6 sm-start-c7 md-c4 lg-c3 xl-c2">
+        <div class="text--3 c10 sm-c8 sm-start-c1 md-c6 lg-start-c3 lg-c3">
           Because the quizzical twins proved my hijack-bug, will you please pack
           my box with five dozen liquor jugs? Because the quizzical twins proved
           my hijack-bug, will you please pack my box with five dozen liquor
@@ -24,7 +21,7 @@
           twins proved my hijack-bug, will you please pack my box with five
           dozen liquor jugs?
         </div>
-        <div class="text--4 c12 sm-c6 md-c4 lg-c3 xl-c2">
+        <div class="text--4 c12 sm-c10 md-c8 lg-start-c6 lg-c3">
           Because the quizzical twins proved my hijack-bug, will you please pack
           my box with five dozen liquor jugs? Because the quizzical twins proved
           my hijack-bug, will you please pack my box with five dozen liquor
@@ -33,7 +30,7 @@
           twins proved my hijack-bug, will you please pack my box with five
           dozen liquor jugs?
         </div>
-        <div class="text--5 c12 sm-c6 md-c4 lg-c3 xl-c2">
+        <div class="text--5 c12 md-c10 lg-start-c9 lg-c5">
           Because the quizzical twins proved my hijack-bug, will you please pack
           my box with five dozen liquor jugs? Because the quizzical twins proved
           my hijack-bug, will you please pack my box with five dozen liquor

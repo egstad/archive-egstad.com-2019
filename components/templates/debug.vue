@@ -9,6 +9,9 @@
         <input id="baseline" v-model="baselineIsVisible" type="checkbox" />
         <label class="text--1" for="baseline">Baseline</label>
       </div>
+      <div>
+        <div class="viewport text--1">VP:&nbsp;</div>
+      </div>
     </div>
 
     <div v-show="gridIsVisible" class="grid columns">
@@ -93,5 +96,27 @@ $baseline-color: red;
     transparent 10px,
     $baseline-color 11px
   );
+}
+
+.viewport {
+  margin: 0;
+
+  &:after {
+    content: 'Default';
+    display: inline;
+
+    @media screen and (min-width: $vp-sm) {
+      content: 'VP-SM';
+    }
+    @media screen and (min-width: $vp-md) {
+      content: 'VP-MD';
+    }
+    @media screen and (min-width: $vp-lg) {
+      content: 'VP-LG';
+    }
+    @media screen and (min-width: $vp-xl) {
+      content: 'VP-XL';
+    }
+  }
 }
 </style>
