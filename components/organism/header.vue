@@ -54,7 +54,10 @@ export default {
         labelText = `#${route.params.slug}`
       } else if (route.name === 'pieces-slug') {
         labelText = 'Pieces'
+      } else if (route.name === 'projects-black-optical') {
+        labelText = ''
       }
+      console.log(route)
 
       this.label = labelText
     },

@@ -119,21 +119,25 @@
       
       &--4 {
         //23.6341 = 24
-        font-size: 24px;
-        @include leading(3);
+        // font-size: 24px;
+        font-size: 21px;
+        @include leading(2.5);
         
         @media screen and (min-width: $vp-sm) {
-          font-size: 26px;
+          @include leading(3);
+          // font-size: 26px;
+          font-size: 24px;
         }
         @media screen and (min-width: $vp-md) {
-          @include leading(3.5);
-          font-size: 28px;
+          // font-size: 28px;
+          font-size: 26px;
         }
         @media screen and (min-width: $vp-lg) {
-          font-size: 30px;
+          // font-size: 30px;
+          font-size: 28px;
         }
         @media screen and (min-width: $vp-xl) {
-          font-size: 32px;
+          // font-size: 32px;
         }
         
       }
