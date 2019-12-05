@@ -1,0 +1,134 @@
+$grid-columns: 12;
+$grid-gutters: calc(20px + 0.5vw);
+
+// Base grid settings
+@mixin grid-settings {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: repeat($grid-columns, 1fr);
+  grid-gap: $grid-gutters;
+  padding: 0 calc(#{$grid-gutters} * 0.5 + 4vw);
+  width: 100%;
+}
+
+// This class sets css grid styles to an element across all breakpoints
+.grid {
+  position: relative;
+  @include grid-settings;
+
+  &--baseline {
+    align-items: baseline;
+    margin-top: 3px;
+  }
+
+  &--full {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  // Basic grid item
+  > * {
+    grid-column-end: auto;
+    grid-column-start: auto;
+    // delete me
+    // height: 10px;
+    // background: blue;
+  }
+}
+
+// Use to set how many columns an item should span.
+// .grid-span-4 will make the grid item span four columns wide.
+@for $index from 1 through $grid-columns {
+  .c#{$index} {
+    grid-column-end: span #{$index};
+  }
+}
+
+// Use to set what column to start an item at.
+// .grid-start-4 will start the content at column 4.
+@for $index from 1 through $grid-columns {
+  .start-c#{$index} {
+    grid-column-start: #{$index};
+  }
+
+  .start-c0 {
+    grid-column-start: auto;
+  }
+}
+
+// Breakpoint-specific column spans and offsets
+@media screen and (min-width: $vp-sm) {
+  @for $index from 1 through $grid-columns {
+    .sm-c#{$index} {
+      grid-column-end: span #{$index};
+    }
+  }
+
+  .sm-c0 {
+    grid-column-start: auto;
+  }
+
+  @for $index from 1 through $grid-columns {
+    .sm-start-c#{$index} {
+      grid-column-start: #{$index};
+    }
+  }
+}
+
+@media screen and (min-width: $vp-md) {
+  @for $index from 1 through $grid-columns {
+    .md-c#{$index} {
+      grid-column-end: span #{$index};
+    }
+  }
+
+  .md-c0 {
+    grid-column-start: auto;
+  }
+
+  @for $index from 1 through $grid-columns {
+    .md-start-c#{$index} {
+      grid-column-start: #{$index};
+    }
+  }
+}
+
+@media screen and (min-width: $vp-lg) {
+  @for $index from 1 through $grid-columns {
+    .lg-c#{$index} {
+      grid-column-end: span #{$index};
+    }
+  }
+
+  .lg-c0 {
+    grid-column-start: auto;
+  }
+
+  @for $index from 1 through $grid-columns {
+    .lg-start-c#{$index} {
+      grid-column-start: #{$index};
+    }
+  }
+}
+
+@media screen and (min-width: $vp-xl) {
+  @for $index from 1 through $grid-columns {
+    .xl-c#{$index} {
+      grid-column-end: span #{$index};
+    }
+  }
+
+  .xl-c0 {
+    grid-column-start: auto;
+  }
+
+  @for $index from 1 through $grid-columns {
+    .xl-start-c#{$index} {
+      grid-column-start: #{$index};
+    }
+  }
+}
+
+@mixin leading($number: 1, $lineHeight: 11) {
+  line-height: $lineHeight * $number + px;
+}

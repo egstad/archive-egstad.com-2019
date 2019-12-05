@@ -226,7 +226,7 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  @media screen and (min-width: $vp3) {
+  @media screen and (min-width: $vp-lg) {
     // center up links
     align-items: center;
   }
@@ -248,7 +248,7 @@ export default {
 }
 
 .menu__list {
-  @media screen and (min-width: $vp3) {
+  @media screen and (min-width: $vp-lg) {
     // padding: 0 10vw;
     display: flex;
     flex-direction: row;
