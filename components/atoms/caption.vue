@@ -2,12 +2,12 @@
   <figcaption>
     <!-- Array (data from prismic) -->
     <template v-if="isPrismic">
-      <prismic-rich-text :field="caption" />
+      <prismic-rich-text class="text--1 caption" :field="caption" />
     </template>
 
     <!-- String -->
     <template v-else>
-      <p>{{ caption }}</p>
+      <p class="text--1 caption">{{ caption }}</p>
     </template>
   </figcaption>
 </template>
@@ -31,3 +31,9 @@ export default {
   },
 }
 </script>
+
+<style lang="scss" scoped>
+.caption {
+  margin-top: $baseline/2;
+}
+</style>

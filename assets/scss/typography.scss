@@ -1,3 +1,26 @@
+// t1: small 
+$t1-size: 9px;
+$t1-leading: $baseline;
+
+// t2: medium
+$t2-size: 14px;
+$t2-leading: $baseline * 1.5;
+
+// t3: large
+$t3-size: 19px;
+$t3-leading: $baseline * 2;
+
+// t4: x-large
+$t4-size: 32px;
+$t4-leading: $baseline * 3;
+
+// t5: billboard
+$t5-size: 44px;
+$t5-leading: $baseline * 4;
+
+
+
+
 /* ==========================================================================
    TYPOGRAPHY
    ========================================================================== */
@@ -59,128 +82,59 @@
     text-align: right;
   }
 
-  /* Size
-       ========================================================================== */
-       &--1 {
-        // start here at 10
-        // 1.33
-        font-variation-settings: "wght" 500;
-        font-variant-numeric: tabular-nums;
-        text-transform: uppercase;
-        letter-spacing: normal;
-        font-size: 10px;
-        letter-spacing: 0.8px;
-        word-spacing: 1px;
-        margin-bottom: 11px;
-        @include leading(1.5);
-        
-        @media screen and (min-width: $vp-sm) {
-          font-size: 11px;
-        }
-        @media screen and (min-width: $vp-md) {
-          font-size: 12px;
-        }
-      }
+  &--1 {
+    font-size: $t1-size;
+    line-height: $t1-leading;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    word-spacing: 0.4px;
+    font-variation-settings: 'wght' 400;
     
-      &--2 {
-        //13.333 = 14
-        font-size: 14px;
-        letter-spacing: .05rem;
-        word-spacing: .05rem;
-        @include leading(2);
-        
-        
-        @media screen and (min-width: $vp-sm) {
-          font-size: 15px;
-        }
-        
-        @media screen and (min-width: $vp-md) {
-          font-size: 16px;
-          letter-spacing: .05rem;
-          word-spacing: 0;
-        }
-      }
-      
-      &--3 {
-        //17.77 = 18
-        font-size: 18px;
-        @include leading(2.5);
-        
-        @media screen and (min-width: $vp-sm) {
-          font-size: 19px;
-        }
-        @media screen and (min-width: $vp-md) {
-          font-size: 20px;
-        }
-        @media screen and (min-width: $vp-lg) {
-          font-size: 21px;
-        }
-      }
-      
-      &--4 {
-        //23.6341 = 24
-        // font-size: 24px;
-        font-size: 21px;
-        @include leading(2.5);
-        
-        @media screen and (min-width: $vp-sm) {
-          @include leading(3);
-          // font-size: 26px;
-          font-size: 24px;
-        }
-        @media screen and (min-width: $vp-md) {
-          // font-size: 28px;
-          font-size: 26px;
-        }
-        @media screen and (min-width: $vp-lg) {
-          // font-size: 30px;
-          font-size: 28px;
-        }
-        @media screen and (min-width: $vp-xl) {
-          // font-size: 32px;
-        }
-        
-      }
-      
-      &--5 {
-        // 31.92 = 32
-        font-size: 32px;
-        @include leading(4);
-        
-        @media screen and (min-width: $vp-sm) {
-          font-size: 36px;
-        }
-        @media screen and (min-width: $vp-md) {
-          @include leading(5);
-          font-size: 40px;
-        }
-        @media screen and (min-width: $vp-lg) {
-          font-size: 44px;
-        }
-        @media screen and (min-width: $vp-xl) {
-          font-size: 48px;
-        }
-      }
+    @media screen and (min-width: $vp-xl) {
+      font-size: calc-vw($t1-size, $vp-xl);
+      line-height: calc-leading($t1-leading, $t1-size);
+    }
+  }
+  
+  &--2 {
+    font-size: $t2-size;
+    line-height: $t2-leading;
+    font-variation-settings: 'wght' 400;
+
+    @media screen and (min-width: $vp-xl) {
+      font-variation-settings: 'wght' 350;
+      font-size: calc(#{calc-vw($t2-size, $vp-xl)});
+      line-height: calc-leading($t2-leading, $t2-size);
+    }
+  }
+  &--3 {
+    font-size: $t3-size;
+    line-height: $t3-leading;
+    font-variation-settings: 'wght' 350;
     
-      &--6 {
-        //42.56 = 44
-        font-size: 44px;
-        @include leading(5);
-        @media screen and (min-width: $vp-sm) {
-          font-size: 49px;
-        }
-        @media screen and (min-width: $vp-md) {
-          @include leading(6);
-          font-size: 54px;
-        }
-        @media screen and (min-width: $vp-lg) {
-          @include leading(7);
-          font-size: 58px;
-        }
-        @media screen and (min-width: $vp-xl) {
-          font-size: 64px;
-        }
-      }
+    @media screen and (min-width: $vp-xl) {
+      font-size: calc(#{calc-vw($t3-size, $vp-xl)});
+      line-height: calc-leading($t3-leading, $t3-size);
+    }
+  }
+  &--4 {
+    font-size: $t4-size;
+    line-height: $t4-leading;
+    
+    @media screen and (min-width: $vp-xl) {
+      font-size: calc(#{calc-vw($t4-size, $vp-xl)});
+      line-height: calc-leading($t4-leading, $t4-size);
+    }
+  }
+  &--5 {
+    font-size: $t5-size;
+    line-height: $t5-leading;
+    
+    @media screen and (min-width: $vp-xl) {
+      font-size: calc(#{calc-vw($t5-size, $vp-xl)});
+      line-height: calc-leading($t5-leading, $t5-size);
+    }
+  }
 }
 
 .ul {

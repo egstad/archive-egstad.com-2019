@@ -13,8 +13,9 @@
   max-width: 54px;
   min-height: 48px;
   max-height: 54px;
-  background: var(--accent);
+  background: rgba(var(--color-foreground), 0.25);
   border-radius: 100%;
+  cursor: pointer;
   margin-right: calc(5px + 0.2vw);
   outline: 0;
 
