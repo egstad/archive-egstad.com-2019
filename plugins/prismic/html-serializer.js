@@ -60,13 +60,13 @@ export default (type, element, content, children) => {
   } else if (type === Elements.heading6) {
     return `<h6 class="h6">${children.join('')}</h6>`
   } else if (type === Elements.paragraph) {
-    return `<p class="p spacing-bottom-2">${children.join('')}</p>`
+    return `<p class="p">${children.join('')}</p>`
   } else if (type === Elements.list) {
-    return `<ul class="ul spacing-bottom-2">${children.join('')}</ul>`
+    return `<ul class="ul">${children.join('')}</ul>`
   } else if (type === Elements.listItem) {
     return `<li class="ul_li">${children.join('')}</li>`
   } else if (type === Elements.oList) {
-    return `<ol class="ol spacing-bottom-2">${children.join('')}</ol>`
+    return `<ol class="ol">${children.join('')}</ol>`
   } else if (type === Elements.oListItem) {
     return `<li class="ol_li">${children.join('')}</li>`
   }

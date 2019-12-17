@@ -57,7 +57,6 @@ export default {
       } else if (route.name === 'projects-black-optical') {
         labelText = ''
       }
-      console.log(route)
 
       this.label = labelText
     },

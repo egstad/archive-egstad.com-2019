@@ -2,7 +2,7 @@
 
 <template>
   <section class="container spacing-top-5">
-    <header class="spacing-bottom-4">
+    <header class="">
       <h1>{{ title }}</h1>
     </header>
   </section>

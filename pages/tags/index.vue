@@ -177,7 +177,7 @@ a {
 
   &:hover {
     text-decoration: none;
-    color: $color-interactive;
+    color: var(--color-accent);
   }
 }
 </style>

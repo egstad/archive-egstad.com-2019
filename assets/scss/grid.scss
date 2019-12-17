@@ -6,9 +6,33 @@ $grid-gutters: calc(20px + 0.5vw);
   display: grid;
   grid-auto-flow: row;
   grid-template-columns: repeat($grid-columns, 1fr);
-  grid-gap: $grid-gutters;
+  grid-auto-rows: max-content;
+  grid-column-gap: $grid-gutters;
   padding: 0 calc(#{$grid-gutters} * 0.5 + 4vw);
   width: 100%;
+}
+
+
+// cap width (line-length) for text containers
+.sm-cap {
+  @media (max-width: $vp-md) {
+    max-width: 350px;
+  }
+}
+
+// top align column
+// by default we align to baseline
+// this override is great for images and shit
+.c-align-start {
+  align-self: start;
+}
+
+.c-align-center {
+  align-self: center;
+}
+
+.c-align-end {
+  align-self: end;
 }
 
 // This class sets css grid styles to an element across all breakpoints
@@ -53,6 +77,7 @@ $grid-gutters: calc(20px + 0.5vw);
 
   .start-c0 {
     grid-column-start: auto;
+    background: red;
   }
 }
 
@@ -129,6 +154,23 @@ $grid-gutters: calc(20px + 0.5vw);
   }
 }
 
-@mixin leading($number: 1, $lineHeight: 11) {
-  line-height: $lineHeight * $number + px;
+@media screen and (min-width: $vp-xx) {
+  @for $index from 1 through $grid-columns {
+    .xx-c#{$index} {
+      grid-column-end: span #{$index};
+    }
+  }
+
+  .xx-c0 {
+    grid-column-start: auto;
+  }
+
+  @for $index from 1 through $grid-columns {
+    .xx-start-c#{$index} {
+      grid-column-start: #{$index};
+    }
+  }
 }
+
+
+
