@@ -10,12 +10,12 @@
     <!-- Two Columns beneath title -->
     <div class="intro grid text--3 js-animate animate">
       <prismic-rich-text
-        class="sm-cap c12 sm-c6 lg-c5 lg-start-c2 xl-c4 xl-start-c3 space-t1"
+        class="c12 sm-c6 lg-c5 lg-start-c2 space-t1"
         :field="slices[0].items[0].content"
       />
 
       <prismic-rich-text
-        class="sm-cap c12 sm-c6 lg-c5 xl-c4 space-t1"
+        class="c12 sm-c6 lg-c5 space-t1"
         :field="slices[0].items[1].content"
       />
     </div>
@@ -68,7 +68,7 @@
         <prismic-rich-text :field="slices[4].items[2].content" />
       </div>
       <div
-        class="c12 c-align-start sm-c6 sm-start-c7 md-c4 md-start-c9 lg-c3 lg-c0 xl-c3 xl-start-c10 text--2 space-t2"
+        class="c12 c-align-start md-c4 md-start-c9 lg-c3 lg-c0 xl-c3 xl-start-c10 text--2 space-t2"
       >
         <Pic :image="slices[5].primary.image" class="js-animate animate" />
         <Caption :caption="slices[5].primary.caption" />
@@ -77,11 +77,11 @@
 
     <!-- Pixel and Macbook -->
     <div class="grid js-animate animate space-4">
-      <figure class="c12 md-c9 js-animate animate c-align-center">
+      <figure class="c12 lg-c9 js-animate animate c-align-center">
         <Pic :image="slices[7].primary.image" />
       </figure>
       <figure
-        class="c8 start-c3 md-c3 md-start-c10 c-align-center js-animate animate"
+        class="c8 start-c3 md-c6 md-start-c4 lg-c3 lg-start-c10 c-align-center js-animate animate"
       >
         <Vid :video="slices[6].primary" />
       </figure>
@@ -129,7 +129,7 @@
 .text--4 {
   @media (min-width: $vp-sm) {
     position: relative;
-    top: 1ch;
+    top: 1.1ch;
   }
 }
 
