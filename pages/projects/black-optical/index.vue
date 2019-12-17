@@ -89,16 +89,16 @@
 
     <!-- design -->
     <div class="space process grid js-animate animate">
-      <div class="sm-cap c12 sm-c6 md-c12 text--4 lg-c3 lg-c0 md-center">
+      <div class="sm-cap c12 sm-c6 md-c4 text--4 lg-c3 lg-c0">
         <prismic-rich-text :field="slices[8].items[0].content" />
       </div>
       <div
-        class="sm-cap c12 sm-c6 sm-start-c7 md-c4 md-start-c1 lg-c3 lg-c0 xl-c2 text--2 space-t2"
+        class="sm-cap c12 sm-c6 sm-start-c7 md-c4 md-start-c5 lg-c3 lg-c0 xl-c2 text--2 space-t2"
       >
         <prismic-rich-text :field="slices[8].items[1].content" />
       </div>
       <div
-        class="sm-cap c12 sm-c6 sm-start-c7 md-c4 md-start-c5 lg-c3 lg-c0 xl-c2 text--2 space-t1"
+        class="sm-cap c12 sm-c6 sm-start-c7 md-c4 md-start-c9 lg-c3 lg-c0 xl-c2 text--2 space-t1"
       >
         <prismic-rich-text :field="slices[8].items[2].content" />
       </div>
@@ -108,6 +108,23 @@
     <figure class="grid js-animate animate space-4">
       <Vid :video="slices[9].primary" class="c12 js-animate animate" />
     </figure>
+
+    <!-- campaigns -->
+    <div class="space process grid js-animate animate">
+      <div class="sm-cap c12 sm-c6 md-c4 text--4 lg-c3 lg-c0">
+        <prismic-rich-text :field="slices[10].items[0].content" />
+      </div>
+      <div
+        class="sm-cap c12 sm-c6 sm-start-c7 md-c4 md-start-c5 lg-c3 lg-c0 xl-c2 text--2 space-t2"
+      >
+        <prismic-rich-text :field="slices[10].items[1].content" />
+      </div>
+      <div
+        class="sm-cap c12 sm-c6 sm-start-c7 md-c4 md-start-c9 lg-c3 lg-c0 xl-c2 text--2 space-t1"
+      >
+        <prismic-rich-text :field="slices[10].items[2].content" />
+      </div>
+    </div>
   </article>
 </template>
 
