@@ -1,30 +1,64 @@
-$color-fg: rgb(10,10,10);
-$color-bg: rgb(200,200,200);
-$color-interactive: rgb(0,0,255);
+/* colors
+   ========================================================================== */
 
-// Breakpoints
+// stored as css variable for easy switching with js
+// when you want to change a color, update the prop with the "--color" prefix.
+// the reason it's in this format is for an optional alpha channel for rgba.
+:root {
+  // background
+  --color-background: 18, 19, 4;
+  --background: rgb(var(--color-background));
+
+  // foreground
+  --color-foreground: 200, 200, 200;
+  --foreground: rgb(var(--color-foreground));
+
+  // links, buttons, etc.
+  --color-accent: 30, 30, 255;
+  --accent: rgb(var(--color-accent));
+}
+
+
+
+
+/* breakpoints
+   ========================================================================== */
+
 $vp-sm: 600px;
-$vp-md: 1000px;
-$vp-lg: 1200px;
-$vp-xl: 1600px;
+$vp-md: 768px;
+$vp-lg: 1024px;
+$vp-xl: 1300px;
+$vp-xx: 2200px;
 
-// Typography
+
+
+
+/* typography
+   ========================================================================== */
+
+// baseline grid size
+$baseline: 14px;
+
+// sans-serif
 $text-sans: "egstad-sans", Helvetica, sans-serif;
+
+// serif
 $text-serif: Times, serif;
+
+// monospace
 $text-mono: Courier, monospace;
+
+
 $text-fluidity-start: $vp-sm;
 $text-fluidity-end: $vp-xl;
+
+
+
+
 
 // Transitions
 $trans-ease: cubic-bezier(0.455, 0.03, 0.515, 0.955);
 $trans-duration: 400ms;
 $trans-delay-intro: 750ms;
 
-:root {
-  --color-background: 18, 19, 4;
-  --color-foreground: 200, 200, 200;
-  --color-accent: 30, 30, 255;
-  --background: rgb(var(--color-background));
-  --foreground: rgb(var(--color-foreground));
-  --accent: rgb(var(--color-accent));
-}
+

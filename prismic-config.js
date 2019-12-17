@@ -45,6 +45,7 @@ export const generatePageData = (documentType, data) => {
     case 'projects_single':
       return {
         pageContent: data,
+        slices: data.body,
         title: data.title[0].text,
       }
     case 'tags':

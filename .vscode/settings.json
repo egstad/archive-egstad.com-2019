@@ -31,5 +31,8 @@
   ],
   "files.associations": {
     "*.css": "vue-postcss"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
   }
 }

@@ -52,9 +52,9 @@ $baseline-color: red;
 .debug {
   &__nav {
     position: fixed;
-    bottom: 1rem;
-    left: 1rem;
-    right: 1rem;
+    bottom: 0;
+    left: 0;
+    right: 0;
     background: var(--foreground);
     z-index: 1000;
 
@@ -80,7 +80,7 @@ $baseline-color: red;
   .c1 {
     background: $column-color;
     opacity: 0.3;
-    height: 100%;
+    height: 100vh;
   }
 }
 
@@ -91,11 +91,26 @@ $baseline-color: red;
   width: 100%;
   height: 100%;
   z-index: 998;
+  // background: repeating-linear-gradient(
+  //   transparent,
+  //   transparent $baseline - 1px,
+  //   $baseline-color $baseline
+  // );
   background: repeating-linear-gradient(
-    transparent,
-    transparent 10px,
-    $baseline-color 11px
+    $baseline-color,
+    $baseline-color 1px,
+    transparent 1px,
+    transparent $baseline
   );
+
+  @media (min-width: $vp-lg) {
+    background: repeating-linear-gradient(
+      $baseline-color,
+      $baseline-color 1px,
+      transparent 1px,
+      transparent calc-vw($baseline, $vp-lg)
+    );
+  }
 }
 
 .viewport {

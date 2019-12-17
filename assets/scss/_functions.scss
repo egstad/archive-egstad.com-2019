@@ -1,0 +1,15 @@
+@function px-from-percent($percentage, $width:100) {
+  @return ($percentage * .01) * $width;
+}
+
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+@function calc-vw($pixel, $container-size:100) {
+  @return (strip-units($pixel) / strip-units($container-size)) * 100 + 0vw;
+}
+
+@function calc-leading($leading-in-pixels, $type-size) {
+  @return strip-units($leading-in-pixels) / strip-units($type-size);
+}

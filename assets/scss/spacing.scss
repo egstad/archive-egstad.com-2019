@@ -12,7 +12,7 @@
  * @include space(margin, bottom top, 4);
  *
  * Param 1: defines property. Use margin or padding.
- * Param 2: defines space location. Default is bottom. Could be 'top bottom'.
+ * Param 2:k defines space location. Default is bottom. Could be 'top bottom'.
  * Param 3: defines amount of space. 1 is the least, 8 is the most amount of space.
  */
 
@@ -25,10 +25,10 @@ $text-fluidity-end: 2500px;
 // param 2: min size
 // param 3: max size
 $space: (
-  (1, 10px, 10px),
-  (2, 20px, 20px),
-  (3, 40px, 40px),
-  (4, 40px, 80px),
+  (1, $baseline, $baseline),
+  (2, $baseline*2, $baseline*2),
+  (3, $baseline*3, $baseline*3),
+  (4, $baseline*4, $baseline*8),
   (5, 55px, 120px),
   (6, 80px, 200px),
   (7, 160px, 280px),
@@ -70,26 +70,24 @@ $space: (
 
 // set prefix name here, currently is "spacing".
 // one mixin for bottom padding only, one for top only, and one for both.
-.spacing {
-  &-bottom {
+.space {
+  &-b {
     @for $i from 1 through 8 {
-      &-#{$i} {
+      &#{$i} {
         @include space(margin, bottom, $i);
       }
     }
   }
-  &-top {
+  &-t {
     @for $i from 1 through 8 {
-      &-#{$i} {
+      &#{$i} {
         @include space(margin, top, $i);
       }
     }
   }
-  &-both {
-    @for $i from 1 through 8 {
-      &-#{$i} {
-        @include space(margin, bottom top, $i);
-      }
+  @for $i from 1 through 8 {
+    &-#{$i} {
+      @include space(margin, bottom top, $i);
     }
   }
 }
