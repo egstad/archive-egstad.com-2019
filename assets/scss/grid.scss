@@ -27,6 +27,14 @@ $grid-gutters: calc(20px + 0.5vw);
   align-self: start;
 }
 
+.c-align-center {
+  align-self: center;
+}
+
+.c-align-end {
+  align-self: end;
+}
+
 // This class sets css grid styles to an element across all breakpoints
 .grid {
   position: relative;

@@ -75,31 +75,38 @@
       </div>
     </div>
 
-    <!-- FPO -->
-    <figure class="grid js-animate animate space-4">
-      <Pic :image="slices[1].primary.image" class="c12 js-animate animate" />
-    </figure>
+    <!-- Pixel and Macbook -->
+    <div class="grid js-animate animate space-4">
+      <figure class="c12 md-c9 js-animate animate c-align-center">
+        <Pic :image="slices[7].primary.image" />
+      </figure>
+      <figure
+        class="c8 start-c3 md-c3 md-start-c10 c-align-center js-animate animate"
+      >
+        <Vid :video="slices[6].primary" />
+      </figure>
+    </div>
 
-    <!-- Creating a similar space -->
+    <!-- design -->
     <div class="space process grid js-animate animate">
       <div class="sm-cap c12 sm-c6 md-c12 text--4 lg-c3 lg-c0 md-center">
-        <prismic-rich-text :field="slices[6].items[0].content" />
+        <prismic-rich-text :field="slices[8].items[0].content" />
       </div>
       <div
         class="sm-cap c12 sm-c6 sm-start-c7 md-c4 md-start-c1 lg-c3 lg-c0 xl-c2 text--2 space-t2"
       >
-        <prismic-rich-text :field="slices[6].items[1].content" />
+        <prismic-rich-text :field="slices[8].items[1].content" />
       </div>
       <div
         class="sm-cap c12 sm-c6 sm-start-c7 md-c4 md-start-c5 lg-c3 lg-c0 xl-c2 text--2 space-t1"
       >
-        <prismic-rich-text :field="slices[6].items[2].content" />
+        <prismic-rich-text :field="slices[8].items[2].content" />
       </div>
     </div>
 
-    <!-- FPO -->
+    <!-- Image of Laptop -->
     <figure class="grid js-animate animate space-4">
-      <Pic :image="slices[1].primary.image" class="c12 js-animate animate" />
+      <Vid :video="slices[9].primary" class="c12 js-animate animate" />
     </figure>
   </article>
 </template>
@@ -167,11 +174,13 @@ import Debug from '@/components/templates/debug'
 import { routeTransitionFade } from '@/mixins/route-transitions'
 import { initApi, generatePageData } from '@/prismic-config'
 import Pic from '@/components/atoms/pic'
+import Vid from '@/components/atoms/vid'
 import Caption from '@/components/atoms/caption'
 
 export default {
   components: {
     Pic,
+    Vid,
     Caption,
     Debug,
   },
