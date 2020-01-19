@@ -19,14 +19,14 @@
     </button>
     <video
       ref="video"
-      playsinline
-      class="vid__video js-lazy"
       :muted="video.is_muted == 'true'"
       :loop="video.will_loop == 'true'"
       :controls="video.has_controls == 'true'"
       :poster="video.poster.url"
       :aria-label="video.alt_text"
       :data-src="video.source.url"
+      class="vid__video js-lazy"
+      playsinline
     ></video>
   </div>
 </template>

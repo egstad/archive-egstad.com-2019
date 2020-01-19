@@ -236,6 +236,7 @@ export default {
    ** Build configuration
    */
   build: {
+    vendor: ['three', 'vue-three'],
     // analyze: true,
     /*
      ** You can extend webpack config here
@@ -259,7 +260,7 @@ export default {
       config.node = { fs: 'empty' }
     },
 
-    transpile: ['Flickity'],
+    transpile: ['Flickity', 'three/examples/jsm/controls/OrbitControls'],
   },
   generate: {
     // interval: 50,

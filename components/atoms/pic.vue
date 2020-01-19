@@ -1,8 +1,8 @@
 <template>
   <img
-    class="image js-lazy"
     :data-srcset="[size.sm, size.md, size.lg, size.xl]"
     :alt="alt"
+    class="image js-lazy"
   />
 </template>
 
