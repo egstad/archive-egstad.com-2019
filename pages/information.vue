@@ -14,7 +14,7 @@
 import Prismic from 'prismic-javascript'
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-// import { LightProbeGenerator } from 'three/examples/jsm/lights/LightProbeGenerator'
+import { LightProbeGenerator } from 'three/examples/jsm/lights/LightProbeGenerator'
 import { routeTransitionFade } from '@/mixins/route-transitions'
 import { initApi, generatePageData } from '@/prismic-config'
 
@@ -26,9 +26,8 @@ export default {
       lightProbe: null,
       directionalLight: null,
       lightApi: {
-        lightProbeIntensity: 1.0,
-        directionalLightIntensity: 0.2,
-        envMapIntensity: 1,
+        directionalLightIntensity: 0.5,
+        envMapIntensity: 12,
       },
       scene: null,
       camera: null,
@@ -72,19 +71,22 @@ export default {
   methods: {
     init() {
       this.camera = new THREE.PerspectiveCamera(
-        80,
+        100,
         window.innerWidth / window.innerHeight,
         1,
         1000
       )
-      this.camera.position.z = 400
+      this.camera.position.set(75, 0, 60)
 
       this.scene = new THREE.Scene()
+      /* eslint-disable */
+      // this.scene.fog = new THREE.Fog(0x000000, 3);
+      /* eslint-enable */
 
       const texture = new THREE.TextureLoader().load(
         'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3410/_my-face.png'
       )
-      const radius = 168
+      const radius = 300
       const widthSegments = 64
       const heightSegments = 64
       const geometry = new THREE.SphereBufferGeometry(
@@ -120,8 +122,8 @@ export default {
         this.lightApi.directionalLightIntensity
       )
 
-      this.directionalLight.position.set(10, 10, 10)
-      this.scene.add(this.directionalLight)
+      // this.directionalLight.position.set(100, 0, 300)
+      // this.scene.add(this.directionalLight)
 
       // environmental map
       const genCubeUrls = function(prefix, postfix) {
@@ -141,7 +143,7 @@ export default {
 
         this.scene.background = cubeTexture
 
-        // lightProbe.copy( LightProbeGenerator.fromCubeTexture( cubeTexture ) );
+        this.lightProbe.copy(LightProbeGenerator.fromCubeTexture(cubeTexture))
 
         const geometry = new THREE.SphereBufferGeometry(45, 64, 64)
         // var geometry = new THREE.TorusKnotBufferGeometry( 4, 1.5, 256, 32, 2, 3 );
@@ -152,12 +154,12 @@ export default {
         const material = new THREE.MeshStandardMaterial({
           /* eslint-disable */
           color: 0xFFFFFF,
+          // emissive: 0x0000FF,
           /* eslint-enable */
-          metalness: 0,
-          roughness: 0,
+          metalness: 0.1,
+          roughness: 0.5,
           envMap: cubeTexture,
           map: texture,
-          shininess: 0,
           envMapIntensity: this.lightApi.envMapIntensity,
         })
 
@@ -173,7 +175,7 @@ export default {
 
       this.mesh.rotation.y += 0.005
 
-      this.controls.update()
+      // this.controls.update()
       this.renderer.render(this.scene, this.camera)
     },
     onWindowResize() {
