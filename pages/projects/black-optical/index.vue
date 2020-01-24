@@ -130,14 +130,14 @@
 
 <style lang="scss" scoped>
 .header {
-  margin-top: 10vw;
+  margin-top: calc(10vh + 10vw);
 
   h1 {
     font-variation-settings: 'wght' 400;
     letter-spacing: -0.06ch;
 
     @media (min-width: $vp-sm) {
-      font-size: 7vw;
+      font-size: 9vw;
       text-align: center;
     }
   }

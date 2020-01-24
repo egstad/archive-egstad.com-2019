@@ -168,8 +168,9 @@ export default {
   }
 
   &__item {
-    width: 40%;
-    margin: 0 1rem;
+    width: 50%;
+    // margin: 0 1.5vw;
+    padding: 1.5vw;
   }
 
   img {

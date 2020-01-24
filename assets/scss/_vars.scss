@@ -53,8 +53,10 @@ $text-fluidity-start: $vp-sm;
 $text-fluidity-end: $vp-xl;
 
 
+/* spacing
+   ========================================================================== */
 
-
+$space: calc(10px + 1vw);
 
 // Transitions
 $trans-ease: cubic-bezier(0.455, 0.03, 0.515, 0.955);

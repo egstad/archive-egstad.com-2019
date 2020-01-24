@@ -1,9 +1,9 @@
 <template>
   <header class="site-header">
-    <div class="site-header__toggles">
-      <ToggleMenu />
-      <ToggleTags />
-    </div>
+    <!-- <div class="site-header__toggles"> -->
+    <ToggleMenu />
+    <!-- <ToggleTags /> -->
+    <!-- </div> -->
 
     <transition name="fade" mode="out-in">
       <h1
@@ -14,16 +14,29 @@
         {{ label }}
       </h1>
     </transition>
+
+    <nav>
+      <ul>
+        <li><n-link class="text--3" to="/pieces">Pieces</n-link></li>
+        <li><n-link class="text--3" to="/projects">Projects</n-link></li>
+        <li>
+          <n-link class="text--3" to="/information"
+            ><span>Info</span><span class="truncate">rmation</span></n-link
+          >
+        </li>
+        <li><n-link class="text--3" to="/contact">Contact</n-link></li>
+      </ul>
+    </nav>
   </header>
 </template>
 
 <script>
 import ToggleMenu from '@/components/atoms/toggle-menu'
-import ToggleTags from '@/components/atoms/toggle-tags'
+// import ToggleTags from '@/components/atoms/toggle-tags'
 export default {
   components: {
     ToggleMenu,
-    ToggleTags,
+    // ToggleTags,
   },
   data() {
     return {
@@ -47,7 +60,6 @@ export default {
   methods: {
     updateLabel(route) {
       let labelText = route.name
-
       if (route.name === 'index') {
         labelText = 'Egstad'
       } else if (route.name === 'tags-slug') {
@@ -57,7 +69,6 @@ export default {
       } else if (route.name === 'projects-black-optical') {
         labelText = ''
       }
-
       this.label = labelText
     },
     overwriteLabel(text) {
@@ -68,9 +79,26 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.text--header {
+  @include text-size(21px, 44px);
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+}
+
+.truncate {
+  @media screen and (max-width: $vp-lg) {
+    display: none;
+  }
+}
+
 .site-header {
-  @include padding(all, 10px, 20px);
-  transition: transform $trans-duration $trans-ease;
+  padding: 10px $space;
+  // @include padding(all, 10px, $space);
+  transition: transform $trans-duration $trans-ease,
+    background-color $trans-duration $trans-ease;
+  background-color: rgba(var(--color-background), 1);
+  // box-shadow: 0 0.5em 1em rgba(var(--color-background), 0.2);
 
   // alignment
   display: flex;
@@ -92,12 +120,42 @@ export default {
   }
 }
 
+nav {
+  width: 100%;
+
+  @media screen and (max-width: $vp-md) {
+    display: none;
+  }
+
+  ul {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  a {
+    transition: all 0.2s ease-in-out;
+    text-transform: uppercase;
+    opacity: 0.3;
+    line-height: 1;
+
+    &:hover,
+    &.nuxt-link-exact-active {
+      opacity: 1;
+    }
+  }
+}
+
 .label {
   @include text-size(44px, 64px);
   letter-spacing: -0.02em;
   text-transform: uppercase;
   line-height: 1;
   margin-top: -0.15em;
+
+  @media screen and (min-width: $vp-md) {
+    display: none;
+  }
 }
 
 .scrolling-down .site-header {

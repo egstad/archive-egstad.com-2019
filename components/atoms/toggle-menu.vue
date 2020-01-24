@@ -18,3 +18,11 @@
     </svg>
   </button>
 </template>
+
+<style lang="scss" scoped>
+.toggle-menu {
+  @media screen and (min-width: $vp-md) {
+    display: none;
+  }
+}
+</style>
