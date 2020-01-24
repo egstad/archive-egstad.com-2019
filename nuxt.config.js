@@ -242,6 +242,15 @@ export default {
      ** You can extend webpack config here
      */
     extend(config, ctx) {
+      config.module.rules.push({
+        test: /\.(png|jpe?g|gif|svg|webp)$/,
+        loader: 'url-loader',
+        query: {
+          limit: 1000, // 1kB
+          name: 'img/[name].[hash:7].[ext]',
+        },
+      })
+
       // target the client compiler version to fix the prismic-edit-button
       // remove this if no longer needed as it adds 10k to the dist build
       config.resolve.alias.vue = 'vue/dist/vue.common'
@@ -260,7 +269,11 @@ export default {
       config.node = { fs: 'empty' }
     },
 
-    transpile: ['Flickity', 'three/examples/jsm/controls/OrbitControls'],
+    transpile: [
+      'Flickity',
+      'three/examples/jsm/controls/OrbitControls',
+      'three/examples/jsm/lights/LightProbeGenerator',
+    ],
   },
   generate: {
     // interval: 50,
