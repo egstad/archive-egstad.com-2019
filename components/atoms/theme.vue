@@ -19,11 +19,11 @@
 -->
 <template>
   <div
-    class="scroll-to-theme"
     :data-background="colors.background"
     :data-foreground="colors.foreground"
     :data-target="fadeTarget"
     :data-accent="colors.accent"
+    class="scroll-to-theme"
   ></div>
 </template>
 

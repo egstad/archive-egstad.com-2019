@@ -2,7 +2,7 @@
   <figcaption>
     <!-- Array (data from prismic) -->
     <template v-if="isPrismic">
-      <prismic-rich-text class="text--1 caption" :field="caption" />
+      <prismic-rich-text :field="caption" class="text--1 caption" />
     </template>
 
     <!-- String -->

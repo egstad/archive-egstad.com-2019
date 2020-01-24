@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper" :class="{ 'is-loaded': !isLoading }">
+  <div :class="{ 'is-loaded': !isLoading }" class="wrapper">
     <Flickity
       ref="gallery"
       :options="galleryOptions"

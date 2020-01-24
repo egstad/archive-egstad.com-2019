@@ -36,8 +36,8 @@
           <li
             v-if="result.visible"
             :key="'result-' + index"
-            class="results__list-item"
             :data-type="result.type"
+            class="results__list-item"
           >
             <nuxt-link :to="'/pieces/' + result.uid" class="results__link">
               <article class="results__item">

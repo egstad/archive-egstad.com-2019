@@ -3,8 +3,8 @@
     <Header />
     <Menu />
     <main
-      class="site-content spacing-top-2"
       :class="{ 'is-blurred': $store.state.menuIsOpen }"
+      class="site-content spacing-top-2"
     >
       <nuxt />
       <SiteFooter />

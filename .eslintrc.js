@@ -23,6 +23,8 @@ module.exports = {
     'no-unused-vars': ['warn', { 'args': 'none' }],
     // v-html vue component dangerously renders HTML
     'vue/no-v-html': 'off',
+    // i don't love this order bullshit
+    'vue/attributes-order': 0,
     // Allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
     'no-console': process.env.NODE_ENV === 'production' ? 2 : 0,

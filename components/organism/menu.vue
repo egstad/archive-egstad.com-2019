@@ -1,8 +1,8 @@
 <template>
   <nav
+    :class="{ 'is-active': $store.state.menuIsOpen }"
     class="js-menu menu cover"
     tabindex="-1"
-    :class="{ 'is-active': $store.state.menuIsOpen }"
   >
     <ul
       class="menu__list js-menu-list"
