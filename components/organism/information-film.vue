@@ -106,9 +106,7 @@ export default {
       const video = this.$refs.video
       video.setAttribute('crossorigin', 'anonymous')
       video.preload = 'auto'
-      // video.autoload = true
-      // video.play()
-      // video.play()
+      video.autoload = true
       this.$refs.playVideo.addEventListener('mousedown', () => {
         video.play()
       })
@@ -175,10 +173,10 @@ export default {
       if (this.isUserInteracting === true) {
         if (event.touches) {
           this.lon =
-            (this.onPointerDownPointerX - event.touches[0].clientX) * 0.6 +
+            (this.onPointerDownPointerX - event.touches[0].clientX) * 0.8 -
             this.onPointerDownLon
           this.lat =
-            (event.touches[0].clientY - this.onPointerDownPointerY) * 0.6 +
+            (event.touches[0].clientY - this.onPointerDownPointerY) * 0.8 -
             this.onPointerDownLat
         } else {
           this.lon =
