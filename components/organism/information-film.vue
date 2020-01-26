@@ -19,7 +19,7 @@
       <div>Drag me!</div>
     </div>
     <button ref="playVideo">Play</button>
-    <video :src="video" ref="video" muted playsinline loop></video>
+    <video :src="video" ref="video" muted playsinline autoplay loop></video>
   </div>
 </template>
 
