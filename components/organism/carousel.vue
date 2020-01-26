@@ -119,7 +119,6 @@ export default {
       this.galleryHeight = tallest
     },
     setFlickityHeight() {
-      console.log('set is fired')
       this.$refs.gallery.$el.style.height = `${this.galleryHeight}px`
       this.$refs.gallery.$flickity.viewport.style.height = `${this.galleryHeight}px`
     },

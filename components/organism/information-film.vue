@@ -11,6 +11,7 @@
     </div>
     <div
       class="nav"
+      ref="nav"
       @touchstart="onDocumentMouseDown"
       @touchmove="onDocumentMouseMove"
       @touchend="onDocumentMouseUp"
@@ -21,6 +22,7 @@
 
 <script>
 import * as THREE from 'three'
+import Draggable from 'gsap/Draggable'
 
 export default {
   props: {
@@ -53,6 +55,13 @@ export default {
     this.init()
     this.animate()
     window.addEventListener('resize', this.onWindowResize, false)
+
+    Draggable.create(this.$refs.nav, {
+      type: 'x,y',
+      edgeResistance: 0.65,
+      bounds: this.$refs.canvasWrapper,
+      inertia: true,
+    })
   },
   beforeDestroy() {
     // kill the animation loop
@@ -150,10 +159,10 @@ export default {
       if (this.isUserInteracting === true) {
         if (event.touches) {
           this.lon =
-            (this.onPointerDownPointerX - event.touches[0].clientX) * 0.3 +
+            (this.onPointerDownPointerX - event.touches[0].clientX) * 0.6 +
             this.onPointerDownLon
           this.lat =
-            (event.touches[0].clientY - this.onPointerDownPointerY) * 0.3 +
+            (event.touches[0].clientY - this.onPointerDownPointerY) * 0.6 +
             this.onPointerDownLat
         } else {
           this.lon =
@@ -201,9 +210,12 @@ video {
   background: rgba(var(--color-background), 0.7);
   width: 84px;
   height: 84px;
-  position: absolute;
   border-radius: 100%;
+  position: absolute;
   top: 1rem;
   left: 1rem;
+
+  > * {
+  }
 }
 </style>
