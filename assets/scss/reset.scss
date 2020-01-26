@@ -157,8 +157,8 @@ table {
 
 // highlighted text
 ::selection {
-  background: var(--foreground);
-  color: var(--foreground);
+  background: rgba(var(--color-foreground), 0.8);
+  color: var(--background);
 }
 
 // document styles

@@ -122,8 +122,7 @@ export default {
           '{ window.prismic = { endpoint: "' + prismicConfig.baseUrl + '"} }',
       },
       {
-        src:
-          'https://cdnjs.cloudflare.com/ajax/libs/gsap/2.1.3/TweenMax.min.js',
+        src: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.1.1/gsap.min.js',
         defer: true,
       },
       { src: '//static.cdn.prismic.io/prismic.min.js', async: true },
@@ -145,6 +144,7 @@ export default {
     '@/assets/scss/spacing.scss',
     '@/assets/scss/animate.scss',
     '@/assets/scss/helpers.scss',
+    '@/assets/scss/scroll.scss',
   ],
 
   /*

@@ -96,9 +96,10 @@ export default {
   padding: 10px $space;
   // @include padding(all, 10px, $space);
   transition: transform $trans-duration $trans-ease,
-    background-color $trans-duration $trans-ease;
+    background-color $trans-duration $trans-ease,
+    box-shadow $trans-duration $trans-ease;
   background-color: rgba(var(--color-background), 1);
-  // box-shadow: 0 0.5em 1em rgba(var(--color-background), 0.2);
+  // box-shadow: 0 0.5em 2em 2em rgba(var(--color-background), 1);
 
   // alignment
   display: flex;

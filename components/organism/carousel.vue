@@ -168,9 +168,13 @@ export default {
   }
 
   &__item {
-    width: 50%;
-    // margin: 0 1.5vw;
-    padding: 1.5vw;
+    // 50%
+    // width: calc((100% - #{$space}) / 2);
+    // padding-left: $space;
+    // 50%
+
+    width: calc((100vw - #{$space} * 2) - 16vw);
+    padding-left: $space;
   }
 
   img {
