@@ -80,12 +80,8 @@ export default {
     this.$app.$on('image::loaded', el => {
       // does this image exist in this gallery?
       if (el.closest('.gallery')) {
-        // if image is taller, update height
-        if (this.galleryHeight < el.clientHeight) {
-          this.galleryHeight = el.clientHeight
-          this.measureCells()
-          this.setFlickityHeight()
-        }
+        this.measureCells()
+        this.setFlickityHeight()
       }
     })
   },
@@ -93,8 +89,6 @@ export default {
     // update cell heights on resize
     this.$app.$on('page::resized', this.resizeFlickity)
     this.$app.$on('carousel::updateHeight', this.resizeFlickity)
-
-    console.log(this.options)
   },
   beforeDestroy() {
     this.$app.$off('carousel::updateHeight')
@@ -125,6 +119,7 @@ export default {
       this.galleryHeight = tallest
     },
     setFlickityHeight() {
+      console.log('set is fired')
       this.$refs.gallery.$el.style.height = `${this.galleryHeight}px`
       this.$refs.gallery.$flickity.viewport.style.height = `${this.galleryHeight}px`
     },

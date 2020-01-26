@@ -1,11 +1,20 @@
 <template>
   <div
+    class="wrapper"
     ref="wrapper"
     @mousedown="onDocumentMouseDown"
     @mousemove="onDocumentMouseMove"
     @mouseup="onDocumentMouseUp"
   >
-    <canvas ref="canvas"></canvas>
+    <div class="canvas-wrapper" ref="canvasWrapper">
+      <canvas ref="canvas"></canvas>
+    </div>
+    <div
+      class="nav"
+      @touchstart="onDocumentMouseDown"
+      @touchmove="onDocumentMouseMove"
+      @touchend="onDocumentMouseUp"
+    ></div>
     <video :src="video" ref="video" muted playsinline loop></video>
   </div>
 </template>
@@ -56,11 +65,14 @@ export default {
       // setup camera
       this.camera = new THREE.PerspectiveCamera(
         75,
-        this.$store.state.winWidth / this.$store.state.winHeight,
+        this.$refs.canvasWrapper.clientWidth /
+          this.$refs.canvasWrapper.clientHeight,
         1,
         1100
       )
       this.camera.target = new THREE.Vector3(0, 0, 0)
+
+      this.camera.updateProjectionMatrix()
 
       // create scene
       this.scene = new THREE.Scene()
@@ -90,13 +102,14 @@ export default {
         canvas: this.$refs.canvas,
         antialias: true,
       })
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
+      this.renderer.setSize(
+        this.$refs.canvasWrapper.clientWidth,
+        this.$refs.canvasWrapper.clientHeight
+      )
     },
     animate() {
       this.raf = requestAnimationFrame(this.animate)
       this.update()
-      // this.camera.lookAt(this.camera.target)
-      // this.renderer.render(this.scene, this.camera)
     },
     update() {
       this.lat = Math.max(-85, Math.min(85, this.lat))
@@ -110,6 +123,10 @@ export default {
         this.distance * Math.sin(this.phi) * Math.sin(this.theta)
 
       this.camera.lookAt(this.camera.target)
+      this.camera.aspect =
+        this.$refs.canvasWrapper.clientWidth /
+        this.$refs.canvasWrapper.clientHeight
+      this.camera.updateProjectionMatrix()
 
       this.renderer.render(this.scene, this.camera)
     },
@@ -118,30 +135,49 @@ export default {
 
       this.isUserInteracting = true
 
-      this.onPointerDownPointerX = event.clientX
-      this.onPointerDownPointerY = event.clientY
+      if (event.touches) {
+        this.onPointerDownPointerX = event.touches[0].clientX
+        this.onPointerDownPointerY = event.touches[0].clientY
+      } else {
+        this.onPointerDownPointerX = event.clientX
+        this.onPointerDownPointerY = event.clientY
+      }
 
       this.onPointerDownLon = this.lon
       this.onPointerDownLat = this.lat
     },
     onDocumentMouseMove(event) {
       if (this.isUserInteracting === true) {
-        this.lon =
-          (this.onPointerDownPointerX - event.clientX) * 0.1 +
-          this.onPointerDownLon
-        this.lat =
-          (event.clientY - this.onPointerDownPointerY) * 0.1 +
-          this.onPointerDownLat
+        if (event.touches) {
+          this.lon =
+            (this.onPointerDownPointerX - event.touches[0].clientX) * 0.3 +
+            this.onPointerDownLon
+          this.lat =
+            (event.touches[0].clientY - this.onPointerDownPointerY) * 0.3 +
+            this.onPointerDownLat
+        } else {
+          this.lon =
+            (this.onPointerDownPointerX - event.clientX) * 0.1 +
+            this.onPointerDownLon
+          this.lat =
+            (event.clientY - this.onPointerDownPointerY) * 0.1 +
+            this.onPointerDownLat
+        }
       }
     },
     onDocumentMouseUp() {
       this.isUserInteracting = false
     },
     onWindowResize() {
-      this.camera.aspect = window.innerWidth / window.innerHeight
+      this.camera.aspect =
+        this.$refs.canvasWrapper.clientWidth /
+        this.$refs.canvasWrapper.clientHeight
       this.camera.updateProjectionMatrix()
 
-      this.renderer.setSize(window.innerWidth, window.innerHeight)
+      this.renderer.setSize(
+        this.$refs.canvasWrapper.clientWidth,
+        this.$refs.canvasWrapper.clientHeight
+      )
     },
   },
 }
@@ -150,5 +186,24 @@ export default {
 <style lang="scss" scoped>
 video {
   display: none;
+}
+
+.wrapper {
+  position: relative;
+}
+
+.canvas-wrapper {
+  width: 100%;
+  height: 52vh;
+}
+
+.nav {
+  background: rgba(var(--color-background), 0.7);
+  width: 84px;
+  height: 84px;
+  position: absolute;
+  border-radius: 100%;
+  top: 1rem;
+  left: 1rem;
 }
 </style>
