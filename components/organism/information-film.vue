@@ -105,10 +105,13 @@ export default {
       // get ze video
       const video = this.$refs.video
       video.setAttribute('crossorigin', 'anonymous')
+      video.preload = 'auto'
+      video.autoload = true
+      video.play()
       // video.play()
-      this.$refs.playVideo.addEventListener('mousedown', () => {
-        video.play()
-      })
+      // this.$refs.playVideo.addEventListener('mousedown', () => {
+
+      // })
 
       // convert video to texture
       const texture = new THREE.VideoTexture(video)
