@@ -15,14 +15,24 @@
       @touchstart="onDocumentMouseDown"
       @touchmove="onDocumentMouseMove"
       @touchend="onDocumentMouseUp"
-    ></div>
+    >
+      <div>Drag me!</div>
+    </div>
+    <button ref="playVideo">Play</button>
     <video :src="video" ref="video" muted playsinline loop></video>
   </div>
 </template>
 
 <script>
 import * as THREE from 'three'
-import Draggable from 'gsap/Draggable'
+
+// import Draggable from 'gsap/Draggable'
+// import Draggable from 'gsap/Draggable'
+let Draggable
+if (process.client) {
+  Draggable = require('gsap/Draggable')
+  Draggable = Draggable.Draggable
+}
 
 export default {
   props: {
@@ -95,7 +105,10 @@ export default {
       // get ze video
       const video = this.$refs.video
       video.setAttribute('crossorigin', 'anonymous')
-      video.play()
+      // video.play()
+      this.$refs.playVideo.addEventListener('mousedown', () => {
+        video.play()
+      })
 
       // convert video to texture
       const texture = new THREE.VideoTexture(video)
@@ -189,6 +202,11 @@ export default {
       )
     },
   },
+  // head() {
+  //   return {
+  //     script: [{ src: 'gsap/Draggable.min.js' }],
+  //   }
+  // },
 }
 </script>
 
