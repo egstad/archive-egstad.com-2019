@@ -4,12 +4,14 @@
   <section class="container">
     <Debug />
 
-    <div ref="thing" class="thing">
+    <!-- Three JS Faceball. Aka Eggball -->
+    <div ref="eggcarton" class="eggcarton">
       <div class="eggball" ref="eggball">
         <canvas ref="canvas"></canvas>
       </div>
     </div>
 
+    <!-- Logo -->
     <div class="grid">
       <h1 class="logo c12">EGSTAD</h1>
 
@@ -51,15 +53,19 @@
       ></div>
     </div>
 
+    <InformationFilm :video="pageContent.video.url" />
+
     <Slices :slices="pageContent.body" />
   </section>
 </template>
 
 <script>
 import * as THREE from 'three'
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-/* eslint-disable */
+// import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import Prismic from 'prismic-javascript'
+import utils from '@/plugins/utils'
+import InformationFilm from '@/components/organism/information-film'
+/* eslint-disable */
 import grid from '@/assets/scss/grid.scss'
 import Debug from '@/components/templates/debug'
 /* eslint-enable */
@@ -71,20 +77,19 @@ export default {
   components: {
     Slices,
     Debug,
+    InformationFilm,
   },
   mixins: [routeTransitionFade],
   data() {
     return {
+      // eggball
       renderer: null,
       scene: null,
       camera: null,
-      controls: null,
       mesh: null,
       raf: null,
-      mouse: null,
-      target: null,
-      windowHalf: null,
       meshMoveInterval: null,
+      meshMoveDuration: 3000,
       eggBallCoords: null,
     }
   },
@@ -112,9 +117,12 @@ export default {
     this.init()
     this.animate()
     window.addEventListener('resize', this.onWindowResize)
-    this.$refs.thing.addEventListener('mouseenter', this.relocateEggball)
-    this.$refs.thing.addEventListener('touchstart', this.relocateEggball)
-    this.meshMoveInterval = setInterval(this.relocateEggball, 3000)
+    this.$refs.eggcarton.addEventListener('mouseenter', this.relocateEggball)
+    this.$refs.eggcarton.addEventListener('touchstart', this.relocateEggball)
+    this.meshMoveInterval = setInterval(
+      this.relocateEggball,
+      this.meshMoveDuration
+    )
 
     this.$app.$emit('page::mounted')
   },
@@ -140,10 +148,6 @@ export default {
       this.camera.position.z = 500
       this.mouse = new THREE.Vector2()
       this.target = new THREE.Vector2()
-      this.windowHalf = new THREE.Vector2(
-        this.$refs.eggball.clientWidth / 2,
-        this.$refs.eggball.clientWidth / 2
-      )
 
       this.scene = new THREE.Scene()
 
@@ -165,9 +169,10 @@ export default {
       this.scene.add(this.mesh)
 
       const bgColorHex = this.pageContent.background
-      const bgColor = bgColorHex.substr(1).toUpperCase()
+      const bgColor = utils.hexToRgb(bgColorHex)
+      // F0E6DA
       // eslint-disable-next-line
-      this.scene.fog = new THREE.Fog(`0x${bgColor}`, 420, 550)
+      this.scene.fog = new THREE.Fog(`rgb(${bgColor})`, 400, 540)
 
       this.renderer = new THREE.WebGLRenderer({
         alpha: true,
@@ -179,25 +184,16 @@ export default {
         this.$refs.eggball.clientWidth
       )
 
-      this.controls = new OrbitControls(this.camera, this.renderer.domElement)
-      this.controls.enableDamping = true
-      this.controls.dampingFactor = 0.5
-      this.controls.enableZoom = false
+      // this.controls = new OrbitControls(this.camera, this.renderer.domElement)
+      // this.controls.enableDamping = true
+      // this.controls.dampingFactor = 0.5
+      // this.controls.enableZoom = false
       // this.controls.minDistance = 200
       // this.controls.maxDistance = 500
       // this.controls.enablePan = false
     },
     animate() {
       this.raf = requestAnimationFrame(this.animate)
-
-      // this.mesh.rotation.y += 0.01
-      // this.mesh.rotation.y += 0.01
-      // this.target.x = this.mouse.x * 0.005
-      // this.target.y = this.mouse.y * 0.002
-      // this.camera.rotation.x += 0.05 * (this.target.y - this.camera.rotation.x)
-      // this.camera.rotation.y += 0.05 * (this.target.x - this.camera.rotation.y)
-
-      // this.controls.update()
       this.renderer.render(this.scene, this.camera)
     },
     onWindowResize() {
@@ -218,11 +214,11 @@ export default {
         y: !this.eggBallCoords ? 300 : this.eggBallCoords.yNew,
         xNew: Math.round(
           Math.random() * this.$store.state.winWidth -
-            this.$refs.thing.clientWidth / 1.5
+            this.$refs.eggcarton.clientWidth / 1.5
         ),
         yNew: Math.round(
           Math.random() * this.$store.state.docHeight -
-            this.$refs.thing.clientHeight / 1.5
+            this.$refs.eggcarton.clientHeight / 1.5
         ),
       }
     },
@@ -250,20 +246,11 @@ export default {
       this.updateEggballCoords()
       this.setEggballRollVelocity()
 
-      window.TweenMax.to(this.$refs.thing, 1.2, {
+      window.TweenMax.to(this.$refs.eggcarton, 1.2, {
         ease: window.Power4.easeOut,
         x: this.eggBallCoords.xNew,
         y: this.eggBallCoords.yNew,
       })
-    },
-    onMouseMove(event) {
-      this.mouse.x = event.clientX - this.windowHalf.x
-      this.mouse.y = event.clientY - this.windowHalf.x
-
-      // this.mesh.rotation.x += 0.01
-      // this.mesh.rotation.y += 0.01
-      // this.mesh.rotation.x += 0.05 * (this.target.y - this.mesh.rotation.x)
-      // this.mesh.rotation.y += 0.05 * (this.target.x - this.mesh.rotation.y)
     },
   },
   head() {
@@ -304,7 +291,7 @@ export default {
   }
 }
 
-.thing {
+.eggcarton {
   min-width: 150px;
   min-height: 150px;
   max-width: 350px;
