@@ -179,6 +179,7 @@ export default {
         canvas: this.$refs.canvas,
         antialias: true,
       })
+      this.renderer.setPixelRatio(window.devicePixelRatio)
       this.renderer.setSize(
         this.$refs.eggball.clientWidth,
         this.$refs.eggball.clientWidth
@@ -221,7 +222,7 @@ export default {
         yNew: Math.round(
           utils.getRandomInt(
             0,
-            this.$store.state.winHeight - this.$refs.eggcarton.clientHeight
+            this.$store.state.docHeight - this.$refs.eggcarton.clientHeight
           )
         ),
       }
@@ -234,7 +235,7 @@ export default {
       // y difference
       const yd = this.eggBallCoords.yNew - this.eggBallCoords.y
       // y planes in document
-      const yp = this.$store.state.winHeight / 24
+      const yp = this.$store.state.docHeight / 24
 
       // console.log((xd / xp) * 0.4)
 
