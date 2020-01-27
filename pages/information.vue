@@ -91,6 +91,29 @@ export default {
       meshMoveInterval: null,
       meshMoveDuration: 1000,
       eggBallCoords: null,
+      themes: [
+        {
+          foreground: '#FFFFFF', // white
+          background: '#FF90BD', // pink
+          accent: '#FF0200', // red
+        },
+        {
+          foreground: '#FF1AC2', // magenta
+          background: '#FEFE00', // yellow
+          accent: '#FF1AC2', // magenta
+        },
+        {
+          foreground: '#1F201E', // charcoal
+          background: '#EBE3D8', // gray
+          accent: '#0599FF', // blue
+        },
+        {
+          foreground: '#107A49', // forrest
+          background: '#E7EBEE', // gray
+          accent: '#FFAA00', // yellow
+        },
+      ],
+      themeCurrentIndex: 0,
     }
   },
   asyncData(context) {
@@ -107,11 +130,13 @@ export default {
     }
   },
   created() {
-    this.$app.$store.commit('setTheme', {
-      background: this.pageContent.background,
-      foreground: this.pageContent.foreground,
-      accent: this.pageContent.accent,
-    })
+    this.shuffleThemes()
+    this.setRandomTheme()
+    // this.$app.$store.commit('setTheme', {
+    //   background: this.pageContent.background,
+    //   foreground: this.pageContent.foreground,
+    //   accent: this.pageContent.accent,
+    // })
   },
   mounted() {
     this.init()
@@ -168,8 +193,9 @@ export default {
       this.mesh.rotation.y = 0.35
       this.scene.add(this.mesh)
 
-      const bgColorHex = this.pageContent.background
-      const bgColor = utils.hexToRgb(bgColorHex)
+      const bgColor = getComputedStyle(
+        document.documentElement
+      ).getPropertyValue('--color-background')
       // F0E6DA
       // eslint-disable-next-line
       this.scene.fog = new THREE.Fog(`rgb(${bgColor})`, 400, 540)
@@ -256,6 +282,19 @@ export default {
         x: this.eggBallCoords.xNew,
         y: this.eggBallCoords.yNew,
       })
+    },
+    shuffleThemes() {
+      const shuffledThemes = utils.shuffle(this.themes)
+      this.themes = shuffledThemes
+    },
+    setRandomTheme() {
+      this.$app.$store.commit('setTheme', {
+        background: this.themes[this.themeCurrentIndex].background,
+        foreground: this.themes[this.themeCurrentIndex].foreground,
+        accent: this.themes[this.themeCurrentIndex].accent,
+      })
+
+      this.themeCurrentIndex++
     },
   },
   head() {

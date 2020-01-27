@@ -180,10 +180,10 @@ export default {
             this.onPointerDownLat
         } else {
           this.lon =
-            (this.onPointerDownPointerX - event.clientX) * 0.1 +
+            (this.onPointerDownPointerX - event.clientX) * 0.5 +
             this.onPointerDownLon
           this.lat =
-            (event.clientY - this.onPointerDownPointerY) * 0.1 +
+            (event.clientY - this.onPointerDownPointerY) * 0.5 +
             this.onPointerDownLat
         }
       }
