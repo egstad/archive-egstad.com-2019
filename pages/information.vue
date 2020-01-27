@@ -89,7 +89,7 @@ export default {
       mesh: null,
       raf: null,
       meshMoveInterval: null,
-      meshMoveDuration: 3000,
+      meshMoveDuration: 1000,
       eggBallCoords: null,
     }
   },
@@ -152,7 +152,7 @@ export default {
       this.scene = new THREE.Scene()
 
       const texture = new THREE.TextureLoader().load(
-        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3410/_my-face.png'
+        'https://s3-us-west-2.amazonaws.com/s.cdpn.io/3410/_me.jpg'
       )
       const radius = 100
       const widthSegments = 64
@@ -213,12 +213,16 @@ export default {
         x: !this.eggBallCoords ? 300 : this.eggBallCoords.xNew,
         y: !this.eggBallCoords ? 300 : this.eggBallCoords.yNew,
         xNew: Math.round(
-          Math.random() * this.$store.state.winWidth -
-            this.$refs.eggcarton.clientWidth / 1.5
+          utils.getRandomInt(
+            0,
+            this.$store.state.winWidth - this.$refs.eggcarton.clientWidth
+          )
         ),
         yNew: Math.round(
-          Math.random() * this.$store.state.docHeight -
-            this.$refs.eggcarton.clientHeight / 1.5
+          utils.getRandomInt(
+            0,
+            this.$store.state.winHeight - this.$refs.eggcarton.clientHeight
+          )
         ),
       }
     },
@@ -226,19 +230,19 @@ export default {
       // x difference
       const xd = this.eggBallCoords.xNew - this.eggBallCoords.x
       // x planes in window
-      const xp = this.$store.state.winWidth / 12
+      const xp = this.$store.state.winWidth / 24
       // y difference
       const yd = this.eggBallCoords.yNew - this.eggBallCoords.y
       // y planes in document
-      const yp = this.$store.state.docHeight / 12
+      const yp = this.$store.state.winHeight / 24
 
       // console.log((xd / xp) * 0.4)
 
       // i fuqd up. somehow these are backwards. but it works. so wutever.
       window.TweenMax.to(this.mesh.rotation, 1.2, {
         ease: window.Power4.easeOut,
-        y: (xd / xp) * 0.5,
-        x: (yd / yp) * 0.3,
+        y: Math.round((xd / xp) * 0.3),
+        x: Math.round((yd / yp) * 0.3),
       })
     },
     relocateEggball() {
@@ -263,6 +267,7 @@ export default {
 // $grid-gutters: calc(20px + 0.5vw);
 
 .logo {
+  color: var(--accent);
   font-size: 28.3vw;
   white-space: nowrap;
   letter-spacing: -0.08em;
