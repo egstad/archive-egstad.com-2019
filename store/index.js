@@ -101,7 +101,7 @@ export const mutations = {
         // remember that all colors need to be hex!
         // we convert theses to RGB within the theme.js file
         case 'black':
-          state.theme.background = '#0000ff'
+          state.theme.background = '#000000'
           state.theme.foreground = '#ffffff'
           state.theme.accent = '#ffffff'
           break

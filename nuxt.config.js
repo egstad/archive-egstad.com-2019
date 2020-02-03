@@ -153,7 +153,14 @@ export default {
   plugins: [
     '@/plugins/prismic/prismic-vue.js',
     '@/plugins/page-metadata.js',
-    '@/plugins/device.js',
+    {
+      src: '@/plugins/device.js',
+      ssr: false,
+    },
+    {
+      src: '@/plugins/fontloader.js',
+      ssr: false,
+    },
     {
       src: '@/plugins/scrolls.js',
       ssr: false,

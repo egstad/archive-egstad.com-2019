@@ -140,12 +140,13 @@ nav {
   }
 
   a {
-    transition: all 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in-out;
     text-transform: uppercase;
     opacity: 0.3;
     line-height: 1;
 
     &:hover,
+    &.nuxt-link-active,
     &.nuxt-link-exact-active {
       opacity: 1;
     }
