@@ -90,18 +90,44 @@ export const mutations = {
    * Color
    */
   setTheme(state, val) {
-    // save it
-    if (val.background) {
-      state.theme.background = val.background
-    }
-    if (val.foreground) {
-      state.theme.foreground = val.foreground
-    }
-    if (val.accent) {
-      state.theme.accent = val.accent
+    // registered themes come through as strings. theme overrides are objects.
+    const isDefinedTheme = typeof val === 'string'
+
+    if (isDefinedTheme) {
+      // in use
+      // this.$app.$store.commit('setTheme', 'black')
+
+      switch (val) {
+        // remember that all colors need to be hex!
+        // we convert theses to RGB within the theme.js file
+        case 'black':
+          state.theme.background = '#0000ff'
+          state.theme.foreground = '#ffffff'
+          state.theme.accent = '#ffffff'
+          break
+        case 'white':
+          state.theme.background = '#ffffff'
+          state.theme.foreground = '#000000'
+          state.theme.accent = '#000000'
+          break
+        default:
+          // do nothing
+          return
+      }
+    } else {
+      // if author doesn't assign all three colors, the unassigned color remains the same as previous theme
+      if (val.background) {
+        state.theme.background = val.background
+      }
+      if (val.foreground) {
+        state.theme.foreground = val.foreground
+      }
+      if (val.accent) {
+        state.theme.accent = val.accent
+      }
     }
 
     // update it boi!
-    theme.updateColor(val)
+    theme.updateColor(state.theme)
   },
 }

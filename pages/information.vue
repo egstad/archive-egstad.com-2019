@@ -53,7 +53,7 @@
       ></div>
     </div>
 
-    <InformationFilm :video="pageContent.video.url" />
+    <InformationFilm ref="film" :video="pageContent.video.url" />
 
     <Slices :slices="pageContent.body" />
   </section>
@@ -91,6 +91,7 @@ export default {
       meshMoveInterval: null,
       meshMoveDuration: 1000,
       eggBallCoords: null,
+      filmLocation: null,
       themes: [
         {
           foreground: '#FFFFFF', // white
@@ -141,17 +142,20 @@ export default {
   mounted() {
     this.init()
     this.animate()
-    window.addEventListener('resize', this.onWindowResize)
+    this.$app.$on('page::resized', this.onWindowResize)
     this.$refs.eggcarton.addEventListener('mouseenter', this.relocateEggball)
     this.$refs.eggcarton.addEventListener('touchstart', this.relocateEggball)
     this.meshMoveInterval = setInterval(
       this.relocateEggball,
       this.meshMoveDuration
     )
+    // update location - used to keep ball position above of it
+    this.filmLocation = this.$refs.film.$el.getBoundingClientRect().top
 
     this.$app.$emit('page::mounted')
   },
   beforeDestroy() {
+    this.$app.$off('page::resized')
     // kill the animation loop
     cancelAnimationFrame(this.raf)
     // teardown resize event
@@ -224,6 +228,10 @@ export default {
       this.renderer.render(this.scene, this.camera)
     },
     onWindowResize() {
+      // update location - used to keep ball position above of it
+      this.filmLocation = this.$refs.film.$el.getBoundingClientRect().top
+
+      // set camera
       this.camera.aspect =
         this.$refs.eggball.clientWidth / this.$refs.eggball.clientWidth
       this.camera.updateProjectionMatrix()
@@ -248,7 +256,7 @@ export default {
         yNew: Math.round(
           utils.getRandomInt(
             0,
-            this.$store.state.docHeight - this.$refs.eggcarton.clientHeight
+            this.filmLocation - this.$refs.eggcarton.clientWidth
           )
         ),
       }
@@ -261,9 +269,7 @@ export default {
       // y difference
       const yd = this.eggBallCoords.yNew - this.eggBallCoords.y
       // y planes in document
-      const yp = this.$store.state.docHeight / 24
-
-      // console.log((xd / xp) * 0.4)
+      const yp = this.filmLocation / 24
 
       // i fuqd up. somehow these are backwards. but it works. so wutever.
       window.TweenMax.to(this.mesh.rotation, 1.2, {
@@ -308,14 +314,14 @@ export default {
 
 .logo {
   color: var(--accent);
-  font-size: 28.3vw;
+  font-size: calc(30.4vw - calc(#{$space}));
   white-space: nowrap;
   letter-spacing: -0.08em;
   transform: translateX(-0.1em);
   margin-top: 20vw;
   margin-top: calc(200px + 10vw);
   // padding: 0 calc(#{$grid-gutters} * 0.5 + 4vw);
-  font-variation-settings: 'wght' 450 !important;
+  font-variation-settings: 'wght' 350 !important;
 }
 
 .para {
@@ -346,7 +352,7 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 10;
   transform: translate3d(40%, 200%, 0);
 
   &:after {

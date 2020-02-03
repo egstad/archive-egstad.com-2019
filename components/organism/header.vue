@@ -93,12 +93,13 @@ export default {
 }
 
 .site-header {
-  padding: 10px $space;
+  padding: 10px $space 14px;
   // @include padding(all, 10px, $space);
   transition: transform $trans-duration $trans-ease,
     background-color $trans-duration $trans-ease,
     box-shadow $trans-duration $trans-ease;
-  background-color: rgba(var(--color-background), 1);
+  background-color: rgba(var(--color-background), 0.85);
+  backdrop-filter: blur(5px);
   // box-shadow: 0 0.5em 2em 2em rgba(var(--color-background), 1);
 
   // alignment
@@ -114,6 +115,10 @@ export default {
   z-index: 11;
   width: 100%;
   transform: translate3d(0, 0, 0);
+
+  @media screen and (min-width: $vp-md) {
+    padding: 10px calc(calc(10px + 1vw) * 2) 14px;
+  }
 
   &__toggles {
     display: flex;
