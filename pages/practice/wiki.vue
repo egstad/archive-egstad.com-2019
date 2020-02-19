@@ -1,17 +1,24 @@
 <template>
   <section>
-    <article v-for="item in items" :key="item.id">
+    <article
+      v-for="item in items"
+      :key="item.id"
+      ref="article"
+      @click="toggleActive()"
+    >
       <header>
-        <h2 class="text--5">
+        <h2>
           <span>{{ item.adjective }}</span
           >&nbsp;<span>{{ item.noun }}</span>
         </h2>
       </header>
-      <img
-        :src="item.image.src"
-        :alt="item.image.title + ' - ' + item.image.description"
-        :title="item.image.title"
-      />
+      <figure>
+        <img
+          :src="item.image.src"
+          :alt="item.image.title + ' - ' + item.image.description"
+          :title="item.image.title"
+        />
+      </figure>
     </article>
   </section>
 </template>
@@ -324,6 +331,13 @@ export default {
     this.shuffleItems()
     this.createItems()
   },
+  created() {
+    this.$app.$store.commit('setTheme', {
+      background: '#000000',
+      foreground: '#4A462A',
+      accent: '#4A462A',
+    })
+  },
   methods: {
     shuffleItems() {
       utils.shuffle(this.images)
@@ -384,6 +398,30 @@ export default {
       //   this.fetchImage(imageQuery)
       // })
     },
+    toggleActive() {},
   },
 }
 </script>
+
+<style lang="scss" scoped>
+article {
+  margin: 0;
+  text-align: center;
+
+  img {
+    margin: 0 auto;
+  }
+}
+
+h2 {
+  font-size: 10vw;
+  font-family: 'FranklinGothic-ExtraCond';
+
+  span:first-child {
+    text-transform: lowercase;
+  }
+  span:last-child {
+    text-transform: uppercase;
+  }
+}
+</style>
