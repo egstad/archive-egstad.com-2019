@@ -50,13 +50,13 @@ $text-mono: Courier, monospace;
 
 
 $text-fluidity-start: $vp-sm;
-$text-fluidity-end: $vp-xl;
+$text-fluidity-end: $vp-xx;
 
 
 /* spacing
    ========================================================================== */
 
-$space: calc(10px + 1vw);
+$space: calc(5px + 2vw);
 
 // Transitions
 $trans-ease: cubic-bezier(0.455, 0.03, 0.515, 0.955);
@@ -64,3 +64,7 @@ $trans-duration: 400ms;
 $trans-delay-intro: 750ms;
 
 
+/* Utils
+   ========================================================================== */
+
+$util-space: $space;

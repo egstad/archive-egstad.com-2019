@@ -237,7 +237,19 @@ export default {
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
-  axios: {},
+  axios: {
+    credentials: false,
+    proxy: true,
+  },
+
+  proxy: {
+    '/api': {
+      target: 'https://en.wikipedia.org/w/api.php',
+      pathRewrite: {
+        '^/api': '/',
+      },
+    },
+  },
 
   /*
    ** Build configuration

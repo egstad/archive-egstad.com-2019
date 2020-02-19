@@ -47,7 +47,7 @@ const getNextPageFromPrismic = context => {
       .query(Prismic.Predicates.at('document.type', 'pieces_single'), {
         page: context.state.pagination.page + 1,
         pageSize: context.state.pagination.results_per_page,
-        orderings: '[document.first_publication_date]',
+        orderings: '[my.pieces_single.date_of_creation desc]',
       })
       .then(response => {
         const updatedPagination = {

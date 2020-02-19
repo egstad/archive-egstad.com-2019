@@ -72,6 +72,7 @@ const scroll = {
 
   isTopOut() {
     const isAtTop = (device.docY === 0) === true
+    const isNearTop = -device.docY <= 200 === true
     // is two viewports away
     // looks like three here, but that's because docY is in zero position
     const isNearBottom =
@@ -83,6 +84,9 @@ const scroll = {
     // at top
     if (isAtTop) {
       this.isScrollTop()
+    }
+    if (isNearTop) {
+      this.isScrollNearTop()
     }
     // at bottom
     if (isAtBottom) {
@@ -108,7 +112,8 @@ const scroll = {
     document.documentElement.classList.add('is-scrolling')
     document.documentElement.classList.remove(
       'is-scroll-top',
-      'is-scroll-bottom'
+      'is-scroll-bottom',
+      'is-scroll-near-top'
     )
   },
 
@@ -143,7 +148,11 @@ const scroll = {
 
   isScrollTop() {
     document.documentElement.classList.add('is-scroll-top')
-    // document.documentElement.classList.remove("is-scroll-bottom")
+    document.documentElement.classList.remove('is-scroll-near-top')
+  },
+
+  isScrollNearTop() {
+    document.documentElement.classList.add('is-scroll-near-top')
   },
 }
 

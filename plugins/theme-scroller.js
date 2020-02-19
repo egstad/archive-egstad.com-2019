@@ -124,6 +124,7 @@ const colorWash = {
 
     // if color isn't right, update it
     if (!themesMatch && this.activeTheme) {
+      console.log('revert', this.cachedTheme.background)
       window.$app.$store.commit('setTheme', this.thisTheme)
     }
   },

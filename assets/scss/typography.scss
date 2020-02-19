@@ -34,6 +34,15 @@ $t5-leading: $baseline * 4;
   /* Style
        ========================================================================== */
 
+  &--link {
+    // @include text-size(15px, 21px);
+    font-size: 14px;
+    letter-spacing: .16ch;
+    font-family: 'TSTARTWPRO-Regular';
+    line-height: 1;
+    font-weight: 300;
+  }
+
   &--serif {
     font-family: $text-serif;
   }
@@ -120,6 +129,7 @@ $t5-leading: $baseline * 4;
   &--4 {
     font-size: $t4-size;
     line-height: $t4-leading;
+    font-variation-settings: 'wght' 500;
     
     @media screen and (min-width: $vp-xl) {
       font-size: calc(#{calc-vw($t4-size, $vp-xl)});
@@ -129,6 +139,7 @@ $t5-leading: $baseline * 4;
   &--5 {
     font-size: $t5-size;
     line-height: $t5-leading;
+    font-variation-settings: 'wght' 500;
     
     @media screen and (min-width: $vp-xl) {
       font-size: calc(#{calc-vw($t5-size, $vp-xl)});

@@ -5,26 +5,21 @@
     <!-- <ToggleTags /> -->
     <!-- </div> -->
 
-    <transition name="fade" mode="out-in">
-      <h1
-        v-if="!$store.state.menuIsOpen"
-        :key="label"
-        class="label text--truncate text--right"
-      >
-        {{ label }}
-      </h1>
-    </transition>
+    <h1><n-link class="text--3" to="/" prefetch>Egstad</n-link></h1>
 
     <nav>
       <ul>
-        <li><n-link class="text--3" to="/pieces">Pieces</n-link></li>
-        <li><n-link class="text--3" to="/projects">Projects</n-link></li>
         <li>
-          <n-link class="text--3" to="/information"
+          <n-link class="text--3" to="/pieces" prefetch>Pieces</n-link>
+        </li>
+        <li>
+          <n-link class="text--3" to="/projects" prefetch>Projects</n-link>
+        </li>
+        <li>
+          <n-link class="text--3" to="/information" prefetch
             ><span>Info</span><span class="truncate">rmation</span></n-link
           >
         </li>
-        <li><n-link class="text--3" to="/contact">Contact</n-link></li>
       </ul>
     </nav>
   </header>
@@ -92,21 +87,41 @@ export default {
   }
 }
 
+.is-scroll-near-top .site-header,
+.is-scroll-top .site-header {
+  background: transparent;
+  backdrop-filter: blur(0);
+
+  // a {
+  //   color: rgba(var(--color-foreground), 1);
+  // }
+}
+.scrolling-down .site-header {
+  transform: translate3d(0, -200%, 0);
+}
+
 .site-header {
-  padding: 10px $space 14px;
-  // @include padding(all, 10px, $space);
+  padding: 0 calc(#{$space}* 2);
   transition: transform $trans-duration $trans-ease,
-    background-color $trans-duration $trans-ease,
-    box-shadow $trans-duration $trans-ease;
-  background-color: rgba(var(--color-background), 0.85);
-  backdrop-filter: blur(5px);
-  // box-shadow: 0 0.5em 2em 2em rgba(var(--color-background), 1);
+    background-color $trans-duration $trans-ease;
+  // backdrop-filter: blur(10px);
+  background-color: rgba(var(--color-background), 1);
+  border-bottom: 1px solid rgba(var(--color-foreground), 0.8);
+
+  a {
+    color: rgba(var(--color-foreground), 1);
+  }
+
+  &:hover {
+    background-color: rgba(var(--color-background), 1);
+  }
 
   // alignment
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
 
   // position
   position: fixed;
@@ -116,9 +131,14 @@ export default {
   width: 100%;
   transform: translate3d(0, 0, 0);
 
-  @media screen and (min-width: $vp-md) {
-    padding: 10px calc(calc(10px + 1vw) * 2) 14px;
+  a {
+    display: block;
+    padding: 0.2em 0;
   }
+
+  // @media screen and (min-width: $vp-md) {
+  //   padding: 10px calc(calc(10px + 1vw) * 2) 14px;
+  // }
 
   &__toggles {
     display: flex;
@@ -126,9 +146,13 @@ export default {
   }
 }
 
-nav {
-  width: 100%;
+h1 {
+  grid-column: 1/2;
+  text-transform: uppercase;
+}
 
+nav {
+  grid-column: 2/5;
   @media screen and (max-width: $vp-md) {
     display: none;
   }
@@ -136,7 +160,6 @@ nav {
   ul {
     display: flex;
     justify-content: space-between;
-    width: 100%;
   }
 
   a {
@@ -144,6 +167,7 @@ nav {
     text-transform: uppercase;
     opacity: 0.3;
     line-height: 1;
+    margin-left: calc(28px + 0.25vw);
 
     &:hover,
     &.nuxt-link-active,
@@ -163,9 +187,5 @@ nav {
   @media screen and (min-width: $vp-md) {
     display: none;
   }
-}
-
-.scrolling-down .site-header {
-  transform: translate3d(0, -100%, 0);
 }
 </style>
