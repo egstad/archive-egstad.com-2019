@@ -4,7 +4,7 @@
       v-for="item in items"
       :key="item.id"
       ref="article"
-      @click="toggleActive()"
+      @click="toggleActive($event)"
     >
       <header>
         <h2>
@@ -184,80 +184,80 @@ export default {
         'Ancient',
         'Rational',
         'Gentle',
-        'adorable',
-        'beautiful',
-        'clean',
-        'drab',
-        'elegant',
-        'fancy',
-        'glamorous',
-        'handsome',
-        'long',
-        'magnificent',
-        'old-fashioned',
-        'plain',
-        'quaint',
-        'sparkling',
-        'ugliest',
-        'unsightly',
-        'wide-eyed',
-        'agreeable',
-        'brave',
-        'calm',
-        'delightful',
-        'eager',
-        'faithful',
-        'gentle',
-        'happy',
-        'jolly',
-        'kind',
-        'lively',
-        'nice',
-        'obedient',
-        'proud',
-        'relieved',
-        'silly',
-        'thankful',
-        'victorious',
-        'witty',
-        'zealous',
-        'angry',
-        'bewildered',
-        'clumsy',
-        'defeated',
-        'embarrassed',
-        'fierce',
-        'grumpy',
-        'helpless',
-        'itchy',
-        'jealous',
-        'lazy',
-        'mysterious',
-        'nervous',
-        'obnoxious',
-        'panicky',
-        'repulsive',
-        'scary',
-        'thoughtless',
-        'uptight',
-        'worried',
-        'broad',
-        'chubby',
-        'crooked',
-        'curved',
-        'deep',
-        'flat',
-        'high',
-        'hollow',
-        'low',
-        'narrow',
-        'round',
-        'shallow',
-        'skinny',
-        'square',
-        'steep',
-        'straight',
-        'wide',
+        'Adorable',
+        'Beautiful',
+        'Clean',
+        'Drab',
+        'Elegant',
+        'Fancy',
+        'Glamorous',
+        'Handsome',
+        'Long',
+        'Magnificent',
+        'Old-Fashioned',
+        'Plain',
+        'Quaint',
+        'Sparkling',
+        'Ugliest',
+        'Unsightly',
+        'Wide-Eyed',
+        'Agreeable',
+        'Brave',
+        'Calm',
+        'Delightful',
+        'Eager',
+        'Faithful',
+        'Gentle',
+        'Happy',
+        'Jolly',
+        'Kind',
+        'Lively',
+        'Nice',
+        'Obedient',
+        'Proud',
+        'Relieved',
+        'Silly',
+        'Thankful',
+        'Victorious',
+        'Witty',
+        'Zealous',
+        'Angry',
+        'Bewildered',
+        'Clumsy',
+        'Defeated',
+        'Embarrassed',
+        'Fierce',
+        'Grumpy',
+        'Helpless',
+        'Itchy',
+        'Jealous',
+        'Lazy',
+        'Mysterious',
+        'Nervous',
+        'Obnoxious',
+        'Panicky',
+        'Repulsive',
+        'Scary',
+        'Thoughtless',
+        'Uptight',
+        'Worried',
+        'Broad',
+        'Chubby',
+        'Crooked',
+        'Curved',
+        'Deep',
+        'Flat',
+        'High',
+        'Hollow',
+        'Low',
+        'Narrow',
+        'Round',
+        'Shallow',
+        'Skinny',
+        'Square',
+        'Steep',
+        'Straight',
+        'Wide',
       ],
       nouns: [
         'Economy',
@@ -398,7 +398,21 @@ export default {
       //   this.fetchImage(imageQuery)
       // })
     },
-    toggleActive() {},
+    toggleActive(event) {
+      // remove all active classes
+      this.$refs.article.forEach(article => {
+        article.classList.remove('is-active')
+      })
+
+      // activate this one
+      event.target.classList.toggle('is-active')
+      // event.target.addEventListener('transitionend', ev => {
+      //   // scroll into view
+      //   event.target.scrollIntoView({
+      //     behavior: 'smooth',
+      //   })
+      // })
+    },
   },
 }
 </script>
@@ -408,17 +422,37 @@ article {
   margin: 0;
   text-align: center;
 
-  img {
-    margin: 0 auto;
+  figure {
+    transition: max-height 500ms ease-in-out;
+    max-height: 0;
+    overflow: hidden;
   }
+
+  &.is-active figure {
+    max-height: 100vh;
+  }
+
+  img {
+    transition: opacity 500ms ease-in-out;
+    margin: 0 auto;
+    opacity: 0;
+  }
+  &.is-active img {
+    opacity: 1;
+  }
+}
+
+header {
+  pointer-events: none;
 }
 
 h2 {
   font-size: 10vw;
   font-family: 'FranklinGothic-ExtraCond';
+  pointer-events: none;
 
   span:first-child {
-    text-transform: lowercase;
+    text-transform: capitalize;
   }
   span:last-child {
     text-transform: uppercase;
