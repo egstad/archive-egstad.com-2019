@@ -255,7 +255,7 @@ export default {
    ** Build configuration
    */
   build: {
-    vendor: ['three', 'vue-three', 'gsap/Draggable'],
+    vendor: ['three', 'paper', 'vue-three', 'gsap/Draggable'],
     // analyze: true,
     /*
      ** You can extend webpack config here
