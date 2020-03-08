@@ -184,10 +184,7 @@
 </style>
 
 <script>
-/* eslint-disable */
-import grid from '@/assets/scss/grid.scss'
 import Debug from '@/components/templates/debug'
-/* eslint-enable */
 import { routeTransitionFade } from '@/mixins/route-transitions'
 import { initApi, generatePageData } from '@/prismic-config'
 import Pic from '@/components/atoms/pic'

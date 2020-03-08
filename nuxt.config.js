@@ -123,7 +123,6 @@ export default {
       },
       {
         src: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.1.1/gsap.min.js',
-        defer: true,
       },
       { src: '//static.cdn.prismic.io/prismic.min.js', async: true },
     ],
@@ -140,6 +139,7 @@ export default {
    */
   css: [
     '@/assets/scss/reset.scss',
+    '@/assets/scss/grid.scss',
     '@/assets/scss/typography.scss',
     '@/assets/scss/spacing.scss',
     '@/assets/scss/animate.scss',
@@ -255,7 +255,7 @@ export default {
    ** Build configuration
    */
   build: {
-    vendor: ['three', 'paper', 'vue-three', 'gsap/Draggable'],
+    vendor: ['three', 'paper', 'vue-three', 'gsap/Draggable', 'SplitText'],
     // analyze: true,
     /*
      ** You can extend webpack config here

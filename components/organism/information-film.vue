@@ -104,7 +104,8 @@ export default {
 
       // get ze video
       const video = this.$refs.video
-      video.setAttribute('crossorigin', 'anonymous')
+      // video.setAttribute('crossorigin', 'anonymous')
+      video.crossOrigin = ''
       video.preload = 'auto'
       video.autoload = true
       this.$refs.playVideo.addEventListener('mousedown', () => {

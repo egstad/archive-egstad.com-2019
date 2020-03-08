@@ -6,15 +6,15 @@
 // the reason it's in this format is for an optional alpha channel for rgba.
 :root {
   // background
-  --color-background: 18, 19, 4;
+  --color-background: 0, 0, 0;
   --background: rgb(var(--color-background));
 
   // foreground
-  --color-foreground: 200, 200, 200;
+  --color-foreground: 0, 0, 0;
   --foreground: rgb(var(--color-foreground));
 
   // links, buttons, etc.
-  --color-accent: 30, 30, 255;
+  --color-accent: 0, 0, 0;
   --accent: rgb(var(--color-accent));
 }
 

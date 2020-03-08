@@ -31,7 +31,7 @@
 <script>
 // import _vars from '@/assets/scss/_vars.scss'
 /* eslint-disable */
-import grid from '@/assets/scss/grid.scss'
+// import grid from '@/assets/scss/grid.scss'
 /* eslint-enable */
 
 export default {

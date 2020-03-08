@@ -1,19 +1,11 @@
 <template>
   <section class="container">
-    <br /><br /><br /><br /><br />
+    <Debug />
     <button ref="viewFeed" @click="toggleView('feed')">Feed</button>
     <button ref="viewGrid" @click="toggleView('grid')">Grid</button>
 
-    <Theme
-      :colors="{
-        background: '#ffffff',
-        foreground: '#000000',
-        accent: '#0000ff',
-      }"
-      fade-target="middle"
-    />
     <header class="header grid">
-      <h2 class="text c12 lg-c6 lg-start-c7">
+      <h2 class="text--headline c12 lg-c6 lg-start-c7">
         These fragments of work provide a glimpse into my process as a designer
         &amp; developer over the last 10 years. Some of these works were the
         final products of months of labor. Others were completed in minutes or
@@ -22,15 +14,6 @@
     </header>
 
     <nav class="filter"></nav>
-
-    <Theme
-      :colors="{
-        background: '#000000',
-        foreground: '#ffffff',
-        accent: '#0000ff',
-      }"
-      fade-target="top"
-    />
     <ul class="piece-list" :class="[isFeedView ? 'as-feed' : 'as-grid']">
       <li
         v-for="(piece, pieceIndex) in pieces"
@@ -71,16 +54,19 @@
 </template>
 
 <script>
+/* eslint-disable */
 import Prismic from 'prismic-javascript'
+// import grid from '@/assets/scss/grid.scss'
+import Debug from '@/components/templates/debug'
+/* eslint-enable */
 import Slices from '@/components/templates/slices'
-import Theme from '@/components/atoms/theme'
 import { routeTransitionFade } from '@/mixins/route-transitions'
 import { initApi, generatePageData } from '@/prismic-config'
 
 export default {
   components: {
     Slices,
-    Theme,
+    Debug,
     // TitleAndTags,
   },
   mixins: [routeTransitionFade],
@@ -160,6 +146,11 @@ export default {
 $piece-height: 110vh;
 $piece-max-height: 1500px;
 
+.text--headline {
+  @include text-size(33px, 64px);
+  font-family: 'FGroteskThin-Regular';
+}
+
 .container {
   // padding: 50px;
 }
@@ -172,14 +163,6 @@ $piece-max-height: 1500px;
     line-height: 38px;
     font-variation-settings: 'wght' 500;
   }
-}
-
-.filter {
-  width: 94vw;
-  margin-left: 3vw;
-  border-top: 1px solid rgba(var(--color-foreground), 0.8);
-  margin-top: 10vw;
-  margin-bottom: 10vw;
 }
 
 .piece {

@@ -12,6 +12,7 @@ const theme = {
 
     if (process.client && options.foreground) {
       const foregroundRgb = utils.hexToRgb(options.foreground)
+
       document.documentElement.style.setProperty(
         '--color-foreground',
         foregroundRgb

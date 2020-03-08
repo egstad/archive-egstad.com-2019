@@ -168,6 +168,9 @@ export default {
     // 50%
 
     width: calc((100vw - #{$space} * 2) - 16vw);
+    // @media screen and (min-width: $vp-lg) {
+    //   width: calc((100vw - #{$space} * 2) - 50vw);
+    // }
     padding-left: $space;
   }
 

@@ -22,15 +22,9 @@ const colorWash = {
   },
   cacheDefaultTheme() {
     this.cachedTheme = {
-      accent: getComputedStyle(document.documentElement).getPropertyValue(
-        '--color-accent'
-      ),
-      background: getComputedStyle(document.documentElement).getPropertyValue(
-        '--color-background'
-      ),
-      foreground: getComputedStyle(document.documentElement).getPropertyValue(
-        '--color-foreground'
-      ),
+      accent: window.$app.$store.state.theme.accent,
+      background: window.$app.$store.state.theme.background,
+      foreground: window.$app.$store.state.theme.foreground,
     }
   },
   setupEvents() {
@@ -124,7 +118,6 @@ const colorWash = {
 
     // if color isn't right, update it
     if (!themesMatch && this.activeTheme) {
-      console.log('revert', this.cachedTheme.background)
       window.$app.$store.commit('setTheme', this.thisTheme)
     }
   },
