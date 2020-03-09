@@ -7,6 +7,7 @@
 <script>
 import { gsap, Power2 } from 'gsap/all'
 import SplitText from '@/plugins/gsap/SplitText'
+import 'intersection-observer'
 
 export default {
   data() {
