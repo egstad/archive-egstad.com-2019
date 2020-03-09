@@ -36,13 +36,12 @@
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.2.3",
     "fontfaceobserver": "^2.1.0",
-    "gsap": "^3.1.1",
+    "gsap": "^3.2.4",
     "node-sass": "^4.13.1",
     "paper": "^0.12.4",
     "prettier": "^1.18.2",
     "sass-loader": "^8.0.0",
     "three": "^0.112.1",
-    "vanilla-lazyload": "^12.0.0",
-    "vue-three": "^0.1.20"
+    "vanilla-lazyload": "^12.0.0"
   }
 }

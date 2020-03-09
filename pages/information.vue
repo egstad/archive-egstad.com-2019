@@ -63,10 +63,7 @@ import InformationLogo from '@/components/organism/information-logo'
 import InformationBio from '@/components/organism/information-bio'
 import InformationFilm from '@/components/organism/information-film'
 import InformationEgball from '@/components/organism/information-egball'
-/* eslint-disable */
-// import grid from '@/assets/scss/grid.scss'
 import Debug from '@/components/templates/debug'
-/* eslint-enable */
 import Slices from '@/components/templates/slices'
 import { routeTransitionFade } from '@/mixins/route-transitions'
 import { initApi, generatePageData } from '@/prismic-config'

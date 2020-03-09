@@ -121,9 +121,9 @@ export default {
         innerHTML:
           '{ window.prismic = { endpoint: "' + prismicConfig.baseUrl + '"} }',
       },
-      {
-        src: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.1.1/gsap.min.js',
-      },
+      // {
+      //   src: 'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.1.1/gsap.min.js',
+      // },
       { src: '//static.cdn.prismic.io/prismic.min.js', async: true },
     ],
     __dangerouslyDisableSanitizers: ['script'],
@@ -132,7 +132,7 @@ export default {
   /*
    ** Customize the progress-bar color
    */
-  loading: { color: 'rgb(243, 62, 17)' },
+  loading: { color: 'rgb(255, 255, 255)' },
 
   /*
    ** Global CSS
@@ -185,10 +185,6 @@ export default {
       src: '@/plugins/slideshow.js',
       ssr: false,
     },
-    // {
-    //   src: '@/plugins/isotope.js',
-    //   ssr: false,
-    // },
   ],
 
   /*
@@ -255,7 +251,7 @@ export default {
    ** Build configuration
    */
   build: {
-    vendor: ['three', 'paper', 'vue-three', 'gsap/Draggable', 'SplitText'],
+    vendor: ['three', 'paper'],
     // analyze: true,
     /*
      ** You can extend webpack config here
@@ -290,6 +286,9 @@ export default {
 
     transpile: [
       'Flickity',
+      'gsap',
+      '@/plugins/gsap/SplitText',
+      '@/plugins/gsap/src/Draggable',
       'three/examples/jsm/controls/OrbitControls',
       'three/examples/jsm/lights/LightProbeGenerator',
     ],

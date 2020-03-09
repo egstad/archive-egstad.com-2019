@@ -5,6 +5,9 @@
 </template>
 
 <script>
+import { gsap, Power2 } from 'gsap/all'
+import SplitText from '@/plugins/gsap/SplitText'
+
 export default {
   data() {
     return {
@@ -28,9 +31,9 @@ export default {
     },
     initGsapSplitText() {
       // create gsap timeline
-      this.timeline = window.gsap.timeline()
+      this.timeline = gsap.timeline()
       // split text by characters
-      this.splitText = new window.SplitText(this.$refs.text, {
+      this.splitText = new SplitText(this.$refs.text, {
         type: 'chars',
       })
       // save array of characters
@@ -56,7 +59,7 @@ export default {
           opacity: 0,
           scaleX: '0%',
           transformOrigin: '0% 50% -100%',
-          ease: window.Power2.easeOut,
+          ease: Power2.easeOut,
           stagger: 0.15,
         },
         '+=0'
@@ -65,62 +68,34 @@ export default {
     reanimate(ev) {
       // which character is clicked? start there
       const startIndex = ev.target.dataset.index
-      // stagger is same always
-      const stagger = {
-        grid: [1, 6],
-        from: startIndex,
-        axis: 'x',
-        each: 0.05,
+      // number of animations
+      const shuffleNum = Math.round(Math.random() * 3)
+
+      switch (shuffleNum) {
+        case 0:
+          this.animFall(startIndex)
+          break
+        case 1:
+          this.animWave(startIndex)
+          break
+        case 2:
+          this.animSqueeze(startIndex)
+          break
+        default:
+          break
       }
-
-      // frontFlip
-      const frontFlip = {
-        duration: 0.5,
-        rotation: 360,
-        transformOrigin: 'center center',
-        ease: window.Power2.easeInOut,
-        stagger,
-      }
-
-      const squeeze = {
-        duration: 0.3,
-        scaleY: 0,
-        transformOrigin: 'center center',
-        ease: window.Power2.easeInOut,
-        stagger,
-      }
-      // squeeze.stagger.repeat = 1
-      // squeeze.stagger.yoyo = true
-
-      // wave
-      const wave = {
-        duration: 0.5,
-        y: '-30%',
-        ease: window.Power2.easeInOut,
-        stagger,
-      }
-      // wave.stagger.repeat = 1
-      // wave.stagger.yoyo = true
-
-      this.animFall(startIndex)
-
-      // const reset = { opacity: 1 }
-      // this.timeline.staggerFrom(this.chars, 1.5, reset, 0.06, '+=0')
-
-      // reset
-      // this.timeline.to(this.chars, {
-      //   scaleY: 1,
-      // })
     },
     animFall(startIndex) {
+      const plusOrMinus = Math.random() < 0.5 ? -1 : 1
+
       this.timeline.to(this.chars, {
         duration: 1,
         opacity: 0,
-        y: 1500,
+        y: plusOrMinus * 1500,
         rotation: 30,
         skewX: 90,
         transformOrigin: '0% 50% -100%',
-        ease: window.Power2.easeIn,
+        ease: Power2.easeIn,
         stagger: {
           grid: [1, 6],
           from: startIndex,
@@ -145,11 +120,44 @@ export default {
         },
       })
     },
-  },
-  head() {
-    return {
-      script: [{ src: 'scripts/gsap/SplitText.min.js' }],
-    }
+    animWave(startIndex) {
+      const y = Math.round(Math.random() * 60) + 10
+
+      this.timeline.to(this.chars, {
+        duration: 0.5,
+        y: `-${y}%`,
+        ease: Power2.easeInOut,
+        stagger: {
+          grid: [1, 6],
+          yoyo: true,
+          repeat: 1,
+          from: startIndex,
+          axis: 'x',
+          each: 0.05,
+        },
+      })
+    },
+    animSqueeze(startIndex) {
+      const rotation = Math.round(Math.random() * 360)
+      const plusOrMinus = Math.random() < 0.5 ? -1 : 1
+
+      this.timeline.to(this.chars, {
+        duration: 0.5,
+        scale: 0.65,
+        rotation: plusOrMinus * rotation,
+        transformOrigin: 'center center',
+        ease: Power2.easeInOut,
+        stagger: {
+          grid: [1, 6],
+          yoyo: true,
+          repeat: 1,
+          repeatDelay: 0.25,
+          from: startIndex,
+          axis: 'x',
+          each: 0.025,
+        },
+      })
+    },
   },
 }
 </script>
@@ -167,7 +175,7 @@ export default {
   cursor: pointer;
 }
 
-/deep/.char5 {
+/deep/[data-index='4'] {
   margin-left: -0.15ch;
 }
 </style>

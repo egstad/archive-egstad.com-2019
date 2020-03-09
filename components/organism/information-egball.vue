@@ -8,7 +8,7 @@
 
 <script>
 import * as THREE from 'three'
-
+import { gsap, Power4 } from 'gsap/all'
 import utils from '@/plugins/utils'
 
 export default {
@@ -38,9 +38,9 @@ export default {
       this.meshMoveDuration
     )
     // update location - used to keep ball position above of it
-    this.filmLocation = document
-      .querySelector('.fence')
-      .getBoundingClientRect().top
+    // this.filmLocation = document
+    //   .querySelector('.fence')
+    //   .getBoundingClientRect().top
 
     this.$app.$emit('page::mounted')
   },
@@ -118,9 +118,9 @@ export default {
     },
     onWindowResize() {
       // update location - used to keep ball position above of it
-      this.filmLocation = document
-        .querySelector('.fence')
-        .getBoundingClientRect().top
+      // this.filmLocation = document
+      //   .querySelector('.fence')
+      //   .getBoundingClientRect().top
 
       // set camera
       this.camera.aspect =
@@ -164,8 +164,8 @@ export default {
       const yp = this.$store.state.docHeight / 24
 
       // i fuqd up. somehow these are backwards. but it works. so wutever.
-      window.TweenMax.to(this.mesh.rotation, 1.5, {
-        ease: window.Power4.easeOut,
+      gsap.to(this.mesh.rotation, 1.5, {
+        ease: Power4.easeOut,
         y: Math.round((xd / xp) * 0.2),
         x: Math.round((yd / yp) * 0.6),
       })
@@ -175,8 +175,8 @@ export default {
       this.updateEggballCoords()
       this.setEggballRollVelocity()
 
-      window.TweenMax.to(this.$refs.eggcarton, 1.5, {
-        ease: window.Power4.easeOut,
+      gsap.to(this.$refs.eggcarton, 1.5, {
+        ease: Power4.easeOut,
         x: this.eggBallCoords.xNew,
         y: this.eggBallCoords.yNew,
       })

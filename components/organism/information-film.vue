@@ -26,14 +26,6 @@
 <script>
 import * as THREE from 'three'
 
-// import Draggable from 'gsap/Draggable'
-// import Draggable from 'gsap/Draggable'
-let Draggable
-if (process.client) {
-  Draggable = require('gsap/Draggable')
-  Draggable = Draggable.Draggable
-}
-
 export default {
   props: {
     video: {
@@ -65,13 +57,6 @@ export default {
     this.init()
     this.animate()
     window.addEventListener('resize', this.onWindowResize, false)
-
-    Draggable.create(this.$refs.nav, {
-      type: 'x,y',
-      edgeResistance: 0.65,
-      bounds: this.$refs.canvasWrapper,
-      inertia: true,
-    })
   },
   beforeDestroy() {
     // kill the animation loop
@@ -204,11 +189,6 @@ export default {
       )
     },
   },
-  // head() {
-  //   return {
-  //     script: [{ src: 'gsap/Draggable.min.js' }],
-  //   }
-  // },
 }
 </script>
 
