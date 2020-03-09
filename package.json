@@ -5,34 +5,34 @@
   "author": "Jordan Egstad",
   "private": true,
   "scripts": {
-    "start": "nuxt",
+    "start": "nuxt --port 7777",
     "build": "nuxt build",
-    "serve": "nuxt start",
+    "serve": "nuxt start --port 7777",
     "generate": "nuxt generate",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore ."
   },
   "dependencies": {
-    "@nuxtjs/axios": "^5.3.6",
-    "@nuxtjs/pwa": "^3.0.0-0",
+    "@nuxtjs/axios": "^5.9.5",
+    "@nuxtjs/pwa": "^3.0.0-beta.20",
     "@nuxtjs/sitemap": "^2.0.0",
-    "nuxt": "^2.0.0",
+    "nuxt": "2.11.0",
     "prismic-dom": "^2.1.0",
-    "prismic-javascript": "^2.1.1",
+    "prismic-javascript": "^2.2.0",
     "prismic-vue": "git+https://github.com/prismicio/prismic-vue.git#nuxt",
-    "sass": "^1.23.0",
+    "sass": "^1.26.2",
     "vue-flickity": "^1.2.1",
-    "webpack": "^4.39.3"
+    "webpack": "^4.42.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^1.0.1",
     "@nuxtjs/eslint-module": "^1.0.0",
     "@nuxtjs/proxy": "^1.3.3",
     "@nuxtjs/style-resources": "^1.0.0",
-    "babel-eslint": "^10.0.3",
+    "babel-eslint": "^10.1.0",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^4.3.0",
     "eslint-loader": "^3.0.0",
-    "eslint-plugin-nuxt": ">=0.4.2",
+    "eslint-plugin-nuxt": "^0.5.1",
     "eslint-plugin-prettier": "^3.1.0",
     "eslint-plugin-vue": "^5.2.3",
     "fontfaceobserver": "^2.1.0",
@@ -41,8 +41,8 @@
     "node-sass": "^4.13.1",
     "paper": "^0.12.4",
     "prettier": "^1.18.2",
-    "sass-loader": "^8.0.0",
+    "sass-loader": "^8.0.2",
     "three": "^0.112.1",
-    "vanilla-lazyload": "^12.0.0"
+    "vanilla-lazyload": "^12.5.1"
   }
 }

@@ -41,9 +41,9 @@ if (process.client) {
     // update lazy images
     // likely because we just got new assets from prismic
     window.$app.$on('lazy::update', () => {
-      setTimeout(() => {
+      window.$app.$nextTick(() => {
         lazyload.update()
-      }, 0)
+      })
     })
 
     // route is changing
