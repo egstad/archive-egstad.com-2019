@@ -5,6 +5,10 @@
 </template>
 
 <script>
+import { gsap, Power2 } from 'gsap/all'
+import SplitText from '@/plugins/gsap/SplitText'
+import 'intersection-observer'
+
 export default {
   props: {
     text: {
@@ -22,12 +26,12 @@ export default {
     }
   },
   mounted() {
-    this.timeline = window.gsap.timeline()
-    this.splitText = new window.SplitText(this.$refs.text, {
+    this.timeline = gsap.timeline()
+    this.splitText = new SplitText(this.$refs.text, {
       type: 'lines',
       linesClass: 'line-child',
     })
-    this.splitWrap = new window.SplitText(this.$refs.text, {
+    this.splitWrap = new SplitText(this.$refs.text, {
       type: 'lines',
       linesClass: 'line-parent hidden',
     })
@@ -54,7 +58,7 @@ export default {
           duration: 0.8,
           opacity: 0,
           y: '100%',
-          ease: window.Power2.easeOut,
+          ease: Power2.easeOut,
           stagger: 0.15,
           onComplete: () => {
             // split in reverse order of initialization
@@ -65,11 +69,6 @@ export default {
         '+=0'
       )
     },
-  },
-  head() {
-    return {
-      script: [{ src: 'scripts/gsap/SplitText.min.js' }],
-    }
   },
 }
 </script>

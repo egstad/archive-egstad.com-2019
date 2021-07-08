@@ -54,10 +54,10 @@ const device = {
     // remeasure the window on resize
     window.addEventListener('resize', this.resizeHandler)
     // watch if reduce motion changes at all
-    this.reducedMotionState.addEventListener(
-      'change',
-      this.handleReduceMotionChange
-    )
+    // this.reducedMotionState.addEventListener(
+    //   'change',
+    //   this.handleReduceMotionChange
+    // )
   },
 
   handleReduceMotion() {

@@ -4,6 +4,7 @@
    • When ".js-animate" elements are in view, ".is-visible" class is added.
    • Intersection Observer for modern browsers
    ========================================================================== */
+import 'intersection-observer'
 
 const animate = {
   init() {

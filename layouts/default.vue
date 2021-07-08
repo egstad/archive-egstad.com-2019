@@ -45,7 +45,7 @@ export default {
     // tell the store what page we're on when we mount
     this.$store.commit('updateActivePage', this.$route.name)
 
-    this.$app.$on('site::blurToggle', this.blurHandler)
+    // this.$app.$on('site::blurToggle', this.blurHandler)
   },
   methods: {
     blurHandler(val) {

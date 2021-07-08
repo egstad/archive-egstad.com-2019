@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import 'intersection-observer'
+
 export default {
   props: {
     video: {

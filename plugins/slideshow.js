@@ -1,3 +1,5 @@
+import 'intersection-observer'
+
 class Slideshow {
   constructor(el, args) {
     // default options
